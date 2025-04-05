@@ -1,3 +1,11 @@
+<?php
+	session_start();
+	include_once('../../model/Connect.php');
+
+
+?>
+
+
 <!--
     Item Name: Luxurious - Hotel Booking HTML Template + Admin Dashboard.
     Author: ashishmaraviya
@@ -107,7 +115,7 @@
 										<li><a href="./team-update.php">Settings</a></li>
 									</ul>
 									<ul class="border-top">
-										<li><a href="./signin.php"><i class="ri-logout-circle-r-line"></i>Logout</a></li>
+										<li><a href="./Login/login.php"><i class="ri-logout-circle-r-line"></i>Logout</a></li>
 									</ul>
 								</div>
 							</div>

@@ -1,21 +1,37 @@
 <?php
 include_once("connect.php");
 
+class NhanVienModel extends ketnoi {
 
-class NhanVienModel extends ketnoi
-{
-    //Kiểm tra thông tin đăng nhập
-    public function checkLogin($username, $password)
-    {
-        $con = $this->Moketnoi();
 
-        $query = "SELECT nd.*, vt.TenViTri 
-                  FROM NguoiDung nd
-                  INNER JOIN VaiTro vt ON nd.ID_Role = vt.ID_Role 
+    //  Dang nhap
+    public function getNhanVien($sdt , $mk){
+        $db = new ketnoi();
+        $conn = $db->Moketnoi();
+
+        $mk =   md5($mk);
+        $sql = " SELECT * from NhanVien where SoDienThoai = '$sdt' AND MatKhau = '$mk'";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ss", $sdt, $mk);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $db->DongKetNoi($conn);
+        return $result;
+
+
+    }
+
+
+    public function checkLogin($username, $password) {
+        $db = new ketnoi();
+        $con = $db->MoKetNoi();
+
+        $query = "SELECT users.*, roles.TenViTri 
+                  FROM NguoiDung AS users 
+                  INNER JOIN VaiTro as roles ON users.ID_Role = roles.ID_Role 
                   WHERE UserName = ? AND PassWord = ?";
-
         $stmt = $con->prepare($query);
-        $hashedPassword = md5($password); // Nếu bạn đang dùng md5 trong database
+        $hashedPassword = md5($password);
         $stmt->bind_param("ss", $username, $hashedPassword);
         $stmt->execute();
 
@@ -23,108 +39,68 @@ class NhanVienModel extends ketnoi
         $user = $result->fetch_assoc();
 
         $stmt->close();
-        $this->Dongketnoi($con);
+        $db->DongKetNoi($con);
 
         return $user;
     }
 
-    // Thêm người dùng mới
-
-    public function createUserTheoRole($username, $phone, $password, $roleId, $tenNguoi, $diaChi)
-{
-    $con = $this->Moketnoi();
-
-    // 1. Kiểm tra username
-    $stmt = $con->prepare("SELECT * FROM NguoiDung WHERE UserName = ?");
-    $stmt->bind_param("s", $username);
-    $stmt->execute();
-    if ($stmt->get_result()->num_rows > 0) {
-        $stmt->close(); $this->Dongketnoi($con);
-        return "username_exists";
-    }
-
-    // 2. Kiểm tra phone
-    $stmt = $con->prepare("SELECT * FROM NguoiDung WHERE Phone = ?");
-    $stmt->bind_param("s", $phone);
-    $stmt->execute();
-    if ($stmt->get_result()->num_rows > 0) {
-        $stmt->close(); $this->Dongketnoi($con);
-        return "phone_exists";
-    }
-
-    // 3. Mã hóa mật khẩu và thêm vào bảng NguoiDung
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-    $stmt = $con->prepare("INSERT INTO NguoiDung (UserName, Phone, PassWord, ID_Role) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param("sssi", $username, $phone, $hashedPassword, $roleId);
-    $stmt->execute();
-
-    // Lấy ID người dùng vừa thêm
-    $newUserId = $con->insert_id;
-    $stmt->close();
-
-    // 4. Phân chia theo role
-    if (in_array($roleId, [1, 2, 3])) {
-        // ➤ Thêm vào bảng NhanVien
-        $stmt = $con->prepare("INSERT INTO NhanVien (TenNhanVien, SoDienThoai, DiaChi, ID_Role, NgayThangNam, ID_NguoiDung)
-                               VALUES (?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssisi", $tenNguoi, $phone, $diaChi, $roleId, $ngaySinh, $newUserId);
-        $stmt->execute();
-        $stmt->close();
-    } else {
-        // ➤ Thêm vào bảng KhachHang
-        $stmt = $con->prepare("INSERT INTO KhachHang (TenKhachHang, SoDienThoai, DiaChi, ID_NguoiDung)
-                               VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("sssi", $tenNguoi, $phone, $diaChi, $newUserId);
-        $stmt->execute();
-        $stmt->close();
-    }
-
-    $this->Dongketnoi($con);
-    return "success";
-}
-
-public function getUserByUsername($username)
-{
-    $con = $this->Moketnoi();
-    $query = "SELECT * FROM NguoiDung WHERE UserName = ?";
-    $stmt = $con->prepare($query);
-    $stmt->bind_param("s", $username);
-    $stmt->execute();
-
-    $result = $stmt->get_result();
-    $user = $result->fetch_assoc();
-
-    $stmt->close();
-    $this->Dongketnoi($con);
-
-    return $user;
-}
-
-
-
-
-
-
-
-// Lấy tất cả vai trò
-public function getAllRoles()
-    {
+    public function createNhanVien($username, $email, $roleId, $phone, $diaChi, $ngaySinh, $avatarPath = null) {
         $db = new ketnoi();
         $con = $db->MoKetNoi();
 
-        $query = "SELECT * FROM VaiTro";
-        $result = $con->query($query);
+        // Kiểm tra username
+        $stmt = $con->prepare("SELECT * FROM NguoiDung WHERE UserName = ?");
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        if ($stmt->get_result()->num_rows > 0) {
+            $stmt->close();
+            $db->DongKetNoi($con);
+            return "username_exists";
+        }
+        $stmt->close();
 
-        $roles = [];
-        while ($row = $result->fetch_assoc()) {
-            $roles[] = $row;
+        // Kiểm tra email
+        $stmt = $con->prepare("SELECT * FROM NguoiDung WHERE Email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        if ($stmt->get_result()->num_rows > 0) {
+            $stmt->close();
+            $db->DongKetNoi($con);
+            return "email_exists";
+        }
+        $stmt->close();
+
+        // Thêm tài khoản mới
+        $stmt = $con->prepare("INSERT INTO NguoiDung (UserName, Email, ID_Role, Phone, Adress, NgaySinh, HinhAnh) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssisss", $username, $email, $roleId, $phone, $diaChi, $ngaySinh, $avatarPath);
+
+        if ($stmt->execute()) {
+            $stmt->close();
+            $db->DongKetNoi($con);
+            return "registration_success";
         }
 
+        $stmt->close();
         $db->DongKetNoi($con);
-
-        return $roles;
+        return "registration_failed";
     }
 
-
+    public function getChiTietNhanVien($data) {
+        $db = new ketnoi();
+        $con = $db->MoKetNoi();
+    
+        $sql = "SELECT NguoiDung.Email, NguoiDung.Phone, NguoiDung.UserName, NguoiDung.Adress, NguoiDung.NgaySinh, VaiTro.TenViTri 
+                FROM NguoiDung
+                INNER JOIN VaiTro ON NguoiDung.ID_Role = VaiTro.ID_Role
+                WHERE NguoiDung.ID_NguoiDung = '$data'";
+        $stmt = $con->prepare($sql);
+        $stmt->bind_param("i", $data);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        $db->DongKetNoi($con);
+        return $result;
+    }
     
 }
+?>

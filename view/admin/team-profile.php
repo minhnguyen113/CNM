@@ -1,3 +1,6 @@
+
+
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -142,13 +145,12 @@
 										<p>moris@example.com</p>
 									</div>
 									<ul class="border-top">
-										<li><a href="team-profile.html">Profile</a></li>
-										<li><a href="#">Help</a></li>
-										<li><a href="#">Messages</a></li>
-										<li><a href="team-update.html">Settings</a></li>
+										<li><a href="team-profile.php">Profile</a></li>
+
+										<li><a href="team-update.php">Settings</a></li>
 									</ul>
 									<ul class="border-top">
-										<li><a href="signin.html"><i class="ri-logout-circle-r-line"></i>Logout</a></li>
+										<li><a href="../customer/Login/login.html"><i class="ri-logout-circle-r-line"></i>Logout</a></li>
 									</ul>
 								</div>
 							</div>
@@ -514,13 +516,13 @@
 										<div class="lh-team-block-img">
 											<div class="lh-team-block-detail">
 												<div class="profile-img">
-													<img class="t-img" src="../../assets_admin/img/user/11.jpg" alt="team image">
+													<img class="t-img" src="<?php echo !empty($data['HinhAnh']) ? '../../uploads/' . htmlspecialchars($data['HinhAnh']) : '../../assets_admin/img/user/default.jpg'; ?>" alt="team image">
 													<span class="tag-label online"></span>
 												</div>
-												<h5 class="name">Wiley Waites</h5>
+												<h5 class="name"><?php echo htmlspecialchars($data['UserName']); ?></h5>
 												<p>( Team Leader )</p>
 												<div class="lh-settings">
-													<a href="#" class="lh-btn-primary m-r-10">Edit Profile</a>
+													<a href="#" class="lh-btn-primary m-r-10">Cập nhật thông tin</a>
 													<div class="dropdown">
 														<button class="btn btn-secondary dropdown-toggle" type="button"
 															data-bs-toggle="dropdown" aria-expanded="false">
@@ -538,9 +540,7 @@
 													</div>
 												</div>
 											</div>
-											<p>I am a team leader of Luxurious technology. I have a 6+ years of experience. I
-												have experience using PHP, HTML, CSS, JavaScript/jQuery, MySQL and
-												associated frameworks to build specialized webpages. </p>
+
 										</div>
 									</div>
 								</div>
@@ -551,94 +551,62 @@
 						<div class="lh-card team-overview">
 							<div class="lh-card-content lh-card-team team-details">
 								<div class="row">
-									<div class="col-sm-12">
-										<h3>Account Details</h3>
-										<div class="lh-team-detail">
-											<p>From your account you can easily view and track orders. You can manage
-												and change your account information like address, contact information
-												and history of orders.</p>
-										</div>
-									</div>
+
+									<!-- Email -->
 									<div class="col-lg-6 col-md-12">
 										<div class="lh-team-detail">
 											<h6>E-mail address</h6>
-											<ul>
-												<li><strong>Email 1 : </strong>support1@exapmle.com</li>
-												<li><strong>Email 2 : </strong>support2@exapmle.com</li>
-											</ul>
+											<div class="form-group">
+												<input type="email" class="form-control" name="email" placeholder="Vui lòng nhập email"
+													value="<?php echo htmlspecialchars($data['Email'] ?? ''); ?>" />
+											</div>
 										</div>
 									</div>
+
+									<!-- Số điện thoại -->
 									<div class="col-lg-6 col-md-12">
 										<div class="lh-team-detail">
-											<h6>Contact nubmer</h6>
-											<ul>
-												<li><strong>Phone Nubmer 1 : </strong>(123) 123 456 7890</li>
-												<li><strong>Phone Nubmer 2 : </strong>(123) 123 456 7890</li>
-											</ul>
+											<h6>Contact number</h6>
+											<div class="form-group">
+												<input type="text" class="form-control" name="phone" placeholder="Vui lòng nhập số điện thoại"
+													value="<?php echo htmlspecialchars($data['Phone'] ?? ''); ?>" />
+											</div>
 										</div>
 									</div>
+
+									<!-- Địa chỉ -->
 									<div class="col-lg-6 col-md-12">
 										<div class="lh-team-detail">
 											<h6>Address</h6>
-											<ul>
-												<li>123, 2150 Sycamore Street, dummy text of
-													the, bara cota San Jose, California - 95131.</li>
-											</ul>
+											<div class="form-group">
+												<textarea class="form-control" rows="2" name="address" placeholder="Nhập địa chỉ"><?php echo htmlspecialchars($data['Adress'] ?? ''); ?></textarea>
+											</div>
 										</div>
 									</div>
+
+									<!-- Ngày sinh -->
 									<div class="col-lg-6 col-md-12">
 										<div class="lh-team-detail">
-											<h6>Address 2</h6>
-											<ul>
-												<li>123, 2150 Sycamore Street, dummy text of
-													the, bara cota San Jose, California - 95131.</li>
-											</ul>
+											<h6>Ngày/ tháng/ năm sinh</h6>
+											<div class="form-group">
+												<input type="date" class="form-control" name="date" placeholder="Nhập ngày/ tháng/ năm sinh"
+													value="<?php echo isset($data['NgaySinh']) ? date('Y-m-d', strtotime($data['NgaySinh'])) : ''; ?>" />
+											</div>
 										</div>
 									</div>
+
+									<!-- Vai trò -->
 									<div class="col-lg-6 col-md-12">
 										<div class="lh-team-detail">
-											<h6>Bank Accounts</h6>
-											<ul>
-												<li><strong>Account Name : </strong>Wiley Waites</li>
-												<li><strong>Account Nubmer : </strong>123**********80</li>
-												<li><strong>IFSC Code : </strong>123**********80</li>
-												<li><strong>Bank name : </strong>Barky Central Bank</li>
-											</ul>
+											<h6>Vai trò</h6>
+											<div class="form-group">
+												<input type="text" class="form-control" name="vaitro" placeholder="Vai trò"
+													value="<?php echo htmlspecialchars($data['TenViTri'] ?? ''); ?>" readonly />
+											</div>
 										</div>
 									</div>
-									<div class="col-lg-6 col-md-12">
-										<div class="lh-team-detail">
-											<h6>Social media</h6>
-											<ul>
-												<li><strong><i class="ri-facebook-line"></i> </strong><a
-														href="#">https://www.facebook.com/youraccount</a></li>
-												<li><strong><i class="ri-twitter-line"></i> </strong><a
-														href="#">https://twitter.com/youraccount</a></li>
-												<li><strong><i class="ri-linkedin-line"></i> </strong><a
-														href="#">https://in.linkedin.com/youraccount</a></li>
-												<li><strong><i class="ri-github-line"></i> </strong><a
-														href="#">https://github.com/youraccount</a></li>
-											</ul>
-										</div>
-									</div>
-									<div class="col-lg-6 col-md-12">
-										<div class="lh-team-detail">
-											<h6>Payment</h6>
-											<ul>
-												<li><strong>Paypal : </strong>support1@exapmle.com</li>
-												<li><strong>Payoneer : </strong>support2@exapmle.com</li>
-											</ul>
-										</div>
-									</div>
-									<div class="col-lg-6 col-md-12">
-										<div class="lh-team-detail">
-											<h6>Tax Info</h6>
-											<ul>
-												<li><strong>TIN NO : </strong>SDF5***********5F</li>
-												<li><strong>Tax ID Number : </strong>6582***********523</li>
-											</ul>
-										</div>
-									</div>
+
+
 								</div>
 							</div>
 						</div>
@@ -652,8 +620,8 @@
 		<footer>
 			<div class="container-fluid">
 				<div class="copyright">
-					<p><span id="copyright_year"></span> © Luxurious, All rights Reserved.</p>
-					<p>Design by MaraviyaInfotech.</p>
+					<p><span id="copyright_year"></span> Nhóm 24</p>
+
 				</div>
 			</div>
 		</footer>
@@ -662,7 +630,7 @@
 		<div class="lh-tools-sidebar-overlay"></div>
 		<div class="lh-tools-sidebar">
 			<a href="javascript:void(0)" class="lh-tools-sidebar-toggle in-out">
-				<i class="ri-settings-4-line"></i>
+				<i class="fa-solid fa-gear"></i>
 			</a>
 			<div class="lh-bar-title">
 				<h6>Tools</h6>
