@@ -175,12 +175,12 @@
                                     </ul>
                                 </li> -->
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link" href="restaurant.php">
+                                    <a class="nav-link" href="./restaurant.php">
                                         Thực đơn
                                     </a>
                                 </li>
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link" href="./signin.php">
+                                    <a class="nav-link" href="./login.php">
                                         Đăng nhập
                                     </a>
                                 </li>

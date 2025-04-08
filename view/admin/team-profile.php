@@ -73,66 +73,23 @@
 							</div>
 						</div>
 					</div>
-					<div class="right-header">
-						<div class="lh-right-tool lh-flag-drop language">
-							<div class="lh-hover-drop">
-								<div class="lh-hover-tool">
-									<img class="flag" src="../../assets_admin/img/flag/us.png" alt="flag">
-								</div>
-								<div class="lh-hover-drop-panel right">
-									<ul>
-										<li><a href="javascript:void(0)"><img class="flag" src="../../assets_admin/img/flag/us.png"
-													alt="flag">English</a></li>
-										<li><a href="javascript:void(0)"><img class="flag" src="../../assets_admin/img/flag/in.png"
-													alt="flag">Hindi</a></li>
-										<li><a href="javascript:void(0)"><img class="flag" src="../../assets_admin/img/flag/de.png"
-													alt="flag"> Deutsch</a></li>
-										<li><a href="javascript:void(0)"><img class="flag" src="../../assets_admin/img/flag/it.png"
-													alt="flag">Italian</a></li>
-										<li><a href="javascript:void(0)"><img class="flag" src="../../assets_admin/img/flag/jp.png"
-													alt="flag">Japanese</a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-						<div class="lh-right-tool apps">
-							<div class="lh-hover-drop">
-								<div class="lh-hover-tool">
-									<i class="ri-apps-2-line"></i>
-								</div>
-								<div class="lh-hover-drop-panel right apps">
-									<h6 class="title">Apps</h6>
-									<ul>
-										<li><a href="javascript:void(0)"><img class="app" src="../../assets_admin/img/apps/1.png"
-													alt="flag">Github</a></li>
-										<li><a href="javascript:void(0)"><img class="app" src="../../assets_admin/img/apps/2.png"
-													alt="flag">Dribbble</a></li>
-										<li><a href="javascript:void(0)"><img class="app" src="../../assets_admin/img/apps/3.png"
-													alt="flag">Dropbox</a></li>
-										<li><a href="javascript:void(0)"><img class="app" src="../../assets_admin/img/apps/4.png"
-													alt="flag">Figma</a></li>
-										<li><a href="javascript:void(0)"><img class="app" src="../../assets_admin/img/apps/5.png"
-													alt="flag">Meta</a></li>
-										<li><a href="javascript:void(0)"><img class="app" src="../../assets_admin/img/apps/6.png"
-													alt="flag">Adsense</a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
+				<div class="right-header">
 						<div class="lh-right-tool display-screen">
-							<a class="lh-screen full" href="javascript:void(0)"><i class="ri-fullscreen-line"></i></a>
-							<a class="lh-screen reset" href="javascript:void(0)"><i
-									class="ri-fullscreen-exit-line"></i></a>
+							<a class="lh-screen full" href="javascript:void(0)"><i class="fa-solid fa-expand"></i></a>
+							<a class="lh-screen reset" href="javascript:void(0)">
+								<!-- <i class="ri-fullscreen-exit-line"></i> -->
+								<i class="fa-solid fa-expand"></i>
+							</a>
 						</div>
 						<div class="lh-right-tool">
 							<a class="lh-notify" href="javascript:void(0)">
-								<i class="ri-notification-2-line"></i>
+								<i class="fa-regular fa-bell"></i>
 								<span class="label"></span>
 							</a>
 						</div>
 						<div class="lh-right-tool display-dark">
-							<a class="lh-mode dark" href="javascript:void(0)"><i class="ri-moon-clear-line"></i></a>
-							<a class="lh-mode light" href="javascript:void(0)"><i class="ri-sun-line"></i></a>
+							<a class="lh-mode dark" href="javascript:void(0)"><i class="fa-regular fa-moon"></i></a>
+							<a class="lh-mode light" href="javascript:void(0)"><i class="fa-regular fa-sun"></i></a>
 						</div>
 						<div class="lh-right-tool lh-user-drop">
 							<div class="lh-hover-drop">
@@ -145,12 +102,13 @@
 										<p>moris@example.com</p>
 									</div>
 									<ul class="border-top">
-										<li><a href="team-profile.php">Profile</a></li>
-
-										<li><a href="team-update.php">Settings</a></li>
+										<li><a href="./team-profile.php">Profile</a></li>
+										<li><a href="#">Help</a></li>
+										<li><a href="#">Messages</a></li>
+										<li><a href="./team-update.php">Settings</a></li>
 									</ul>
 									<ul class="border-top">
-										<li><a href="../customer/Login/login.html"><i class="ri-logout-circle-r-line"></i>Logout</a></li>
+										<li><a href="./Login/login.php"><i class="ri-logout-circle-r-line"></i>Logout</a></li>
 									</ul>
 								</div>
 							</div>
@@ -499,7 +457,7 @@
 						</ul>
 					</div>
 					<div class="lh-tools">
-						<a href="javascript:void(0)" title="Refresh" class="refresh"><i class="ri-refresh-line"></i></a>
+						<a href="javascript:void(0)" title="Refresh" class="refresh"><i class="fa-solid fa-arrows-rotate"></i></a>
 						<div id="pagedate">
 							<div class="lh-date-range" title="Date">
 								<span></span>

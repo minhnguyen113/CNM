@@ -1,10 +1,18 @@
 <?php
-	session_start();
-	include_once('../../model/Connect.php');
+session_start();
 
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+if (isset($_SESSION['success'])) {
+	$successMessage = $_SESSION['success'];
+	unset($_SESSION['success']);
+} else {
+	$successMessage = '';
+}
 
 ?>
-
 
 <!--
     Item Name: Luxurious - Hotel Booking HTML Template + Admin Dashboard.
@@ -51,6 +59,9 @@
 		<!-- Main CSS -->
 		<link id="mainCss" href="../../assets_admin/css/style.css" rel="stylesheet">
 </head>
+<script>
+	alert("<?php echo $successMessage; ?>");
+</script>
 
 <body data-lh-mode="light">
 	<main class="wrapper sb-default">
@@ -115,7 +126,8 @@
 										<li><a href="./team-update.php">Settings</a></li>
 									</ul>
 									<ul class="border-top">
-										<li><a href="./Login/login.php"><i class="ri-logout-circle-r-line"></i>Logout</a></li>
+										<li><a href="../customer/logout.php"><i class="ri-logout-circle-r-line"></i>Đăng xuất</a></li>
+
 									</ul>
 								</div>
 							</div>
@@ -146,6 +158,9 @@
 							</ul>
 						</li>
 						<li class="lh-sb-item-separator"></li>
+						<?php
+						if ($_SESSION['role_id'] == 1) {
+							echo '
 						<li class="lh-sb-title condense">Apps</li>
 						<li class="lh-sb-item sb-drop-item">
 							<a href="javascript:void(0)" class="lh-drop-toggle">
@@ -231,42 +246,99 @@
 								<li><a href="./reset-password.php" class="lh-page-link drop">
 										<i class="fa-solid fa-code-commit"></i>Đặt lại mật khẩu</a></li>
 							</ul>
-						</li>
-						<li class="lh-sb-item sb-drop-item">
-							<a href="javascript:void(0)" class="lh-drop-toggle">
-								<i class="ri-service-line"></i><span class="condense">Service pages
-									<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
-							<ul class="lh-sb-drop condense">
-								<li><a href="./404-error-page.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>404 error</a></li>
-								<li><a href="./maintenance.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Maintenance</a></li>
-							</ul>
-						</li>
-						<li class="lh-sb-item-separator"></li>
-						<li class="lh-sb-title condense">Elements</li>
-						<li class="lh-sb-item">
-							<a href="./remix-icons.php" class="lh-page-link">
-								<i class="ri-remixicon-line"></i><span class="condense"><span class="hover-title">remix
-										icons</span></span></a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./material-icons.php" class="lh-page-link">
-								<i class="mdi mdi-material-ui"></i><span class="condense"><span
-										class="hover-title">Material icons</span></span></a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./alert-popup.php" class="lh-page-link">
-								<i class="ri-file-warning-line"></i><span class="condense"><span
-										class="hover-title">Alert Popup</span></span></a>
-						</li>
-						<li class="lh-sb-item-separator"></li>
-						<li class="lh-sb-title condense">Settings</li>
-						<li class="lh-sb-item">
-							<a href="./role.php" class="lh-page-link">
-								<i class="ri-magic-line"></i><span class="condense"><span
-										class="hover-title">Role</span></span></a>
-						</li>
+						</li>';
+						} else if ($_SESSION['role_id'] == 2) {
+							echo '<li class="lh-sb-item-separator"></li>
+							<li class="lh-sb-title condense">Customer</li>
+							<li class="lh-sb-item">
+								<a href="./guest.php" class="lh-page-link">
+									<i class="fa-solid fa-user-group"></i><span class="condense"><span
+											class="hover-title">Khách hàng</span> </span>
+								</a>
+							</li>
+							<li class="lh-sb-item">
+								<a href="./guest-details.php" class="lh-page-link">
+									<i class="fa-solid fa-user-pen"></i><span class="condense">
+										<span class="hover-title">Khách hàng Chi tiết
+										</span> </span>
+								</a>
+							</li>
+							<li class="lh-sb-item">
+								<a href="./rooms.php" class="lh-page-link">
+									<i class="fa-solid fa-gift"></i><span class="condense"><span
+											class="hover-title">Khuyến mãi </span> </span>
+								</a>
+							</li>
+							<li class="lh-sb-item">
+								<a href="./bookings.php" class="lh-page-link">
+									<i class="fa-solid fa-file"></i><span class="condense"><span
+											class="hover-title">Đặt chỗ</span> </span>
+								</a>
+							</li>
+							<li class="lh-sb-item">
+								<a href="./invoice.php" class="lh-page-link">
+									<i class="fa-regular fa-money-bill-1"></i><span class="condense"><span
+											class="hover-title">Hoá đơn</span> </span>
+								</a>
+							</li>
+							<li class="lh-sb-item-separator"></li>
+							<li class="lh-sb-title condense">Foods</li>
+							<li class="lh-sb-item">
+								<a href="./menu.php" class="lh-page-link">
+									<i class="fa-solid fa-utensils"></i><span class="condense"><span
+											class="hover-title">Thực đơn</span> </span>
+								</a>
+							</li>
+							<li class="lh-sb-item">
+								<a href="./menu-add.php" class="lh-page-link">
+									<i class="fa-solid fa-utensils"></i><span class="condense"><span
+											class="hover-title">Thêm thực đơn</span> </span>
+								</a>
+							</li>
+							<li class="lh-sb-item">
+								<a href="./orders.php" class="lh-page-link">
+									<i class="fa-regular fa-bookmark"></i><span class="condense"><span
+											class="hover-title">Đặt chỗ</span> </span>
+								</a>
+							</li>';
+						}
+
+						?>
+						<!-- // <li class="lh-sb-item sb-drop-item">
+						// 	<a href="javascript:void(0)" class="lh-drop-toggle">
+						// 		<i class="ri-service-line"></i><span class="condense">Service pages
+						// 			<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
+						// 	<ul class="lh-sb-drop condense">
+						// 		<li><a href="./404-error-page.php" class="lh-page-link drop">
+						// 				<i class="fa-solid fa-code-commit"></i>404 error</a></li>
+						// 		<li><a href="./maintenance.php" class="lh-page-link drop">
+						// 				<i class="fa-solid fa-code-commit"></i>Maintenance</a></li>
+						// 	</ul>
+						// </li>
+						// <li class="lh-sb-item-separator"></li>
+						// <li class="lh-sb-title condense">Elements</li>
+						// <li class="lh-sb-item">
+						// 	<a href="./remix-icons.php" class="lh-page-link">
+						// 		<i class="ri-remixicon-line"></i><span class="condense"><span class="hover-title">remix
+						// 				icons</span></span></a>
+						// </li>
+						// <li class="lh-sb-item">
+						// 	<a href="./material-icons.php" class="lh-page-link">
+						// 		<i class="mdi mdi-material-ui"></i><span class="condense"><span
+						// 				class="hover-title">Material icons</span></span></a>
+						// </li>
+						// <li class="lh-sb-item">
+						// 	<a href="./alert-popup.php" class="lh-page-link">
+						// 		<i class="ri-file-warning-line"></i><span class="condense"><span
+						// 				class="hover-title">Alert Popup</span></span></a>
+						// </li>
+						// <li class="lh-sb-item-separator"></li>
+						// <li class="lh-sb-title condense">Settings</li>
+						// <li class="lh-sb-item">
+						// 	<a href="./role.php" class="lh-page-link">
+						// 		<i class="ri-magic-line"></i><span class="condense"><span
+						// 				class="hover-title">Role</span></span></a>
+						// </li> -->
 					</ul>
 				</div>
 			</div>
@@ -700,7 +772,7 @@
 									<a href="javascript:void(0)" class="m-r-10 lh-full-card">
 										<i class="fa-solid fa-expand" title="Full Screen"></i></a>
 									<div class="lh-date-range dots">
-									<i class="fa-solid fa-sliders"></i>
+										<i class="fa-solid fa-sliders"></i>
 										<span></span>
 									</div>
 								</div>
@@ -1224,4 +1296,6 @@
 
 <!-- Mirrored from maraviyainfotech.com/projects/luxurious-html-v22/admin/./index.php by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 21 Jan 2025 15:13:42 GMT -->
 
-</html>
+// Remove the unnecessary
+
+</html> tag

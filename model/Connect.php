@@ -29,15 +29,5 @@ class ketnoi
 
 
 
-        // Test thử
-        $database = new ketnoi();
-        $conn = $database->Moketnoi();
-
-        if ($conn) {
-            echo "✅ Kết nối CSDL thành công!";
-            $database->Dongketnoi($conn);
-        } else {
-            echo "❌ Kết nối CSDL thất bại!";
-        }
-
+       
 ?>

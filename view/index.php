@@ -20,20 +20,20 @@
         content="hotel, booking, business, restaurant, spa, resort, landing, agency, corporate, start up, site design, new business site, business template, professional template, classic, modern">
     <title>Chef Restaurent</title>
 
-    <link rel="icon" href="../../assets_customer/img/logo/logo1.png" type="image/x-icon">
+    <link rel="icon" href="../assets_customer/img/logo/logo1.png" type="image/x-icon">
 
     <!-- Css All Plugins Files -->
-    <link rel="stylesheet" href="../../assets_customer/css/vendor/bootstrap.min.css">
-    <link rel="stylesheet" href="../../assets_customer/css/vendor/magnific-popup.css">
-    <link rel="stylesheet" href="../../assets_customer/css/vendor/aos.css">
-    <link rel="stylesheet" href="../../assets_customer/css/vendor/remixicon.css">
-    <link rel="stylesheet" href="../../assets_customer/css/vendor/materialdesignicons.min.css">
-    <link rel="stylesheet" href="../../assets_customer/css/vendor/swiper-bundle.min.css">
-    <link rel="stylesheet" href="../../assets_customer/css/vendor/semantic.min.css">
-    <link rel="stylesheet" href="../../assets_customer/css/vendor/slick.min.css">
+    <link rel="stylesheet" href="../assets_customer/css/vendor/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets_customer/css/vendor/magnific-popup.css">
+    <link rel="stylesheet" href="../assets_customer/css/vendor/aos.css">
+    <link rel="stylesheet" href="../assets_customer/css/vendor/remixicon.css">
+    <link rel="stylesheet" href="../assets_customer/css/vendor/materialdesignicons.min.css">
+    <link rel="stylesheet" href="../assets_customer/css/vendor/swiper-bundle.min.css">
+    <link rel="stylesheet" href="../assets_customer/css/vendor/semantic.min.css">
+    <link rel="stylesheet" href="../assets_customer/css/vendor/slick.min.css">
 
     <!-- Main Style -->
-    <link id="mainCss" href="../../assets_customer/css/style.css" rel="stylesheet">
+    <link id="mainCss" href="../assets_customer/css/style.css" rel="stylesheet">
 
 </head>
 
@@ -76,7 +76,7 @@
                 <div class="row">
                     <nav class="navbar navbar-expand-lg">
                         <a class="navbar-brand" href="./index.php">
-                            <img src="../../assets_customer/img/logo/logo2.png" alt="logo" class="lh-logo">
+                            <img src="../assets_customer/img/logo/logo2.png" alt="logo" class="lh-logo">
                         </a>
                         <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -102,22 +102,22 @@
                                 </li>
                                 <li class="nav-item dropdown">
                                     <a href="javascript:void(0)" role="button" data-bs-toggle="dropdown">
-                                        <a class="nav-link dropdown-toggle" href="./gallery.php"> Khuyến mãi</a>
+                                        <a class="nav-link dropdown-toggle" href="../view/customer/gallery.php"> Khuyến mãi</a>
 
 
                                     </a>
                                     <!-- <ul class="dropdown-menu">
                                         <li>
-                                            <a class="dropdown-item" href="./gallery.php">gallery 1</a>
+                                            <a class="dropdown-item" href="../view/customer/gallery.php">gallery 1</a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="./gallery-2.php">gallery 2</a>
+                                            <a class="dropdown-item" href="../view/customer/gallery-2.php">gallery 2</a>
                                         </li>
                                     </ul> -->
                                 </li>
                                 <li class="nav-item dropdown">
-                                    <a  href="javascript:void(0)" role="button" data-bs-toggle="dropdown">
-                                    <a class="nav-link dropdown-toggle" href="./room-2.php"> Đặt bàn</a>
+                                    <a href="../view/customer/javascript:void(0)" role="button" data-bs-toggle="dropdown">
+                                        <a class="nav-link dropdown-toggle" href="../view/customer/room-2.php"> Đặt bàn</a>
                                     </a>
                                     <!-- <ul class="dropdown-menu">
                                         <li>
@@ -183,12 +183,12 @@
                                     </ul>
                                 </li> -->
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link" href="restaurant.php">
+                                    <a class="nav-link" href="../view/customer/restaurant.php">
                                         Thực đơn
                                     </a>
                                 </li>
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link" href="./Login/login.html">
+                                    <a class="nav-link" href="../view/customer/login.php">
                                         Đăng nhập
                                     </a>
                                 </li>
@@ -221,8 +221,8 @@
                     <li class="dropdown drop-list">
                         <a href="#" class="dropdown-list">Categories</a>
                         <ul class="sub-menu">
-                            <li><a href="gallery.php">gallery 1</a></li>
-                            <li><a href="gallery-2.php">gallery 2</a></li>
+                            <li><a href="../view/customer/gallery.php">gallery 1</a></li>
+                            <li><a href="../view/customer/gallery-2.php">gallery 2</a></li>
                         </ul>
                     </li>
                     <li class="dropdown drop-list">
@@ -360,23 +360,23 @@
                     <button class="nav-link active" id="nav-Deluxe-tab" data-bs-toggle="tab"
                         data-bs-target="#nav-Deluxe" type="button" role="tab" aria-controls="nav-Deluxe"
                         aria-selected="true">
-                        <img src="../../assets_customer/img/room/1.jpg" alt="1">
+                        <img src="../assets_customer/img/room/1.jpg" alt="1">
                         Deluxe Room
                     </button>
                     <button class="nav-link" id="nav-Single-tab" data-bs-toggle="tab" data-bs-target="#nav-Single"
                         type="button" role="tab" aria-controls="nav-Single" aria-selected="false">
-                        <img src="../../assets_customer/img/room/2.jpg" alt="2">
+                        <img src="../assets_customer/img/room/2.jpg" alt="2">
                         Single Room
                     </button>
                     <button class="nav-link" id="nav-Super-tab" data-bs-toggle="tab" data-bs-target="#nav-Super"
                         type="button" role="tab" aria-controls="nav-Super" aria-selected="false">
-                        <img src="../../assets_customer/img/room/3.jpg" alt="3">
+                        <img src="../assets_customer/img/room/3.jpg" alt="3">
                         Super Room
                     </button>
                     <button class="nav-link" id="nav-Presidential-tab" data-bs-toggle="tab"
                         data-bs-target="#nav-Presidential" type="button" role="tab" aria-controls="nav-Presidential"
                         aria-selected="false">
-                        <img src="../../assets_customer/img/room/4.jpg" alt="4">
+                        <img src="../assets_customer/img/room/4.jpg" alt="4">
                         Presidential Room
                     </button>
                 </div>
@@ -427,7 +427,8 @@
                             </div>
                             <div class="col-xl-6 col-lg-12 p-0">
                                 <div class="room-img">
-                                    <img src="../../assets_customer/img/room/room-1.jpg" alt="room-img" class="room-image">
+                                    <img src="../assets_customer/img/room/room-1.jpg" alt="room-img"
+                                        class="room-image">
                                     <a href="room-details.php" class="link"><i class="ri-arrow-right-line"></i></a>
                                 </div>
                             </div>
@@ -479,7 +480,8 @@
                             </div>
                             <div class="col-xl-6 col-lg-12 p-0">
                                 <div class="room-img">
-                                    <img src="../../assets_customer/img/room/room-2.jpg" alt="room-img" class="room-image">
+                                    <img src="../assets_customer/img/room/room-2.jpg" alt="room-img"
+                                        class="room-image">
                                     <a href="room-details.php" class="link"><i class="ri-arrow-right-line"></i></a>
                                 </div>
                             </div>
@@ -531,7 +533,8 @@
                             </div>
                             <div class="col-xl-6 col-lg-12 p-0">
                                 <div class="room-img">
-                                    <img src="../../assets_customer/img/room/room-3.jpg" alt="room-img" class="room-image">
+                                    <img src="../assets_customer/img/room/room-3.jpg" alt="room-img"
+                                        class="room-image">
                                     <a href="room-details.php" class="link"><i class="ri-arrow-right-line"></i></a>
                                 </div>
                             </div>
@@ -583,7 +586,8 @@
                             </div>
                             <div class="col-xl-6 col-lg-12 p-0">
                                 <div class="room-img">
-                                    <img src="../../assets_customer/img/room/room-4.jpg" alt="room-img" class="room-image">
+                                    <img src="../assets_customer/img/room/room-4.jpg" alt="room-img"
+                                        class="room-image">
                                     <a href="room-details.php" class="link"><i class="ri-arrow-right-line"></i></a>
                                 </div>
                             </div>
@@ -599,7 +603,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 rs-pb-24" data-aos="fade-up" data-aos-duration="1500">
-                    <img src="../../assets_customer/img/about/about.png" alt="about" class="w-100">
+                    <img src="../assets_customer/img/about/about.png" alt="about" class="w-100">
                 </div>
                 <div class="col-lg-6 rs-pb-24" data-aos="fade-up" data-aos-duration="2000">
                     <div class="lh-about-detail">
@@ -644,18 +648,20 @@
                     <div class="lh-amenities" data-aos="fade-up" data-aos-duration="1500">
                         <div class="amenities-detail">
                             <div class="amenities-box">
-                                <img src="../../assets_customer/img/amenities/1.jpg" alt="amenities_1" class="amenities-left-image">
+                                <img src="../assets_customer/img/amenities/1.jpg" alt="amenities_1"
+                                    class="amenities-left-image">
                             </div>
                             <div class="amenities-box">
                                 <div class="lh-amenities-in">
                                     <h4 class="side-number">01</h4>
                                     <div class="lh-top-dish">
-                                        <img src="../../assets_customer/img/amenities/amenities-dish-1.svg" class="svg-img"
-                                            alt="amenities-dish-1">
+                                        <img src="../assets_customer/img/amenities/amenities-dish-1.svg"
+                                            class="svg-img" alt="amenities-dish-1">
                                     </div>
                                     <div class="amenities-contain">
                                         <h4 class="amenities-heading">Our Restaurant</h4>
-                                        <p>This is the dolor sit amet adipisicing elit. Ducimus corrupti sit amet tempore placeat ipsa.</p>
+                                        <p>This is the dolor sit amet adipisicing elit. Ducimus corrupti sit amet
+                                            tempore placeat ipsa.</p>
                                         <a href="facilities.php">Read more <i class="ri-arrow-right-line"></i></a>
                                     </div>
                                 </div>
@@ -667,18 +673,20 @@
                     <div class="lh-amenities" data-aos="fade-up" data-aos-duration="2000">
                         <div class="amenities-detail">
                             <div class="amenities-box">
-                                <img src="../../assets_customer/img/amenities/2.jpg" alt="amenities_2" class="amenities-left-image">
+                                <img src="../assets_customer/img/amenities/2.jpg" alt="amenities_2"
+                                    class="amenities-left-image">
                             </div>
                             <div class="amenities-box">
                                 <div class="lh-amenities-in">
                                     <h4 class="side-number">02</h4>
                                     <div class="lh-top-dish">
-                                        <img src="../../assets_customer/img/amenities/amenities-dish-2.svg" class="svg-img"
-                                            alt="amenities-dish-2">
+                                        <img src="../assets_customer/img/amenities/amenities-dish-2.svg"
+                                            class="svg-img" alt="amenities-dish-2">
                                     </div>
                                     <div class="amenities-contain">
                                         <h4 class="amenities-heading">Spa & Beauty</h4>
-                                        <p>This is the dolor sit amet adipisicing elit. Ducimus corrupti sit amet tempore placeat ipsa.</p>
+                                        <p>This is the dolor sit amet adipisicing elit. Ducimus corrupti sit amet
+                                            tempore placeat ipsa.</p>
                                         <a href="facilities.php">Read more <i class="ri-arrow-right-line"></i></a>
                                     </div>
                                 </div>
@@ -693,18 +701,20 @@
                                 <div class="lh-amenities-in lh-amenities-right">
                                     <h4 class="side-number">03</h4>
                                     <div class="lh-top-dish">
-                                        <img src="../../assets_customer/img/amenities/amenities-dish-4.svg" class="svg-img"
-                                            alt="amenities-dish-3">
+                                        <img src="../assets_customer/img/amenities/amenities-dish-4.svg"
+                                            class="svg-img" alt="amenities-dish-3">
                                     </div>
                                     <div class="amenities-contain">
                                         <h4 class="amenities-heading">Golf & Garden</h4>
-                                        <p>This is the dolor sit amet adipisicing elit. Ducimus corrupti sit amet tempore placeat ipsa.</p>
+                                        <p>This is the dolor sit amet adipisicing elit. Ducimus corrupti sit amet
+                                            tempore placeat ipsa.</p>
                                         <a href="facilities.php">Read more <i class="ri-arrow-right-line"></i></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="amenities-box">
-                                <img src="../../assets_customer/img/amenities/3.jpg" alt="amenities_3" class="amenities-right-image">
+                                <img src="../assets_customer/img/amenities/3.jpg" alt="amenities_3"
+                                    class="amenities-right-image">
                             </div>
                         </div>
                     </div>
@@ -716,18 +726,20 @@
                                 <div class="lh-amenities-in lh-amenities-right">
                                     <h4 class="side-number">04</h4>
                                     <div class="lh-top-dish">
-                                        <img src="../../assets_customer/img/amenities/amenities-dish-3.svg" class="svg-img"
-                                            alt="amenities-dish-4">
+                                        <img src="../assets_customer/img/amenities/amenities-dish-3.svg"
+                                            class="svg-img" alt="amenities-dish-4">
                                     </div>
                                     <div class="amenities-contain">
                                         <h4 class="amenities-heading">Fitness & Gym</h4>
-                                        <p>This is the dolor sit amet adipisicing elit. Ducimus corrupti sit amet tempore placeat ipsa.</p>
+                                        <p>This is the dolor sit amet adipisicing elit. Ducimus corrupti sit amet
+                                            tempore placeat ipsa.</p>
                                         <a href="facilities.php">Read more <i class="ri-arrow-right-line"></i></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="amenities-box">
-                                <img src="../../assets_customer/img/amenities/4.jpg" alt="amenities_4" class="amenities-right-image">
+                                <img src="../assets_customer/img/amenities/4.jpg" alt="amenities_4"
+                                    class="amenities-right-image">
                             </div>
                         </div>
                     </div>
@@ -745,7 +757,7 @@
                 </div>
                 <div class="col-lg-4 rs-pb-24">
                     <div class="lh-prices" data-aos="fade-up" data-aos-duration="1000">
-                        <img src="../../assets_customer/img/prices/1.jpg" alt="prices_1" class="prices-image">
+                        <img src="../assets_customer/img/prices/1.jpg" alt="prices_1" class="prices-image">
                         <div class="lh-prices-out">
                             <div class="lh-prices-in">
                                 <h4 class="lh-price-dollar"><span>$</span>50<code> / Per night</code></h4>
@@ -783,7 +795,7 @@
                 </div>
                 <div class="col-lg-4 rs-pb-24">
                     <div class="lh-prices" data-aos="fade-up" data-aos-duration="2000">
-                        <img src="../../assets_customer/img/prices/2.jpg" alt="prices_2" class="prices-image active">
+                        <img src="../assets_customer/img/prices/2.jpg" alt="prices_2" class="prices-image active">
                         <div class="lh-prices-out">
                             <div class="lh-prices-in">
                                 <h4 class="lh-price-dollar"><span>$</span>75<code> / Per night</code></h4>
@@ -821,7 +833,7 @@
                 </div>
                 <div class="col-lg-4 rs-pb-24">
                     <div class="lh-prices" data-aos="fade-up" data-aos-duration="3000">
-                        <img src="../../assets_customer/img/prices/3.jpg" alt="prices_3" class="prices-image">
+                        <img src="../assets_customer/img/prices/3.jpg" alt="prices_3" class="prices-image">
                         <div class="lh-prices-out">
                             <div class="lh-prices-in">
                                 <h4 class="lh-price-dollar"><span>$</span>99<code> / Per night</code></h4>
@@ -881,7 +893,7 @@
                                                 <div class="lh-testimonials-contain">
                                                     <div class="d-flex">
                                                         <div class="lh-testimonials-inner">
-                                                            <img src="../../assets_customer/img/businessman/businessman-1.jpg"
+                                                            <img src="../assets_customer/img/businessman/businessman-1.jpg"
                                                                 alt="businessman" class="businessman">
                                                             <div class="lh-testimonials-name-detalis">
                                                                 <h5>Jenifer Brown</h5>
@@ -889,7 +901,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="lh-testimonials-side-image">
-                                                            <img src="../../assets_customer/img/testimonials/quotes.svg"
+                                                            <img src="../assets_customer/img/testimonials/quotes.svg"
                                                                 class="testimonials svg-img" alt="quotes">
                                                         </div>
                                                     </div>
@@ -927,7 +939,7 @@
                                                 <div class="lh-testimonials-contain">
                                                     <div class="d-flex">
                                                         <div class="lh-testimonials-inner">
-                                                            <img src="../../assets_customer/img/businessman/businessman-2.jpg"
+                                                            <img src="../assets_customer/img/businessman/businessman-2.jpg"
                                                                 alt="businessman" class="businessman">
                                                             <div class="lh-testimonials-name-detalis">
                                                                 <h5>John Doe</h5>
@@ -935,7 +947,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="lh-testimonials-side-image">
-                                                            <img src="../../assets_customer/img/testimonials/quotes.svg"
+                                                            <img src="../assets_customer/img/testimonials/quotes.svg"
                                                                 class="testimonials svg-img" alt="quotes">
                                                         </div>
                                                     </div>
@@ -973,7 +985,7 @@
                                                 <div class="lh-testimonials-contain">
                                                     <div class="d-flex">
                                                         <div class="lh-testimonials-inner">
-                                                            <img src="../../assets_customer/img/businessman/businessman-3.jpg"
+                                                            <img src="../assets_customer/img/businessman/businessman-3.jpg"
                                                                 alt="businessman" class="businessman">
                                                             <div class="lh-testimonials-name-detalis">
                                                                 <h5>Moris Selemen</h5>
@@ -981,7 +993,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="lh-testimonials-side-image">
-                                                            <img src="../../assets_customer/img/testimonials/quotes.svg"
+                                                            <img src="../assets_customer/img/testimonials/quotes.svg"
                                                                 class="testimonials svg-img" alt="quotes">
                                                         </div>
                                                     </div>
@@ -1024,7 +1036,8 @@
             </div>
             <div class="slick-slider blog-slider" data-aos="fade-up" data-aos-duration="2000">
                 <div class="blog-card">
-                    <figure><img src="../../assets_customer/img/blog/2.jpg" alt="blog-img" class="blog-image-top"></figure>
+                    <figure><img src="../assets_customer/img/blog/2.jpg" alt="blog-img" class="blog-image-top">
+                    </figure>
                     <div class="lh-blog">
                         <div class="lh-blog-date">
                             <span><code>Restaurant</code> - 09 Jan 2024 - 05 Comment</span>
@@ -1034,7 +1047,8 @@
                     </div>
                 </div>
                 <div class="blog-card">
-                    <figure><img src="../../assets_customer/img/blog/3.jpg" alt="blog-img" class="blog-image-top"></figure>
+                    <figure><img src="../assets_customer/img/blog/3.jpg" alt="blog-img" class="blog-image-top">
+                    </figure>
                     <div class="lh-blog">
                         <div class="lh-blog-date">
                             <span><code>Marketing</code> - 15 Feb 2024 - 22 Comment</span>
@@ -1044,7 +1058,8 @@
                     </div>
                 </div>
                 <div class="blog-card">
-                    <figure><img src="../../assets_customer/img/blog/4.jpg" alt="blog-img" class="blog-image-top"></figure>
+                    <figure><img src="../assets_customer/img/blog/4.jpg" alt="blog-img" class="blog-image-top">
+                    </figure>
                     <div class="lh-blog">
                         <div class="lh-blog-date">
                             <span><code>Hotel</code> - 22 Dec 2024 - 00 Comment</span>
@@ -1054,7 +1069,8 @@
                     </div>
                 </div>
                 <div class="blog-card">
-                    <figure><img src="../../assets_customer/img/blog/5.jpg" alt="blog-img" class="blog-image-top"></figure>
+                    <figure><img src="../assets_customer/img/blog/5.jpg" alt="blog-img" class="blog-image-top">
+                    </figure>
                     <div class="lh-blog">
                         <div class="lh-blog-date">
                             <span><code>Rooms</code> - 11 Nov 2024 - 01 Comment</span>
@@ -1064,7 +1080,8 @@
                     </div>
                 </div>
                 <div class="blog-card">
-                    <figure><img src="../../assets_customer/img/blog/6.jpg" alt="blog-img" class="blog-image-top"></figure>
+                    <figure><img src="../assets_customer/img/blog/6.jpg" alt="blog-img" class="blog-image-top">
+                    </figure>
                     <div class="lh-blog">
                         <div class="lh-blog-date">
                             <span><code>Spa</code> - 02 Mar 2024 - 25 Comment</span>
@@ -1094,27 +1111,27 @@
                                 </li>
                                 <li>
                                     <code>*</code>
-                                    <a href="about.php">About</a>
+                                    <a href="../view/customer/about.php">About</a>
                                 </li>
                                 <li>
                                     <code>*</code>
-                                    <a href="room-details.php">Rooms & suites</a>
+                                    <a href="../view/customer/room-details.php">Rooms & suites</a>
                                 </li>
                                 <li>
                                     <code>*</code>
-                                    <a href="spa.php">spa & Wellness</a>
+                                    <a href="../view/customer/spa.php">spa & Wellness</a>
                                 </li>
                                 <li>
                                     <code>*</code>
-                                    <a href="restaurant.php">Restaurant</a>
+                                    <a href="../view/customer/restaurant.php">Restaurant</a>
                                 </li>
                                 <li>
                                     <code>*</code>
-                                    <a href="gallery.php">Gallery</a>
+                                    <a href="../view/customer/gallery.php">Gallery</a>
                                 </li>
                                 <li>
                                     <code>*</code>
-                                    <a href="contact.php">Contact</a>
+                                    <a href="../view/customer/contact.php">Contact</a>
                                 </li>
                             </ul>
                         </div>
@@ -1122,28 +1139,34 @@
                     <div class="col-lg-6 rs-pb-24 order-lg-2 order-md-1 order-1">
                         <div class="lh-social-media">
                             <div class="footer-logos">
-                                <img src="../../assets_customer/img/logo/logo.png" alt="logo">
+                                <img src="../assets_customer/img/logo/logo.png" alt="logo">
                             </div>
                             <div class="lh-footer-social">
-                                <p>This is the dolor sit amet consectetur adipisicing elit. Libero voluptatem soluta eaque
+                                <p>This is the dolor sit amet consectetur adipisicing elit. Libero voluptatem soluta
+                                    eaque
                                     ullam accusantium animi!</p>
                                 <form class="lh-control-footer" role="search">
                                     <div class="lh-control-inner-icons">
                                         <i class="ri-send-plane-line"></i>
                                     </div>
-                                    <input class="form-control shadow-none me-4" type="search" placeholder="Subscribe..."
-                                        aria-label="Search">
+                                    <input class="form-control shadow-none me-4" type="search"
+                                        placeholder="Subscribe..." aria-label="Search">
                                 </form>
                             </div>
                             <div class="lh-follow-social">
                                 <h4 class="heading">Follow On Social</h4>
                                 <div class="footer-logo-image">
-                                    <a href="#"><img src="../../assets_customer/img/logo/facebook.png" alt="facebook"></a>
-                                    <a href="#"><img src="../../assets_customer/img/logo/twitter.png" alt="twitter"></a>
-                                    <a href="#"><img src="../../assets_customer/img/logo/instagram.png" alt="instagram"></a>
-                                    <a href="#"><img src="../../assets_customer/img/logo/linkedin.png" alt="linkedin"></a>
-                                    <a href="#"><img src="../../assets_customer/img/logo/dribbble.png" alt="dribbble"></a>
-                                    <a href="#"><img src="../../assets_customer/img/logo/pinterest.png" alt="pinterest"></a>
+                                    <a href="#"><img src="../assets_customer/img/logo/facebook.png"
+                                            alt="facebook"></a>
+                                    <a href="#"><img src="../assets_customer/img/logo/twitter.png" alt="twitter"></a>
+                                    <a href="#"><img src="../assets_customer/img/logo/instagram.png"
+                                            alt="instagram"></a>
+                                    <a href="#"><img src="../assets_customer/img/logo/linkedin.png"
+                                            alt="linkedin"></a>
+                                    <a href="#"><img src="../assets_customer/img/logo/dribbble.png"
+                                            alt="dribbble"></a>
+                                    <a href="#"><img src="../assets_customer/img/logo/pinterest.png"
+                                            alt="pinterest"></a>
                                 </div>
                             </div>
                         </div>
@@ -1175,7 +1198,8 @@
                 </div>
             </div>
             <div class="footer-bottom-copy">
-                <span>Copyright @ <span id="copyright_year"></span> <a href="./index.php">Luxurious</a> All Rights Reserved</span>
+                <span>Copyright @ <span id="copyright_year"></span> <a href="./index.php">Luxurious</a> All Rights
+                    Reserved</span>
             </div>
         </div>
     </footer>
@@ -1247,13 +1271,13 @@
                 </div>
                 <ul class="skin-mode">
                     <li class="skin-1">
-                        <span class="lh-all-color"><img src="../../assets_customer/img/skin/1.png" alt="skin-1"></span>
+                        <span class="lh-all-color"><img src="../assets_customer/img/skin/1.png" alt="skin-1"></span>
                     </li>
                     <li class="skin-2">
-                        <span class="lh-all-color"><img src="../../assets_customer/img/skin/2.png" alt="skin-2"></span>
+                        <span class="lh-all-color"><img src="../assets_customer/img/skin/2.png" alt="skin-2"></span>
                     </li>
                     <li class="skin-3 active">
-                        <span class="lh-all-color"><img src="../../assets_customer/img/skin/3.png" alt="skin-3"></span>
+                        <span class="lh-all-color"><img src="../assets_customer/img/skin/3.png" alt="skin-3"></span>
                     </li>
                 </ul>
                 <div class="heading">
@@ -1261,10 +1285,12 @@
                 </div>
                 <ul class="border-mode">
                     <li class="lh-radius radius-mode active-radius">
-                        <span class="lh-all-color"><img src="../../assets_customer/img/skin/box-1.png" alt="skin-1"></span>
+                        <span class="lh-all-color"><img src="../assets_customer/img/skin/box-1.png"
+                                alt="skin-1"></span>
                     </li>
                     <li class="lh-radius radius-mode-none">
-                        <span class="lh-all-color"><img src="../../assets_customer/img/skin/box-2.png" alt="skin-1"></span>
+                        <span class="lh-all-color"><img src="../assets_customer/img/skin/box-2.png"
+                                alt="skin-1"></span>
                     </li>
                 </ul>
             </div>
@@ -1272,18 +1298,18 @@
     </div>
 
     <!-- Plugins JS -->
-    <script src="../../assets_customer/js/vendor/jquery.min.js"></script>
-    <script src="../../assets_customer/js/vendor/swiper-bundle.min.js"></script>
-    <script src="../../assets_customer/js/vendor/bootstrap.bundle.min.js"></script>
-    <script src="../../assets_customer/js/vendor/magnific-popup.min.js"></script>
-    <script src="../../assets_customer/js/vendor/aos.js"></script>
-    <script src="../../assets_customer/js/vendor/semantic.min.js"></script>
-    <script src="../../assets_customer/js/vendor/slick.min.js"></script>
-    <script src="../../assets_customer/js/vendor/particles.min.js"></script>
-    <script src="../../assets_customer/js/vendor/app.js"></script>
+    <script src="../assets_customer/js/vendor/jquery.min.js"></script>
+    <script src="../assets_customer/js/vendor/swiper-bundle.min.js"></script>
+    <script src="../assets_customer/js/vendor/bootstrap.bundle.min.js"></script>
+    <script src="../assets_customer/js/vendor/magnific-popup.min.js"></script>
+    <script src="../assets_customer/js/vendor/aos.js"></script>
+    <script src="../assets_customer/js/vendor/semantic.min.js"></script>
+    <script src="../assets_customer/js/vendor/slick.min.js"></script>
+    <script src="../assets_customer/js/vendor/particles.min.js"></script>
+    <script src="../assets_customer/js/vendor/app.js"></script>
 
     <!-- Main-js -->
-    <script src="../../assets_customer/js/main.js"></script>
+    <script src="../assets_customer/js/main.js"></script>
 
 </body>
 
