@@ -39,37 +39,12 @@
 
     <!-- Header -->
     <header>
-        <div class="lh-top-header">
-              <div class="container">
-                <div class="row">
-                    <div class="col-lg-6 col-sm-12  lh-top-social">
-                        <div class="lh-mail">
-                            <i class="ri-mail-line"></i>
-                            example@ec-email.com
-                        </div>
-
-                    </div>
-                    <div class="col-lg-6 col-sm-12 lh-top-social">
-                        <div class="lh-phone">
-                            <i class="ri-phone-line"></i>
-                            +91(123)(456)(7890)
-                        </div>
-                        <div class="lh-header-icons">
-                            <a href="javascript:void(0)"><i class="ri-facebook-box-line facebook"></i></a>
-                            <a href="javascript:void(0)"><i class="ri-twitter-x-line twitter"></i></a>
-                            <a href="javascript:void(0)"><i class="ri-linkedin-box-line linkedin"></i></a>
-                            <a href="javascript:void(0)"><i class="ri-instagram-line instagram"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="lh-header">
-             <div class="container">
-                <div class="row">
-                    <nav class="navbar navbar-expand-lg">
-                        <a class="navbar-brand" href="./index.php">
-                            <img src="../../assets_customer/img/logo/logo2.png" alt="logo" class="lh-logo">
+        
+ <div class="lh-header h-180" >            <div class="container h-100">
+                <div class="row h-100">
+                    <nav class="navbar navbar-expand-lg h-100">
+                          <a class="navbar-brand" href="./index.php">
+                            <img src="../../assets_customer/img/logo/logo1.png" alt="logo" class="lh-logo">
                         </a>
                         <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -82,108 +57,40 @@
                                     <a href="javascript:void(0)" role="button" data-bs-toggle="dropdown">
                                         <a class="nav-link dropdown-toggle" href="./index.php">Trang chủ</a>
 
-                                        <!-- <i class="ri-arrow-down-s-line"></i> -->
                                     </a>
-                                    <!-- <ul class="dropdown-menu">
-                                        <li>
-                                            <a class="dropdown-item" href="./index.php">Home Layout 1</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="./demo-2.php">Home Layout 2</a>
-                                        </li>
-                                    </ul> -->
+                                  
                                 </li>
-                                <li class="nav-item dropdown">
+                               <li class="nav-item dropdown">
                                     <a href="javascript:void(0)" role="button" data-bs-toggle="dropdown">
-                                        <a class="nav-link dropdown-toggle" href="./gallery.php"> Khuyến mãi</a>
+                                        <a class="nav-link dropdown-toggle" href="./discount.php"> Khuyến mãi</a>
 
 
                                     </a>
-                                    <!-- <ul class="dropdown-menu">
-                                        <li>
-                                            <a class="dropdown-item" href="./gallery.php">gallery 1</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="./gallery-2.php">gallery 2</a>
-                                        </li>
-                                    </ul> -->
+                                    
                                 </li>
-                                <li class="nav-item dropdown">
+                                 <li class="nav-item dropdown">
                                     <a  href="javascript:void(0)" role="button" data-bs-toggle="dropdown">
-                                    <a class="nav-link dropdown-toggle" href="./room-2.php"> Đặt bàn</a>
+                                    <a class="nav-link dropdown-toggle" href="book.php"> Đặt bàn</a>
                                     </a>
-                                    <!-- <ul class="dropdown-menu">
-                                        <li>
-                                            <a class="dropdown-item" href="./room.php">Rooms</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="./room-2.php">Rooms 2</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="./room-details.php">Rooms details</a>
-                                        </li>
-                                    </ul> -->
+                                   
                                 </li>
-                                <!-- <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="javascript:void(0)" role="button"
-                                        data-bs-toggle="dropdown">
-                                        Thực đơn
-                                        <i class="ri-arrow-down-s-line"></i>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a class="dropdown-item" href="./about.php">About Us</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="./contact.php">Contact</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="./facilities.php">Facilities</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="./faq.php">Faq</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="./prices.php">Prices</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="./services.php">Services</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="./spa.php">Spa</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="./team.php">Team</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="./checkout.php">Checkout</a>
-                                        </li>
-                                    </ul>
-                                </li> -->
-                                <!-- <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="./javascript:void(0)" role="button"
-                                        data-bs-toggle="dropdown">
-                                        Blog
-                                        <i class="ri-arrow-down-s-line"></i>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a class="dropdown-item" href="blog.php">Blog</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="blog-details.php">Blog Details</a>
-                                        </li>
-                                    </ul>
-                                </li> -->
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link" href="restaurant.php">
+                                
+                                  <li class="nav-item dropdown">
+                                    <a class="nav-link" href="menu.php">
                                         Thực đơn
                                     </a>
                                 </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link" href="./signin.php">
-                                        Đăng nhập
-                                    </a>
+                               <li class="nav-item dropdown">
+                                    <?php if (isset($_SESSION['username'])): ?>
+                                        <a class="nav-link dropdown-toggle" href="team-profile.php">
+                                            Xin chào, <?php echo htmlspecialchars($_SESSION['username']); ?>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="logout.php">Đăng xuất</a></li>
+                                        </ul>
+                                    <?php else: ?>
+                                        <a class="nav-link dropdown-toggle" href="login.php">Đăng nhập</a>
+                                    <?php endif; ?>
                                 </li>
                             </ul>
                         </div>
@@ -194,66 +101,7 @@
     </header>
 
     <!-- Mobile-menu -->
-    <div class="lh-sidebar-overlay"></div>
-      <div id="lh_mobile_menu" class="lh-side-cart lh-mobile-menu">
-        <div class="lh-menu-title">
-            <span class="menu-title">My Menu</span>
-            <button class="lh-close">×</button>
-        </div>
-        <div class="lh-menu-inner">
-            <input type="text" placeholder="Search" class="lh-menu-box">
-            <div class="lh-menu-content">
-                <ul>
-                    <li class="dropdown drop-list">
-                        <a href="#" class="dropdown-list">Home</a>
-                        <ul class="sub-menu">
-                            <li><a href="./index.php">Home Layout 1</a></li>
-                            <li><a href="demo-2.php">Home Layout 2</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown drop-list">
-                        <a href="#" class="dropdown-list">Categories</a>
-                        <ul class="sub-menu">
-                            <li><a href="gallery.php">gallery 1</a></li>
-                            <li><a href="gallery-2.php">gallery 2</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown drop-list">
-                        <a href="#" class="dropdown-list">Room</a>
-                        <ul class="sub-menu">
-                            <li><a href="room.php">Rooms</a></li>
-                            <li><a href="room-2.php">Rooms 2</a></li>
-                            <li><a href="room-details.php">Room Details</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown drop-list">
-                        <a href="#" class="dropdown-list">Pages</a>
-                        <ul class="sub-menu">
-                            <li><a href="about.php">About Us</a></li>
-                            <li><a href="contact.php">Contact</a></li>
-                            <li><a href="facilities.php">Facilities</a></li>
-                            <li><a href="faq.php">Faq</a></li>
-                            <li><a href="prices.php">Prices</a></li>
-                            <li><a href="services.php">Services</a></li>
-                            <li><a href="spa.php">Spa</a></li>
-                            <li><a href="team.php">Team</a></li>
-                            <li><a href="checkout.php">Checkout</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown drop-list">
-                        <a href="#" class="dropdown-list">Blog</a>
-                        <ul class="sub-menu">
-                            <li><a href="blog.php">Blog</a></li>
-                            <li><a href="blog-details.php">Blog Details</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown drop-list">
-                        <a href="restaurant.php">Restaurant</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
+   
 
     <!-- Banner -->
     <section class="section-banner">
@@ -772,16 +620,10 @@
     </div>
 
     <!-- Plugins JS -->
-   <script src="../../assets_customer/js/vendor/jquery.min.js"></script>
-    <script src="../../assets_customer/js/vendor/swiper-bundle.min.js"></script>
-    <script src="../../assets_customer/js/vendor/bootstrap.bundle.min.js"></script>
-    <script src="../../assets_customer/js/vendor/magnific-popup.min.js"></script>
-    <script src="../../assets_customer/js/vendor/aos.js"></script>
-    <script src="../../assets_customer/js/vendor/semantic.min.js"></script>
-    <script src="../../assets_customer/js/vendor/slick.min.js"></script>
+   <?php
+        include('./footer-scripts.php');
+    ?>
 
-    <!-- Main-js -->
-    <script src="../../assets_customer/js/main.js"></script>
 
 
 </body>

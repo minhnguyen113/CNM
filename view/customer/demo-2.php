@@ -20,17 +20,9 @@
     <title>Luxurious - Hotel Booking HTML Template</title>
 
   
-    <link rel="icon" href="../../assets_customer/img/logo/logo1.png" type="image/x-icon">
-    
-    <!-- Css All Plugins Files -->
-    <link rel="stylesheet" href="../../assets_customer/css/vendor/bootstrap.min.css">
-    <link rel="stylesheet" href="../../assets_customer/css/vendor/magnific-popup.css">
-    <link rel="stylesheet" href="../../assets_customer/css/vendor/aos.css">
-    <link rel="stylesheet" href="../../assets_customer/css/vendor/remixicon.css">
-    <link rel="stylesheet" href="../../assets_customer/css/vendor/materialdesignicons.min.css">
-    <link rel="stylesheet" href="../../assets_customer/css/vendor/swiper-bundle.min.css">
-    <link rel="stylesheet" href="../../assets_customer/css/vendor/semantic.min.css">
-    <link rel="stylesheet" href="../../assets_customer/css/vendor/slick.min.css">
+   <?php
+        include('./head-resources.php');
+    ?>
 
 
     <!-- Main Style -->
@@ -52,8 +44,8 @@
             <div class="container">
                 <div class="row">
                       <nav class="navbar navbar-expand-lg">
-                        <a class="navbar-brand" href="./index.php">
-                            <img src="../../assets_customer/img/logo/logo2.png" alt="logo" class="lh-logo">
+                          <a class="navbar-brand" href="./index.php">
+                            <img src="../../assets_customer/img/logo/logo1.png" alt="logo" class="lh-logo">
                         </a>
                         <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -110,59 +102,9 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <!-- <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="javascript:void(0)" role="button"
-                                        data-bs-toggle="dropdown">
-                                        Thực đơn
-                                        <i class="ri-arrow-down-s-line"></i>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a class="dropdown-item" href="./about.php">About Us</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="./contact.php">Contact</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="./facilities.php">Facilities</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="./faq.php">Faq</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="./prices.php">Prices</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="./services.php">Services</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="./spa.php">Spa</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="./team.php">Team</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="./checkout.php">Checkout</a>
-                                        </li>
-                                    </ul>
-                                </li> -->
-                                <!-- <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="./javascript:void(0)" role="button"
-                                        data-bs-toggle="dropdown">
-                                        Blog
-                                        <i class="ri-arrow-down-s-line"></i>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a class="dropdown-item" href="blog.php">Blog</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="blog-details.php">Blog Details</a>
-                                        </li>
-                                    </ul>
-                                </li> -->
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link" href="restaurant.php">
+                                
+                                  <li class="nav-item dropdown">
+                                    <a class="nav-link" href="menu.php">
                                         Thực đơn
                                     </a>
                                 </li>
@@ -1282,16 +1224,10 @@
     </div>
 
     <!-- Plugins JS -->
-    <script src="../../assets_customer/js/vendor/jquery.min.js"></script>
-    <script src="../../assets_customer/js/vendor/swiper-bundle.min.js"></script>
-    <script src="../../assets_customer/js/vendor/bootstrap.bundle.min.js"></script>
-    <script src="../../assets_customer/js/vendor/magnific-popup.min.js"></script>
-    <script src="../../assets_customer/js/vendor/aos.js"></script>
-    <script src="../../assets_customer/js/vendor/semantic.min.js"></script>
-    <script src="../../assets_customer/js/vendor/slick.min.js"></script>
+    <?php
+        include('./footer-scripts.php');
+    ?>
 
-    <!-- Main-js -->
-    <script src="../../assets_customer/js/main.js"></script>
 
 </body>
 

@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -121,8 +125,215 @@
 				<a href="./index.php" class="sb-full"><img src="../../assets_admin/img/logo/logo2.png" alt="logo" style="width:326px;text-align:center;margin-left:-60px"></a>
 				<a href="./index.php" class="sb-collapse"><img src="../../assets_admin/img/logo/collapse-logo.png" alt="logo"></a>
 			</div>
-			<div class="lh-sb-wrapper">
+<div class="lh-sb-wrapper">
 				<div class="lh-sb-content">
+					<ul class="lh-sb-list">
+						<li class="lh-sb-item sb-drop-item">
+							<a href="javascript:void(0)" class="lh-drop-toggle">
+								<i class="fa-regular fa-clock"></i>
+								<span class="condense">Bảng Điều Khiển<i class="drop-arrow fa-regular fa-circle-left"></i></span>
+							</a>
+							<ul class="lh-sb-drop condense">
+								<li class="list"><a href="./index.php" class="lh-page-link drop">
+										<i class="fa-solid fa-code-commit"></i>Report</a></li>
+							</ul>
+						</li>
+						<li class="lh-sb-item-separator"></li>
+					<?php
+						if ($_SESSION['role_id'] == 1) {
+						echo '
+						<li class="lh-sb-title condense">Apps</li>
+						<li class="lh-sb-item sb-drop-item">
+							<a href="javascript:void(0)" class="lh-drop-toggle">
+								<i class="fa-regular fa-address-card"></i><span class="condense">Nhân Viên
+									<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
+							<ul class="lh-sb-drop condense">
+								<li><a href="./team-profile.php" class="lh-page-link drop">
+										<i class="fa-solid fa-code-commit"></i>Thông tin </a></li>
+								<li><a href="./team-add.php" class="lh-page-link drop">
+										<i class="fa-solid fa-code-commit"></i>Thêm nhân viên</a></li>
+								<li><a href="./team-list.php" class="lh-page-link drop">
+										<i class="fa-solid fa-code-commit"></i>Danh sách nhân viên</a></li>
+										
+							</ul>
+						</li>
+						<li class="lh-sb-item-separator"></li>
+						<li class="lh-sb-title condense">Customer</li>
+						<li class="lh-sb-item">
+							<a href="./guest.php" class="lh-page-link">
+								<i class="fa-solid fa-user-group"></i><span class="condense"><span
+										class="hover-title">Khách hàng</span> </span>
+							</a>
+						</li>
+						<li class="lh-sb-item">
+							<a href="./guest-details.php" class="lh-page-link">
+								<i class="fa-solid fa-user-pen"></i><span class="condense">
+									<span class="hover-title">Khách hàng Chi tiết
+									</span> </span>
+							</a>
+						</li>
+						<li class="lh-sb-item">
+							<a href="./rooms.php" class="lh-page-link">
+								<i class="fa-solid fa-gift"></i><span class="condense"><span
+										class="hover-title">Khuyến mãi </span> </span>
+							</a>
+						</li>
+						<li class="lh-sb-item">
+							<a href="./bookings.php" class="lh-page-link">
+								<i class="fa-solid fa-file"></i><span class="condense"><span
+										class="hover-title">Đặt chỗ</span> </span>
+							</a>
+						</li>
+						<li class="lh-sb-item">
+							<a href="./invoice.php" class="lh-page-link">
+								<i class="fa-regular fa-money-bill-1"></i><span class="condense"><span
+										class="hover-title">Hoá đơn</span> </span>
+							</a>
+						</li>
+						<li class="lh-sb-item-separator"></li>
+						<li class="lh-sb-title condense">Foods</li>
+						<li class="lh-sb-item">
+							<a href="./menu.php" class="lh-page-link">
+								<i class="fa-solid fa-utensils"></i><span class="condense"><span
+										class="hover-title">Thực đơn</span> </span>
+							</a>
+						</li>
+						<li class="lh-sb-item">
+							<a href="./menu-add.php" class="lh-page-link">
+								<i class="fa-solid fa-utensils"></i><span class="condense"><span
+										class="hover-title">Thêm thực đơn</span> </span>
+							</a>
+						</li>
+						<li class="lh-sb-item">
+							<a href="./orders.php" class="lh-page-link">
+								<i class="fa-regular fa-bookmark"></i><span class="condense"><span
+										class="hover-title">Đặt chỗ</span> </span>
+							</a>
+						</li>
+						<li class="lh-sb-item-separator"></li>
+						<li class="lh-sb-title condense">Login</li>
+						<li class="lh-sb-item sb-drop-item">
+							<a href="javascript:void(0)" class="lh-drop-toggle">
+								<i class="ri-pages-line"></i><span class="condense">Kho
+									<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
+							<ul class="lh-sb-drop condense">
+								<li><a href="./material.php" class="lh-page-link drop">
+										<i class="fa-solid fa-code-commit"></i>Nguyên liệu</a></li>
+								<li><a href="./material-add.php" class="lh-page-link drop">
+										<i class="fa-solid fa-code-commit"></i>Thêm Nguyên liệu</a></li>
+								<li><a href="./forgot.php" class="lh-page-link drop">
+										<i class="fa-solid fa-code-commit"></i>Cập nhật nguyên liệu</a></li>
+								
+							</ul>
+						</li>';
+						} else if ($_SESSION['role_id'] == 2) {
+							echo '<li class="lh-sb-item-separator"></li>
+							<li class="lh-sb-title condense">Customer</li>
+							<li class="lh-sb-item">
+								<a href="./guest.php" class="lh-page-link">
+									<i class="fa-solid fa-user-group"></i><span class="condense"><span
+											class="hover-title">Khách hàng</span> </span>
+								</a>
+							</li>
+							<li class="lh-sb-item">
+								<a href="./guest-details.php" class="lh-page-link">
+									<i class="fa-solid fa-user-pen"></i><span class="condense">
+										<span class="hover-title">Khách hàng Chi tiết
+										</span> </span>
+								</a>
+							</li>
+							<li class="lh-sb-item">
+								<a href="./rooms.php" class="lh-page-link">
+									<i class="fa-solid fa-gift"></i><span class="condense"><span
+											class="hover-title">Khuyến mãi </span> </span>
+								</a>
+							</li>
+							<li class="lh-sb-item">
+								<a href="./bookings.php" class="lh-page-link">
+									<i class="fa-solid fa-file"></i><span class="condense"><span
+											class="hover-title">Đặt chỗ</span> </span>
+								</a>
+							</li>
+							<li class="lh-sb-item">
+								<a href="./invoice.php" class="lh-page-link">
+									<i class="fa-regular fa-money-bill-1"></i><span class="condense"><span
+											class="hover-title">Hoá đơn</span> </span>
+								</a>
+							</li>
+							<li class="lh-sb-item-separator"></li>
+							<li class="lh-sb-title condense">Foods</li>
+							<li class="lh-sb-item">
+								<a href="./menu.php" class="lh-page-link">
+									<i class="fa-solid fa-utensils"></i><span class="condense"><span
+											class="hover-title">Thực đơn</span> </span>
+								</a>
+							</li>
+							<li class="lh-sb-item">
+								<a href="./menu-add.php" class="lh-page-link">
+									<i class="fa-solid fa-utensils"></i><span class="condense"><span
+											class="hover-title">Thêm thực đơn</span> </span>
+								</a>
+							</li>
+							<li class="lh-sb-item">
+								<a href="./orders.php" class="lh-page-link">
+									<i class="fa-regular fa-bookmark"></i><span class="condense"><span
+											class="hover-title">Đặt chỗ</span> </span>
+								</a>
+							</li>
+							<li class="lh-sb-item sb-drop-item">
+							<a href="javascript:void(0)" class="lh-drop-toggle">
+								<i class="ri-pages-line"></i><span class="condense">Kho
+									<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
+							<ul class="lh-sb-drop condense">
+								<li><a href="./material.php" class="lh-page-link drop">
+										<i class="fa-solid fa-code-commit"></i>Nguyên liệu</a></li>
+								<li><a href="./material-add.php" class="lh-page-link drop">
+										<i class="fa-solid fa-code-commit"></i>Thêm Nguyên liệu</a></li>
+								<li><a href="./forgot.php" class="lh-page-link drop">
+										<i class="fa-solid fa-code-commit"></i>Cập nhật nguyên liệu</a></li>
+								
+							</ul>
+						</li>';}
+
+						?>
+						<!-- // <li class="lh-sb-item sb-drop-item">
+						// 	<a href="javascript:void(0)" class="lh-drop-toggle">
+						// 		<i class="ri-service-line"></i><span class="condense">Service pages
+						// 			<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
+						// 	<ul class="lh-sb-drop condense">
+						// 		<li><a href="./404-error-page.php" class="lh-page-link drop">
+						// 				<i class="fa-solid fa-code-commit"></i>404 error</a></li>
+						// 		<li><a href="./maintenance.php" class="lh-page-link drop">
+						// 				<i class="fa-solid fa-code-commit"></i>Maintenance</a></li>
+						// 	</ul>
+						// </li>
+						// <li class="lh-sb-item-separator"></li>
+						// <li class="lh-sb-title condense">Elements</li>
+						// <li class="lh-sb-item">
+						// 	<a href="./remix-icons.php" class="lh-page-link">
+						// 		<i class="ri-remixicon-line"></i><span class="condense"><span class="hover-title">remix
+						// 				icons</span></span></a>
+						// </li>
+						// <li class="lh-sb-item">
+						// 	<a href="./material-icons.php" class="lh-page-link">
+						// 		<i class="mdi mdi-material-ui"></i><span class="condense"><span
+						// 				class="hover-title">Material icons</span></span></a>
+						// </li>
+						// <li class="lh-sb-item">
+						// 	<a href="./alert-popup.php" class="lh-page-link">
+						// 		<i class="ri-file-warning-line"></i><span class="condense"><span
+						// 				class="hover-title">Alert Popup</span></span></a>
+						// </li>
+						// <li class="lh-sb-item-separator"></li>
+						// <li class="lh-sb-title condense">Settings</li>
+						// <li class="lh-sb-item">
+						// 	<a href="./role.php" class="lh-page-link">
+						// 		<i class="ri-magic-line"></i><span class="condense"><span
+						// 				class="hover-title">Role</span></span></a>
+						// </li> -->
+					</ul>
+				</div>
+			</div>				<div class="lh-sb-content">
 					<ul class="lh-sb-list">
 						<li class="lh-sb-item sb-drop-item">
 							<a href="javascript:void(0)" class="lh-drop-toggle">
@@ -145,8 +356,7 @@
 										<i class="fa-solid fa-code-commit"></i>Thông tin </a></li>
 								<li><a href="./team-add.php" class="lh-page-link drop">
 										<i class="fa-solid fa-code-commit"></i>Thêm nhân viên</a></li>
-								<li><a href="./team-update.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Cập nhật nhân viên</a></li>
+							
 								<li><a href="./team-list.php" class="lh-page-link drop">
 										<i class="fa-solid fa-code-commit"></i>Xoá nhân viên</a></li>
 							</ul>

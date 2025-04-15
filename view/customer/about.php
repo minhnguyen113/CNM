@@ -3,6 +3,7 @@
 
 
 <!-- Mirrored from maraviyainfotech.com/projects/luxurious-html-v22/luxurious-html/about.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 21 Jan 2025 15:10:57 GMT -->
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,23 +11,15 @@
     <meta name="description" content="Best Luxurious Hotel Booking Template.">
     <meta name="keywords"
         content="hotel, booking, business, restaurant, spa, resort, landing, agency, corporate, start up, site design, new business site, business template, professional template, classic, modern">
-        <title>Luxurious - Hotel Booking HTML Template</title>
+    <title>Luxurious - Hotel Booking HTML Template</title>
 
-    
-    <link rel="icon" href="../../assets_customer/img/logo/logo1.png" type="image/x-icon">
-    
-    <!-- Css All Plugins Files -->
-    <link rel="stylesheet" href="../../assets_customer/css/vendor/bootstrap.min.css">
-    <link rel="stylesheet" href="../../assets_customer/css/vendor/magnific-popup.css">
-    <link rel="stylesheet" href="../../assets_customer/css/vendor/aos.css">
-    <link rel="stylesheet" href="../../assets_customer/css/vendor/remixicon.css">
-    <link rel="stylesheet" href="../../assets_customer/css/vendor/materialdesignicons.min.css">
-    <link rel="stylesheet" href="../../assets_customer/css/vendor/swiper-bundle.min.css">
-    <link rel="stylesheet" href="../../assets_customer/css/vendor/semantic.min.css">
-    <link rel="stylesheet" href="../../assets_customer/css/vendor/slick.min.css">
+
+    <?php
+    include('./head-resources.php');
+    ?>
 
     <!-- Main Style -->
-	<link id="mainCss" href="../../assets_customer/css/style.css" rel="stylesheet">
+    <link id="mainCss" href="../../assets_customer/css/style.css" rel="stylesheet">
 
 </head>
 
@@ -39,37 +32,13 @@
 
     <!-- Header -->
     <header>
-        <div class="lh-top-header">
-              <div class="container">
-                <div class="row">
-                    <div class="col-lg-6 col-sm-12  lh-top-social">
-                        <div class="lh-mail">
-                            <i class="ri-mail-line"></i>
-                            example@ec-email.com
-                        </div>
 
-                    </div>
-                    <div class="col-lg-6 col-sm-12 lh-top-social">
-                        <div class="lh-phone">
-                            <i class="ri-phone-line"></i>
-                            +91(123)(456)(7890)
-                        </div>
-                        <div class="lh-header-icons">
-                            <a href="javascript:void(0)"><i class="ri-facebook-box-line facebook"></i></a>
-                            <a href="javascript:void(0)"><i class="ri-twitter-x-line twitter"></i></a>
-                            <a href="javascript:void(0)"><i class="ri-linkedin-box-line linkedin"></i></a>
-                            <a href="javascript:void(0)"><i class="ri-instagram-line instagram"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="lh-header">
-            <div class="container">
-                <div class="row">
-       <nav class="navbar navbar-expand-lg">
+       <div class="lh-header" style="height:180px;">
+            <div class="container h-100">
+                <div class="row h-100">
+                    <nav class="navbar navbar-expand-lg h-100">
                         <a class="navbar-brand" href="./index.php">
-                            <img src="../../assets_customer/img/logo/logo2.png" alt="logo" class="lh-logo">
+                            <img src="../../assets_customer/img/logo/logo1.png" alt="logo" class="lh-logo">
                         </a>
                         <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -126,59 +95,9 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <!-- <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="javascript:void(0)" role="button"
-                                        data-bs-toggle="dropdown">
-                                        Thực đơn
-                                        <i class="ri-arrow-down-s-line"></i>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a class="dropdown-item" href="./about.php">About Us</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="./contact.php">Contact</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="./facilities.php">Facilities</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="./faq.php">Faq</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="./prices.php">Prices</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="./services.php">Services</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="./spa.php">Spa</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="./team.php">Team</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="./checkout.php">Checkout</a>
-                                        </li>
-                                    </ul>
-                                </li> -->
-                                <!-- <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="./javascript:void(0)" role="button"
-                                        data-bs-toggle="dropdown">
-                                        Blog
-                                        <i class="ri-arrow-down-s-line"></i>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a class="dropdown-item" href="blog.php">Blog</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="blog-details.php">Blog Details</a>
-                                        </li>
-                                    </ul>
-                                </li> -->
+
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link" href="restaurant.php">
+                                    <a class="nav-link" href="menu.php">
                                         Thực đơn
                                     </a>
                                 </li>
@@ -192,7 +111,7 @@
 
     <!-- Mobile-menu -->
     <div class="lh-sidebar-overlay"></div>
-      <div id="lh_mobile_menu" class="lh-side-cart lh-mobile-menu">
+    <div id="lh_mobile_menu" class="lh-side-cart lh-mobile-menu">
         <div class="lh-menu-title">
             <span class="menu-title">My Menu</span>
             <button class="lh-close">×</button>
@@ -626,99 +545,99 @@
     <footer>
         <div class="container">
             <div class="footer-top-section">
-            <div class="row">
-                <div class="col-lg-3 col-md-6 rs-pb-24 p-991 order-lg-1 order-md-2 order-2">
-                    <div class="lh-footer-cols-contain">
-                        <div class="lh-footer-heading">
-                            <h4>Explore</h4>
-                        </div>
-                        <ul>
-                            <li>
-                                <code>*</code>
-                                <a href="./index.php">Home</a>
-                            </li>
-                            <li>
-                                <code>*</code>
-                                <a href="about.php">About</a>
-                            </li>
-                            <li>
-                                <code>*</code>
-                                <a href="room-details.php">Rooms & suites</a>
-                            </li>
-                            <li>
-                                <code>*</code>
-                                <a href="spa.php">spa & Wellness</a>
-                            </li>
-                            <li>
-                                <code>*</code>
-                                <a href="restaurant.php">Restaurant</a>
-                            </li>
-                            <li>
-                                <code>*</code>
-                                <a href="gallery.php">Gallery</a>
-                            </li>
-                            <li>
-                                <code>*</code>
-                                <a href="contact.php">Contact</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-6 rs-pb-24 order-lg-2 order-md-1 order-1">
-                    <div class="lh-social-media">
-                        <div class="footer-logos">
-                            <img src="../../assets_customer/img/logo/logo.png" alt="logo">
-                        </div>
-                        <div class="lh-footer-social">
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero voluptatem soluta eaque
-                                ullam accusantium animi!</p>
-                            <form class="lh-control-footer" role="search">
-                                <div class="lh-control-inner-icons">
-                                    <i class="ri-send-plane-line"></i>
-                                </div>
-                                <input class="form-control shadow-none me-4" type="search" placeholder="Subscribe..."
-                                    aria-label="Search">
-                            </form>
-                        </div>
-                        <div class="lh-follow-social">
-                            <h4 class="heading">Follow On Social</h4>
-                            <div class="footer-logo-image">
-                                <a href="#"><img src="../../assets_customer/img/logo/facebook.png" alt="facebook"></a>
-                                <a href="#"><img src="../../assets_customer/img/logo/twitter.png" alt="twitter"></a>
-                                <a href="#"><img src="../../assets_customer/img/logo/instagram.png" alt="instagram"></a>
-                                <a href="#"><img src="../../assets_customer/img/logo/linkedin.png" alt="linkedin"></a>
-                                <a href="#"><img src="../../assets_customer/img/logo/dribbble.png" alt="dribbble"></a>
-                                <a href="#"><img src="../../assets_customer/img/logo/pinterest.png" alt="pinterest"></a>
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 rs-pb-24 p-991 order-lg-1 order-md-2 order-2">
+                        <div class="lh-footer-cols-contain">
+                            <div class="lh-footer-heading">
+                                <h4>Explore</h4>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 rs-pb-24 order-lg-3 order-md-3 order-3">
-                    <div class="lh-footer-cols-contain ">
-                        <div class="lh-footer-heading">
-                            <h4>Contact Information</h4>
-                        </div>
-                        <div class="lh-footer-contact-infoemation">
                             <ul>
-                                <li class="lh-information">
-                                    <h5 class="heading">Location</h5>
-                                    <span>5 Green st.Huntington stati on, Ny 11746, Libero voluptatem soluta
-                                        Bharat.</span>
+                                <li>
+                                    <code>*</code>
+                                    <a href="./index.php">Home</a>
                                 </li>
-                                <li class="lh-information">
-                                    <h5 class="heading">Email</h5>
-                                    <span>example@ec-email.com</span>
+                                <li>
+                                    <code>*</code>
+                                    <a href="about.php">About</a>
                                 </li>
-                                <li class="lh-information">
-                                    <h5 class="heading">Phone No</h5>
-                                    <span>+91(1234)(567)(890)</span>
+                                <li>
+                                    <code>*</code>
+                                    <a href="room-details.php">Rooms & suites</a>
+                                </li>
+                                <li>
+                                    <code>*</code>
+                                    <a href="spa.php">spa & Wellness</a>
+                                </li>
+                                <li>
+                                    <code>*</code>
+                                    <a href="restaurant.php">Restaurant</a>
+                                </li>
+                                <li>
+                                    <code>*</code>
+                                    <a href="gallery.php">Gallery</a>
+                                </li>
+                                <li>
+                                    <code>*</code>
+                                    <a href="contact.php">Contact</a>
                                 </li>
                             </ul>
                         </div>
                     </div>
+                    <div class="col-lg-6 rs-pb-24 order-lg-2 order-md-1 order-1">
+                        <div class="lh-social-media">
+                            <div class="footer-logos">
+                                <img src="../../assets_customer/img/logo/logo.png" alt="logo">
+                            </div>
+                            <div class="lh-footer-social">
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero voluptatem soluta eaque
+                                    ullam accusantium animi!</p>
+                                <form class="lh-control-footer" role="search">
+                                    <div class="lh-control-inner-icons">
+                                        <i class="ri-send-plane-line"></i>
+                                    </div>
+                                    <input class="form-control shadow-none me-4" type="search" placeholder="Subscribe..."
+                                        aria-label="Search">
+                                </form>
+                            </div>
+                            <div class="lh-follow-social">
+                                <h4 class="heading">Follow On Social</h4>
+                                <div class="footer-logo-image">
+                                    <a href="#"><img src="../../assets_customer/img/logo/facebook.png" alt="facebook"></a>
+                                    <a href="#"><img src="../../assets_customer/img/logo/twitter.png" alt="twitter"></a>
+                                    <a href="#"><img src="../../assets_customer/img/logo/instagram.png" alt="instagram"></a>
+                                    <a href="#"><img src="../../assets_customer/img/logo/linkedin.png" alt="linkedin"></a>
+                                    <a href="#"><img src="../../assets_customer/img/logo/dribbble.png" alt="dribbble"></a>
+                                    <a href="#"><img src="../../assets_customer/img/logo/pinterest.png" alt="pinterest"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 rs-pb-24 order-lg-3 order-md-3 order-3">
+                        <div class="lh-footer-cols-contain ">
+                            <div class="lh-footer-heading">
+                                <h4>Contact Information</h4>
+                            </div>
+                            <div class="lh-footer-contact-infoemation">
+                                <ul>
+                                    <li class="lh-information">
+                                        <h5 class="heading">Location</h5>
+                                        <span>5 Green st.Huntington stati on, Ny 11746, Libero voluptatem soluta
+                                            Bharat.</span>
+                                    </li>
+                                    <li class="lh-information">
+                                        <h5 class="heading">Email</h5>
+                                        <span>example@ec-email.com</span>
+                                    </li>
+                                    <li class="lh-information">
+                                        <h5 class="heading">Phone No</h5>
+                                        <span>+91(1234)(567)(890)</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
             <div class="footer-bottom-copy">
                 <span>Copyright @ <span id="copyright_year"></span> <a href="./index.php">Luxurious</a> All Rights Reserved</span>
             </div>
@@ -817,19 +736,14 @@
     </div>
 
     <!-- Plugins JS -->
-    <script src="../../assets_customer/js/vendor/jquery.min.js"></script>
-    <script src="../../assets_customer/js/vendor/swiper-bundle.min.js"></script>
-    <script src="../../assets_customer/js/vendor/bootstrap.bundle.min.js"></script>
-    <script src="../../assets_customer/js/vendor/magnific-popup.min.js"></script>
-    <script src="../../assets_customer/js/vendor/aos.js"></script>
-    <script src="../../assets_customer/js/vendor/semantic.min.js"></script>
-    <script src="../../assets_customer/js/vendor/slick.min.js"></script>
+    <?php
+    include('./footer-scripts.php');
+    ?>
 
-    <!-- Main-js -->
-    <script src="../../assets_customer/js/main.js"></script>
 
 </body>
 
 
 <!-- Mirrored from maraviyainfotech.com/projects/luxurious-php-v22/luxurious-html/about.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 21 Jan 2025 15:10:59 GMT -->
+
 </html>

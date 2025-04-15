@@ -1,3 +1,42 @@
+<?php
+session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+include_once(__DIR__ . "/../../controller/cUser.php");
+
+$userController = new UserController();
+$result = $userController->StaffGetAllUsers($data);
+
+// Fetch dữ liệu thành mảng
+$data = [];
+if ($result && mysqli_num_rows($result) > 0) {
+	while ($row = mysqli_fetch_assoc($result)) {
+		$data[] = $row;
+	}
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_user_id'])) {
+    $idToDelete = intval($_POST['delete_user_id']); // Chống inject
+    $controller = new UserController();
+    $result = $controller->StaffDeleteUser($idToDelete);
+
+    if ($result) {
+        echo "<script>alert('Xoá thành công!'); window.location.href='team-list.php';</script>";
+        exit;
+    } else {
+        echo "<script>alert('Xoá thất bại hoặc không tìm thấy nhân viên!');</script>";
+    }
+}
+
+
+
+
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -16,24 +55,23 @@
 	<title>Chef Restaurent</title>
 
 	<!-- App favicon -->
-	<link rel="shortcut icon" href="assets/img/logo/logo.jpeg">
+	<link rel="shortcut icon" href="../../assets_admin/img/logo/logo1.png">
 
 	<!-- Icon CSS -->
 	<link href="../../assets_admin/css/vendor/materialdesignicons.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-	<ink href="../../assets_admin /css/vendor/remixicon.css" rel="stylesheet">
 
-		<!-- Vendor CSS -->
-		<link href='../../assets_admin/css/vendor/datatables.bootstrap5.min.css' rel='stylesheet'>
-		<link href='../../assets_admin/css/vendor/responsive.datatables.min.css' rel='stylesheet'>
-		<link href='../../assets_admin/css/vendor/daterangepicker.css' rel='stylesheet'>
-		<link href="../../assets_admin/css/vendor/bootstrap.min.css" rel="stylesheet">
-		<link href="../../assets_admin/css/vendor/apexcharts.css" rel="stylesheet">
-		<link href="../../assets_admin/css/vendor/simplebar.css" rel="stylesheet">
-		<link href="../../assets_admin/css/vendor/jquery-jvectormap-1.2.2.css" rel="stylesheet">
-		<script src="../../assets_admin/js/vendor/apexcharts.min.js"></script>
-		<!-- Main CSS -->
-		<link id="mainCss" href="../../assets_admin/css/style.css" rel="stylesheet">
+	<!-- Vendor CSS -->
+	<link href='../../assets_admin/css/vendor/datatables.bootstrap5.min.css' rel='stylesheet'>
+	<link href='../../assets_admin/css/vendor/responsive.datatables.min.css' rel='stylesheet'>
+	<link href='../../assets_admin/css/vendor/daterangepicker.css' rel='stylesheet'>
+	<link href="../../assets_admin/css/vendor/bootstrap.min.css" rel="stylesheet">
+	<link href="../../assets_admin/css/vendor/apexcharts.css" rel="stylesheet">
+	<link href="../../assets_admin/css/vendor/simplebar.css" rel="stylesheet">
+	<link href="../../assets_admin/css/vendor/jquery-jvectormap-1.2.2.css" rel="stylesheet">
+	<script src="../../assets_admin/js/vendor/apexcharts.min.js"></script>
+	<!-- Main CSS -->
+	<link id="mainCss" href="../../assets_admin/css/style.css" rel="stylesheet">
 
 </head>
 
@@ -136,6 +174,9 @@
 							</ul>
 						</li>
 						<li class="lh-sb-item-separator"></li>
+					<?php
+						if ($_SESSION['role_id'] == 1) {
+						echo '
 						<li class="lh-sb-title condense">Apps</li>
 						<li class="lh-sb-item sb-drop-item">
 							<a href="javascript:void(0)" class="lh-drop-toggle">
@@ -146,10 +187,9 @@
 										<i class="fa-solid fa-code-commit"></i>Thông tin </a></li>
 								<li><a href="./team-add.php" class="lh-page-link drop">
 										<i class="fa-solid fa-code-commit"></i>Thêm nhân viên</a></li>
-								<li><a href="./team-update.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Cập nhật nhân viên</a></li>
 								<li><a href="./team-list.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Xoá nhân viên</a></li>
+										<i class="fa-solid fa-code-commit"></i>Danh sách nhân viên</a></li>
+										
 							</ul>
 						</li>
 						<li class="lh-sb-item-separator"></li>
@@ -209,57 +249,93 @@
 						<li class="lh-sb-title condense">Login</li>
 						<li class="lh-sb-item sb-drop-item">
 							<a href="javascript:void(0)" class="lh-drop-toggle">
-								<i class="ri-pages-line"></i><span class="condense">Authentication
+								<i class="ri-pages-line"></i><span class="condense">Kho
 									<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
 							<ul class="lh-sb-drop condense">
-								<li><a href="./signin.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Đăng nhập</a></li>
-								<li><a href="./signup.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Đăng ký</a></li>
+								<li><a href="./material.php" class="lh-page-link drop">
+										<i class="fa-solid fa-code-commit"></i>Nguyên liệu</a></li>
+								<li><a href="./material-add.php" class="lh-page-link drop">
+										<i class="fa-solid fa-code-commit"></i>Thêm Nguyên liệu</a></li>
 								<li><a href="./forgot.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Quên Mật Khẩu</a></li>
-								<li><a href="./reset-password.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Đặt lại mật khẩu</a></li>
+										<i class="fa-solid fa-code-commit"></i>Cập nhật nguyên liệu</a></li>
+								
 							</ul>
-						</li>
-						<li class="lh-sb-item sb-drop-item">
+						</li>';
+						} else if ($_SESSION['role_id'] == 2) {
+							echo '<li class="lh-sb-item-separator"></li>
+							<li class="lh-sb-title condense">Customer</li>
+							<li class="lh-sb-item">
+								<a href="./guest.php" class="lh-page-link">
+									<i class="fa-solid fa-user-group"></i><span class="condense"><span
+											class="hover-title">Khách hàng</span> </span>
+								</a>
+							</li>
+							<li class="lh-sb-item">
+								<a href="./guest-details.php" class="lh-page-link">
+									<i class="fa-solid fa-user-pen"></i><span class="condense">
+										<span class="hover-title">Khách hàng Chi tiết
+										</span> </span>
+								</a>
+							</li>
+							<li class="lh-sb-item">
+								<a href="./rooms.php" class="lh-page-link">
+									<i class="fa-solid fa-gift"></i><span class="condense"><span
+											class="hover-title">Khuyến mãi </span> </span>
+								</a>
+							</li>
+							<li class="lh-sb-item">
+								<a href="./bookings.php" class="lh-page-link">
+									<i class="fa-solid fa-file"></i><span class="condense"><span
+											class="hover-title">Đặt chỗ</span> </span>
+								</a>
+							</li>
+							<li class="lh-sb-item">
+								<a href="./invoice.php" class="lh-page-link">
+									<i class="fa-regular fa-money-bill-1"></i><span class="condense"><span
+											class="hover-title">Hoá đơn</span> </span>
+								</a>
+							</li>
+							<li class="lh-sb-item-separator"></li>
+							<li class="lh-sb-title condense">Foods</li>
+							<li class="lh-sb-item">
+								<a href="./menu.php" class="lh-page-link">
+									<i class="fa-solid fa-utensils"></i><span class="condense"><span
+											class="hover-title">Thực đơn</span> </span>
+								</a>
+							</li>
+							<li class="lh-sb-item">
+								<a href="./menu-add.php" class="lh-page-link">
+									<i class="fa-solid fa-utensils"></i><span class="condense"><span
+											class="hover-title">Thêm thực đơn</span> </span>
+								</a>
+							</li>
+							<li class="lh-sb-item">
+								<a href="./orders.php" class="lh-page-link">
+									<i class="fa-regular fa-bookmark"></i><span class="condense"><span
+											class="hover-title">Đặt chỗ</span> </span>
+								</a>
+							</li>
+							<li class="lh-sb-item sb-drop-item">
 							<a href="javascript:void(0)" class="lh-drop-toggle">
-								<i class="ri-service-line"></i><span class="condense">Service pages
+								<i class="ri-pages-line"></i><span class="condense">Kho
 									<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
 							<ul class="lh-sb-drop condense">
-								<li><a href="./404-error-page.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>404 error</a></li>
-								<li><a href="./maintenance.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Maintenance</a></li>
+								<li><a href="./material.php" class="lh-page-link drop">
+										<i class="fa-solid fa-code-commit"></i>Nguyên liệu</a></li>
+								<li><a href="./material-add.php" class="lh-page-link drop">
+										<i class="fa-solid fa-code-commit"></i>Thêm Nguyên liệu</a></li>
+								<li><a href="./forgot.php" class="lh-page-link drop">
+										<i class="fa-solid fa-code-commit"></i>Cập nhật nguyên liệu</a></li>
+								
 							</ul>
-						</li>
-						<li class="lh-sb-item-separator"></li>
-						<li class="lh-sb-title condense">Elements</li>
-						<li class="lh-sb-item">
-							<a href="./remix-icons.php" class="lh-page-link">
-								<i class="ri-remixicon-line"></i><span class="condense"><span class="hover-title">remix
-										icons</span></span></a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./material-icons.php" class="lh-page-link">
-								<i class="mdi mdi-material-ui"></i><span class="condense"><span
-										class="hover-title">Material icons</span></span></a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./alert-popup.php" class="lh-page-link">
-								<i class="ri-file-warning-line"></i><span class="condense"><span
-										class="hover-title">Alert Popup</span></span></a>
-						</li>
-						<li class="lh-sb-item-separator"></li>
-						<li class="lh-sb-title condense">Settings</li>
-						<li class="lh-sb-item">
-							<a href="./role.php" class="lh-page-link">
-								<i class="ri-magic-line"></i><span class="condense"><span
-										class="hover-title">Role</span></span></a>
-						</li>
+						</li>';}
+
+						?>
+
 					</ul>
 				</div>
 			</div>
+		</div>
 		</div>
 		<!-- Notify sidebar -->
 		<div class="lh-notify-bar-overlay"></div>
@@ -280,83 +356,14 @@
 					</li>
 				</ul>
 				<div class="tab-content" id="myTabContent">
-					<div class="tab-pane fade show active" id="alert" role="tabpanel" aria-labelledby="alert-tab">
-						<div class="lh-alert-list">
-							<ul>
-								<li>
-									<div class="icon lh-alert">
-										<i class="ri-alarm-warning-line"></i>
-									</div>
-									<div class="detail">
-										<div class="title">Your final report is overdue</div>
-										<p class="time">Just now</p>
-										<p class="message">Please submit your quarterly report before - June 15.</p>
-									</div>
-								</li>
-								<li>
-									<div class="icon lh-warn">
-										<i class="ri-error-warning-line"></i>
-									</div>
-									<div class="detail">
-										<div class="title">Your Booking campaign is stop!</div>
-										<p class="time">5:45AM - 25/05/2024</p>
-										<p class="message">Please submit your quarterly report before Jun 15.</p>
-									</div>
-								</li>
-								<li>
-									<div class="icon lh-success">
-										<i class="ri-check-double-line"></i>
-									</div>
-									<div class="detail">
-										<div class="title">Your payment is successfully processed</div>
-										<p class="time">9:20PM - 19/06/2024</p>
-										<p class="message">Check your account wallet. if there is any issue, create
-											support ticket.</p>
-									</div>
-								</li>
-								<li>
-									<div class="icon lh-warn">
-										<i class="ri-error-warning-line"></i>
-									</div>
-									<div class="detail">
-										<div class="title">Budget threshold exceeded!</div>
-										<p class="time">4:15AM - 01/04/2024</p>
-										<p class="message">Budget threshold was exceeded for project "Luxurious" B612
-											elements.</p>
-									</div>
-								</li>
-								<li>
-									<div class="icon lh-warn">
-										<i class="ri-close-line"></i>
-									</div>
-									<div class="detail">
-										<div class="title">Booking was decline!</div>
-										<p class="time">4:15AM - 01/04/2024</p>
-										<p class="message">Your booking "B126" is declined by Theresa Mayeras.</p>
-									</div>
-								</li>
-								<li>
-									<div class="icon lh-success">
-										<i class="ri-check-double-line"></i>
-									</div>
-									<div class="detail">
-										<div class="title">Your payment is successfully processed</div>
-										<p class="time">9:20PM - 19/06/2024</p>
-										<p class="message">Check your account wallet. if there is any issue, create
-											support ticket.</p>
-									</div>
-								</li>
-								<li class="check"><a class="lh-primary-btn" href="#">View all</a></li>
-							</ul>
-						</div>
-					</div>
+
 					<div class="tab-pane fade" id="messages" role="tabpanel" aria-labelledby="messages-tab">
 						<div class="lh-message-list">
 							<ul>
 								<li>
 									<a href="#" class="reply">Reply</a>
 									<div class="user">
-										<img src="../../assets_admin/img/user/9.jpg" alt="user">
+
 										<span class="label online"></span>
 									</div>
 									<div class="detail">
@@ -382,7 +389,6 @@
 								<li>
 									<a href="#" class="reply">Reply</a>
 									<div class="user">
-										<img src="../../assets_admin/img/user/8.jpg" alt="user">
 										<span class="label offline"></span>
 									</div>
 									<div class="detail">
@@ -394,7 +400,6 @@
 								<li>
 									<a href="#" class="reply">Reply</a>
 									<div class="user">
-										<img src="../../assets_admin/img/user/7.jpg" alt="user">
 										<span class="label busy"></span>
 									</div>
 									<div class="detail">
@@ -403,7 +408,6 @@
 										<p class="message">Room 65 AC repair service is done.</p>
 										<span class="download-files">
 											<span class="download">
-												<img src="../../assets_admin/img/facilities/1.png" alt="image">
 												<a href="javascript:void(0)"><i class="ri-download-2-line"></i></a>
 											</span>
 										</span>
@@ -412,7 +416,6 @@
 								<li>
 									<a href="#" class="reply">Reply</a>
 									<div class="user">
-										<img src="../../assets_admin/img/user/6.jpg" alt="user">
 										<span class="label busy"></span>
 									</div>
 									<div class="detail">
@@ -447,10 +450,11 @@
 				<!-- Page title & breadcrumb -->
 				<div class="lh-page-title lh-page-title-2">
 					<div class="lh-breadcrumb">
-						<h5>Team List</h5>
+						<h5>Danh Sách nhân viên</h5>
 						<ul>
-							<li><a href="./index.php">Luxurious</a></li>
-							<li>Team List</li>
+							<li><a href="./index.php">Chef</a></li>
+							<li><i class="fa-solid fa-right-long"></i></li>
+							<li>Danh sách</li>
 						</ul>
 					</div>
 				</div>
@@ -459,273 +463,58 @@
 						<div class="team-sticky-bar">
 							<div class="lh-card">
 								<div class="lh-card-header">
-									<h4 class="lh-card-title">Team List</h4>
-									<div class="header-tools">
-										<div class="dropdown" title="Add Member">
-											<button class="btn btn-secondary dropdown-toggle" type="button"
-												data-bs-toggle="dropdown" aria-expanded="false">
-												<i class="ri-add-line"></i>
-											</button>
-											<ul class="dropdown-menu">
-												<li><button class="dropdown-item" type="button">Add</button></li>
-												<li><button class="dropdown-item" type="button">Setting</button></li>
-											</ul>
-										</div>
-									</div>
+									<h4 class="lh-card-title">Danh sách</h4>
+
 								</div>
 								<div class="lh-card-content">
-									<ul class="nav nav-tabs" role="tablist">
-										<li class="nav-item" role="presentation">
-											<a class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab1" role="tab" aria-selected="true">
-												<div class="form-group">
-													<img class="team-img" src="assets/img/user/1.jpg" alt="team">
-													<span>Moris Waites</span>
-												</div>
-											</a>
-											<div class="lh-tool">
-												<div class="dropdown">
-													<button class="btn btn-secondary dropdown-toggle" type="button"
-														data-bs-toggle="dropdown"
-														aria-expanded="false">
-														<i class="mdi mdi-dots-vertical"></i>
-													</button>
-													<ul class="dropdown-menu">
-														<li><button class="dropdown-item" type="button">Action</button>
-														</li>
-														<li><button class="dropdown-item" type="button">Rename</button>
-														</li>
-														<li><button class="dropdown-item" type="button">Setting</button>
-														</li>
-													</ul>
-												</div>
-											</div>
-										</li>
-										<li class="nav-item" role="presentation">
-											<a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab2" role="tab" aria-selected="true">
-												<div class="form-group">
-													<img class="team-img" src="assets/img/user/2.jpg" alt="team">
-													<span>Emma Grater</span>
-												</div>
-											</a>
-											<div class="lh-tool">
-												<div class="dropdown">
-													<button class="btn btn-secondary dropdown-toggle" type="button"
-														data-bs-toggle="dropdown"
-														aria-expanded="false">
-														<i class="mdi mdi-dots-vertical"></i>
-													</button>
-													<ul class="dropdown-menu">
-														<li><button class="dropdown-item" type="button">Action</button>
-														</li>
-														<li><button class="dropdown-item" type="button">Rename</button>
-														</li>
-														<li><button class="dropdown-item" type="button">Setting</button>
-														</li>
-													</ul>
-												</div>
-											</div>
-										</li>
-										<li class="nav-item" role="presentation">
-											<a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab3" role="tab" aria-selected="true">
-												<div class="form-group">
-													<img class="team-img" src="assets/img/user/3.jpg" alt="team">
-													<span>Olive Yew</span>
-												</div>
-											</a>
-											<div class="lh-tool">
-												<div class="dropdown">
-													<button class="btn btn-secondary dropdown-toggle" type="button"
-														data-bs-toggle="dropdown"
-														aria-expanded="false">
-														<i class="mdi mdi-dots-vertical"></i>
-													</button>
-													<ul class="dropdown-menu">
-														<li><button class="dropdown-item" type="button">Action</button>
-														</li>
-														<li><button class="dropdown-item" type="button">Rename</button>
-														</li>
-														<li><button class="dropdown-item" type="button">Setting</button>
-														</li>
-													</ul>
-												</div>
-											</div>
-										</li>
-										<li class="nav-item" role="presentation">
-											<a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab4" role="tab" aria-selected="true">
-												<div class="form-group">
-													<img class="team-img" src="assets/img/user/4.jpg" alt="team">
-													<span>Maria Johns</span>
-												</div>
-											</a>
-											<div class="lh-tool">
-												<div class="dropdown">
-													<button class="btn btn-secondary dropdown-toggle" type="button"
-														data-bs-toggle="dropdown"
-														aria-expanded="false">
-														<i class="mdi mdi-dots-vertical"></i>
-													</button>
-													<ul class="dropdown-menu">
-														<li><button class="dropdown-item" type="button">Action</button>
-														</li>
-														<li><button class="dropdown-item" type="button">Rename</button>
-														</li>
-														<li><button class="dropdown-item" type="button">Setting</button>
-														</li>
-													</ul>
-												</div>
-											</div>
-										</li>
-										<li class="nav-item" role="presentation">
-											<a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab5" role="tab" aria-selected="true">
-												<div class="form-group">
-													<img class="team-img" src="assets/img/user/5.jpg" alt="team">
-													<span>Martin vegasu</span>
-												</div>
-											</a>
-											<div class="lh-tool">
-												<div class="dropdown">
-													<button class="btn btn-secondary dropdown-toggle" type="button"
-														data-bs-toggle="dropdown"
-														aria-expanded="false">
-														<i class="mdi mdi-dots-vertical"></i>
-													</button>
-													<ul class="dropdown-menu">
-														<li><button class="dropdown-item" type="button">Action</button>
-														</li>
-														<li><button class="dropdown-item" type="button">Rename</button>
-														</li>
-														<li><button class="dropdown-item" type="button">Setting</button>
-														</li>
-													</ul>
-												</div>
-											</div>
-										</li>
-										<li class="nav-item" role="presentation">
-											<a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab6" role="tab" aria-selected="true">
-												<div class="form-group">
-													<img class="team-img" src="assets/img/user/6.jpg" alt="team">
-													<span>Lily wilson</span>
-												</div>
-											</a>
-											<div class="lh-tool">
-												<div class="dropdown">
-													<button class="btn btn-secondary dropdown-toggle" type="button"
-														data-bs-toggle="dropdown"
-														aria-expanded="false">
-														<i class="mdi mdi-dots-vertical"></i>
-													</button>
-													<ul class="dropdown-menu">
-														<li><button class="dropdown-item" type="button">Action</button>
-														</li>
-														<li><button class="dropdown-item" type="button">Rename</button>
-														</li>
-														<li><button class="dropdown-item" type="button">Setting</button>
-														</li>
-													</ul>
-												</div>
-											</div>
-										</li>
-										<li class="nav-item" role="presentation">
-											<a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab7" role="tab" aria-selected="true">
-												<div class="form-group">
-													<img class="team-img" src="assets/img/user/7.jpg" alt="team">
-													<span>Nancy thomas</span>
-												</div>
-											</a>
-											<div class="lh-tool">
-												<div class="dropdown">
-													<button class="btn btn-secondary dropdown-toggle" type="button"
-														data-bs-toggle="dropdown"
-														aria-expanded="false">
-														<i class="mdi mdi-dots-vertical"></i>
-													</button>
-													<ul class="dropdown-menu">
-														<li><button class="dropdown-item" type="button">Action</button>
-														</li>
-														<li><button class="dropdown-item" type="button">Rename</button>
-														</li>
-														<li><button class="dropdown-item" type="button">Setting</button>
-														</li>
-													</ul>
-												</div>
-											</div>
-										</li>
-										<li class="nav-item" role="presentation">
-											<a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab8" role="tab" aria-selected="true">
-												<div class="form-group">
-													<img class="team-img" src="assets/img/user/8.jpg" alt="team">
-													<span>Mecov Maira</span>
-												</div>
-											</a>
-											<div class="lh-tool">
-												<div class="dropdown">
-													<button class="btn btn-secondary dropdown-toggle" type="button"
-														data-bs-toggle="dropdown"
-														aria-expanded="false">
-														<i class="mdi mdi-dots-vertical"></i>
-													</button>
-													<ul class="dropdown-menu">
-														<li><button class="dropdown-item" type="button">Action</button>
-														</li>
-														<li><button class="dropdown-item" type="button">Rename</button>
-														</li>
-														<li><button class="dropdown-item" type="button">Setting</button>
-														</li>
-													</ul>
-												</div>
-											</div>
-										</li>
-										<li class="nav-item" role="presentation">
-											<a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab9" role="tab" aria-selected="true">
-												<div class="form-group">
-													<img class="team-img" src="assets/img/user/9.jpg" alt="team">
-													<span>Boris Whisli</span>
-												</div>
-											</a>
-											<div class="lh-tool">
-												<div class="dropdown">
-													<button class="btn btn-secondary dropdown-toggle" type="button"
-														data-bs-toggle="dropdown"
-														aria-expanded="false">
-														<i class="mdi mdi-dots-vertical"></i>
-													</button>
-													<ul class="dropdown-menu">
-														<li><button class="dropdown-item" type="button">Action</button>
-														</li>
-														<li><button class="dropdown-item" type="button">Rename</button>
-														</li>
-														<li><button class="dropdown-item" type="button">Setting</button>
-														</li>
-													</ul>
-												</div>
-											</div>
-										</li>
-										<li class="nav-item" role="presentation">
-											<a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab10" role="tab" aria-selected="true">
-												<div class="form-group">
-													<img class="team-img" src="assets/img/user/10.jpg" alt="team">
-													<span>Nirobi rainob</span>
-												</div>
-											</a>
-											<div class="lh-tool">
-												<div class="dropdown">
-													<button class="btn btn-secondary dropdown-toggle" type="button"
-														data-bs-toggle="dropdown"
-														aria-expanded="false">
-														<i class="mdi mdi-dots-vertical"></i>
-													</button>
-													<ul class="dropdown-menu">
-														<li><button class="dropdown-item" type="button">Action</button>
-														</li>
-														<li><button class="dropdown-item" type="button">Rename</button>
-														</li>
-														<li><button class="dropdown-item" type="button">Setting</button>
-														</li>
-													</ul>
-												</div>
-											</div>
-										</li>
+									<ul class="nav nav-tabs lh-body" role="tablist">
+										<?php if (!empty($data)): ?>
+											<?php foreach ($data as $row): ?>
+												<li class="nav-item staff-hover" role="presentation" id="user-<?php echo $row['ID_User']; ?>">
+													<a class="nav-link active user-item"
+														data-user-id="<?php echo $row['ID_User']; ?>"
+														data-name="<?php echo $row['TenUser']; ?>"
+														data-email="<?php echo $row['Email']; ?>"
+														data-phone="<?php echo $row['SoDienThoai']; ?>"
+														data-address="<?php echo $row['DiaChi']; ?>"
+														data-birthdate="<?php echo $row['NgaySinh']; ?>"
+														data-image="<?php echo $row['HinhAnh']; ?>">
+														<div class="form-group">
+															<img class="team-img" src="../../assets_admin/img/user/<?php echo htmlspecialchars($row['HinhAnh']); ?>" alt="team">
+															<span><?php echo htmlspecialchars($row['TenUser']); ?></span>
+														</div>
+													</a>
+													<div class="lh-tool">
+														<div class="dropdown">
+															<button class="btn btn-secondary dropdown-toggle" type="button"
+																data-bs-toggle="dropdown"
+																aria-expanded="false">
+																<i class="mdi mdi-dots-vertical"></i>
+															</button>
+															<ul class="dropdown-menu">
+																<li>
+																	<form method="POST" action="">
+																		<input type="hidden" name="delete_user_id" value="<?php echo $row['ID_User']; ?>">
+																		<button class="dropdown-item" type="submit" onclick="return confirm('Bạn có chắc chắn muốn xoá nhân viên này không?');">
+																			Xoá
+																		</button>
+																	</form>
+																</li>
+															</ul>
+														</div>
+													</div>
+												</li>
+											<?php endforeach; ?>
+										<?php else: ?>
+											<p>Không có nhân viên nào.</p>
+										<?php endif; ?>
 									</ul>
+
+
+
+
+
+
 								</div>
 							</div>
 						</div>
@@ -733,11 +522,8 @@
 					<div class="col-xxl-8 col-lg-7 col-md-12">
 						<div class="lh-card" id="assigntbl">
 							<div class="lh-card-header">
-								<h4 class="lh-card-title">Team Detail</h4>
-								<div class="header-tools">
-									<a href="javascript:void(0)" class="button-add" title="Add Task"><i
-											class="ri-add-line"></i>Task</a>
-								</div>
+								<h4 class="lh-card-title">Thông tin chi tiết</h4>
+
 							</div>
 							<div class="lh-card-content card-default">
 								<div class="tab-content">
@@ -745,958 +531,46 @@
 										<div class="team-overview">
 											<div class="team-details lh-card-team-content">
 												<div class="row">
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
+													<!-- Email -->
+													<div class="col-lg-6 col-md-12">
 														<div class="lh-team-detail">
 															<h6>E-mail address</h6>
-															<ul>
-																<li><strong>Email 1 : </strong>support1@exapmle.com</li>
-																<li><strong>Email 2 : </strong>support2@exapmle.com</li>
-															</ul>
+															<div class="form-group">
+																<input type="email" class="form-control" name="email" value="<?php echo htmlspecialchars($data['Email'] ?? ''); ?>" readonly>
+															</div>
 														</div>
 													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
+
+													<!-- Số điện thoại -->
+													<div class="col-lg-6 col-md-12">
 														<div class="lh-team-detail">
-															<h6>Contact nubmer</h6>
-															<ul>
-																<li><strong>Phone Nubmer 1 : </strong>(123) 123 456 7890
-																</li>
-																<li><strong>Phone Nubmer 2 : </strong>(123) 123 456 7890
-																</li>
-															</ul>
+															<h6>Contact number</h6>
+															<div class="form-group">
+																<input type="text" class="form-control" name="phone" value="<?php echo htmlspecialchars($data['SoDienThoai'] ?? ''); ?>" readonly>
+															</div>
 														</div>
 													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Address</h6>
-															<ul>
-																<li>123, 2150 Sycamore Street, dummy text of
-																	the, bara cota San Jose, California - 95131.</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Address 2</h6>
-															<ul>
-																<li>123, 2150 Sycamore Street, dummy text of
-																	the, bara cota San Jose, California - 95131.</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Bank Accounts</h6>
-															<ul>
-																<li><strong>Account Name : </strong>Moris Waites</li>
-																<li><strong>Account Nubmer : </strong>123**********80
-																</li>
-																<li><strong>IFSC Code : </strong>123**********80</li>
-																<li><strong>Bank name : </strong>Barky Central Bank</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Social media</h6>
-															<ul>
-																<li><strong><i class="ri-facebook-line"></i> </strong><a
-																		href="#">https://www.facebook.com/youraccount</a>
-																</li>
-																<li><strong><i class="ri-twitter-line"></i> </strong><a
-																		href="#">https://twitter.com/youraccount</a>
-																</li>
-																<li><strong><i class="ri-linkedin-line"></i> </strong><a
-																		href="#">https://in.linkedin.com/youraccount</a>
-																</li>
-																<li><strong><i class="ri-github-line"></i> </strong><a
-																		href="#">https://github.com/youraccount</a></li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Payment</h6>
-															<ul>
-																<li><strong>Paypal : </strong>support1@exapmle.com</li>
-																<li><strong>Payoneer : </strong>support2@exapmle.com
-																</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Tax Info</h6>
-															<ul>
-																<li><strong>TIN NO : </strong>SDF5***********5F</li>
-																<li><strong>Tax ID Number : </strong>6582***********523
-																</li>
-															</ul>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="tab-pane fade" id="tab2" role="tabpanel">
-										<div class="team-overview">
-											<div class="team-details lh-card-team-content">
-												<div class="row">
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>E-mail address</h6>
-															<ul>
-																<li><strong>Email 1 : </strong>support1@exapmle.com</li>
-																<li><strong>Email 2 : </strong>support2@exapmle.com</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Contact nubmer</h6>
-															<ul>
-																<li><strong>Phone Nubmer 1 : </strong>(123) 123 456 7890
-																</li>
-																<li><strong>Phone Nubmer 2 : </strong>(123) 123 456 7890
-																</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
+
+													<!-- Địa chỉ -->
+													<div class="col-lg-6 col-md-12">
 														<div class="lh-team-detail">
 															<h6>Address</h6>
-															<ul>
-																<li>123, 2150 Sycamore Street, dummy text of
-																	the, bara cota San Jose, California - 95131.</li>
-															</ul>
+															<div class="form-group">
+																<textarea class="form-control" name="address" rows="2" readonly><?php echo htmlspecialchars($data['DiaChi'] ?? ''); ?></textarea>
+															</div>
 														</div>
 													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
+
+													<!-- Ngày sinh -->
+													<div class="col-lg-6 col-md-12">
 														<div class="lh-team-detail">
-															<h6>Address 2</h6>
-															<ul>
-																<li>123, 2150 Sycamore Street, dummy text of
-																	the, bara cota San Jose, California - 95131.</li>
-															</ul>
+															<h6>Ngày/ tháng/ năm sinh</h6>
+															<div class="form-group">
+																<input type="date" class="form-control" name="date" value="<?php echo isset($data['NgaySinh']) ? date('Y-m-d', strtotime($data['NgaySinh'])) : ''; ?>" readonly>
+															</div>
 														</div>
 													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Bank Accounts</h6>
-															<ul>
-																<li><strong>Account Name : </strong>Moris Waites</li>
-																<li><strong>Account Nubmer : </strong>123**********80
-																</li>
-																<li><strong>IFSC Code : </strong>123**********80</li>
-																<li><strong>Bank name : </strong>Barky Central Bank</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Social media</h6>
-															<ul>
-																<li><strong><i class="ri-facebook-line"></i> </strong><a
-																		href="#">https://www.facebook.com/youraccount</a>
-																</li>
-																<li><strong><i class="ri-twitter-line"></i> </strong><a
-																		href="#">https://twitter.com/youraccount</a>
-																</li>
-																<li><strong><i class="ri-linkedin-line"></i> </strong><a
-																		href="#">https://in.linkedin.com/youraccount</a>
-																</li>
-																<li><strong><i class="ri-github-line"></i> </strong><a
-																		href="#">https://github.com/youraccount</a></li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Payment</h6>
-															<ul>
-																<li><strong>Paypal : </strong>support1@exapmle.com</li>
-																<li><strong>Payoneer : </strong>support2@exapmle.com
-																</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Tax Info</h6>
-															<ul>
-																<li><strong>TIN NO : </strong>SDF5***********5F</li>
-																<li><strong>Tax ID Number : </strong>6582***********523
-																</li>
-															</ul>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="tab-pane fade" id="tab3" role="tabpanel">
-										<div class="team-overview">
-											<div class="team-details lh-card-team-content">
-												<div class="row">
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>E-mail address</h6>
-															<ul>
-																<li><strong>Email 1 : </strong>support1@exapmle.com</li>
-																<li><strong>Email 2 : </strong>support2@exapmle.com</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Contact nubmer</h6>
-															<ul>
-																<li><strong>Phone Nubmer 1 : </strong>(123) 123 456 7890
-																</li>
-																<li><strong>Phone Nubmer 2 : </strong>(123) 123 456 7890
-																</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Address</h6>
-															<ul>
-																<li>123, 2150 Sycamore Street, dummy text of
-																	the, bara cota San Jose, California - 95131.</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Address 2</h6>
-															<ul>
-																<li>123, 2150 Sycamore Street, dummy text of
-																	the, bara cota San Jose, California - 95131.</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Bank Accounts</h6>
-															<ul>
-																<li><strong>Account Name : </strong>Moris Waites</li>
-																<li><strong>Account Nubmer : </strong>123**********80
-																</li>
-																<li><strong>IFSC Code : </strong>123**********80</li>
-																<li><strong>Bank name : </strong>Barky Central Bank</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Social media</h6>
-															<ul>
-																<li><strong><i class="ri-facebook-line"></i> </strong><a
-																		href="#">https://www.facebook.com/youraccount</a>
-																</li>
-																<li><strong><i class="ri-twitter-line"></i> </strong><a
-																		href="#">https://twitter.com/youraccount</a>
-																</li>
-																<li><strong><i class="ri-linkedin-line"></i> </strong><a
-																		href="#">https://in.linkedin.com/youraccount</a>
-																</li>
-																<li><strong><i class="ri-github-line"></i> </strong><a
-																		href="#">https://github.com/youraccount</a></li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Payment</h6>
-															<ul>
-																<li><strong>Paypal : </strong>support1@exapmle.com</li>
-																<li><strong>Payoneer : </strong>support2@exapmle.com
-																</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Tax Info</h6>
-															<ul>
-																<li><strong>TIN NO : </strong>SDF5***********5F</li>
-																<li><strong>Tax ID Number : </strong>6582***********523
-																</li>
-															</ul>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="tab-pane fade" id="tab4" role="tabpanel">
-										<div class="team-overview">
-											<div class="team-details lh-card-team-content">
-												<div class="row">
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>E-mail address</h6>
-															<ul>
-																<li><strong>Email 1 : </strong>support1@exapmle.com</li>
-																<li><strong>Email 2 : </strong>support2@exapmle.com</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Contact nubmer</h6>
-															<ul>
-																<li><strong>Phone Nubmer 1 : </strong>(123) 123 456 7890
-																</li>
-																<li><strong>Phone Nubmer 2 : </strong>(123) 123 456 7890
-																</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Address</h6>
-															<ul>
-																<li>123, 2150 Sycamore Street, dummy text of
-																	the, bara cota San Jose, California - 95131.</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Address 2</h6>
-															<ul>
-																<li>123, 2150 Sycamore Street, dummy text of
-																	the, bara cota San Jose, California - 95131.</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Bank Accounts</h6>
-															<ul>
-																<li><strong>Account Name : </strong>Moris Waites</li>
-																<li><strong>Account Nubmer : </strong>123**********80
-																</li>
-																<li><strong>IFSC Code : </strong>123**********80</li>
-																<li><strong>Bank name : </strong>Barky Central Bank</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Social media</h6>
-															<ul>
-																<li><strong><i class="ri-facebook-line"></i> </strong><a
-																		href="#">https://www.facebook.com/youraccount</a>
-																</li>
-																<li><strong><i class="ri-twitter-line"></i> </strong><a
-																		href="#">https://twitter.com/youraccount</a>
-																</li>
-																<li><strong><i class="ri-linkedin-line"></i> </strong><a
-																		href="#">https://in.linkedin.com/youraccount</a>
-																</li>
-																<li><strong><i class="ri-github-line"></i> </strong><a
-																		href="#">https://github.com/youraccount</a></li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Payment</h6>
-															<ul>
-																<li><strong>Paypal : </strong>support1@exapmle.com</li>
-																<li><strong>Payoneer : </strong>support2@exapmle.com
-																</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Tax Info</h6>
-															<ul>
-																<li><strong>TIN NO : </strong>SDF5***********5F</li>
-																<li><strong>Tax ID Number : </strong>6582***********523
-																</li>
-															</ul>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="tab-pane fade" id="tab5" role="tabpanel">
-										<div class="team-overview">
-											<div class="team-details lh-card-team-content">
-												<div class="row">
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>E-mail address</h6>
-															<ul>
-																<li><strong>Email 1 : </strong>support1@exapmle.com</li>
-																<li><strong>Email 2 : </strong>support2@exapmle.com</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Contact nubmer</h6>
-															<ul>
-																<li><strong>Phone Nubmer 1 : </strong>(123) 123 456 7890
-																</li>
-																<li><strong>Phone Nubmer 2 : </strong>(123) 123 456 7890
-																</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Address</h6>
-															<ul>
-																<li>123, 2150 Sycamore Street, dummy text of
-																	the, bara cota San Jose, California - 95131.</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Address 2</h6>
-															<ul>
-																<li>123, 2150 Sycamore Street, dummy text of
-																	the, bara cota San Jose, California - 95131.</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Bank Accounts</h6>
-															<ul>
-																<li><strong>Account Name : </strong>Moris Waites</li>
-																<li><strong>Account Nubmer : </strong>123**********80
-																</li>
-																<li><strong>IFSC Code : </strong>123**********80</li>
-																<li><strong>Bank name : </strong>Barky Central Bank</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Social media</h6>
-															<ul>
-																<li><strong><i class="ri-facebook-line"></i> </strong><a
-																		href="#">https://www.facebook.com/youraccount</a>
-																</li>
-																<li><strong><i class="ri-twitter-line"></i> </strong><a
-																		href="#">https://twitter.com/youraccount</a>
-																</li>
-																<li><strong><i class="ri-linkedin-line"></i> </strong><a
-																		href="#">https://in.linkedin.com/youraccount</a>
-																</li>
-																<li><strong><i class="ri-github-line"></i> </strong><a
-																		href="#">https://github.com/youraccount</a></li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Payment</h6>
-															<ul>
-																<li><strong>Paypal : </strong>support1@exapmle.com</li>
-																<li><strong>Payoneer : </strong>support2@exapmle.com
-																</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Tax Info</h6>
-															<ul>
-																<li><strong>TIN NO : </strong>SDF5***********5F</li>
-																<li><strong>Tax ID Number : </strong>6582***********523
-																</li>
-															</ul>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="tab-pane fade" id="tab6" role="tabpanel">
-										<div class="team-overview">
-											<div class="team-details lh-card-team-content">
-												<div class="row">
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>E-mail address</h6>
-															<ul>
-																<li><strong>Email 1 : </strong>support1@exapmle.com</li>
-																<li><strong>Email 2 : </strong>support2@exapmle.com</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Contact nubmer</h6>
-															<ul>
-																<li><strong>Phone Nubmer 1 : </strong>(123) 123 456 7890
-																</li>
-																<li><strong>Phone Nubmer 2 : </strong>(123) 123 456 7890
-																</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Address</h6>
-															<ul>
-																<li>123, 2150 Sycamore Street, dummy text of
-																	the, bara cota San Jose, California - 95131.</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Address 2</h6>
-															<ul>
-																<li>123, 2150 Sycamore Street, dummy text of
-																	the, bara cota San Jose, California - 95131.</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Bank Accounts</h6>
-															<ul>
-																<li><strong>Account Name : </strong>Moris Waites</li>
-																<li><strong>Account Nubmer : </strong>123**********80
-																</li>
-																<li><strong>IFSC Code : </strong>123**********80</li>
-																<li><strong>Bank name : </strong>Barky Central Bank</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Social media</h6>
-															<ul>
-																<li><strong><i class="ri-facebook-line"></i> </strong><a
-																		href="#">https://www.facebook.com/youraccount</a>
-																</li>
-																<li><strong><i class="ri-twitter-line"></i> </strong><a
-																		href="#">https://twitter.com/youraccount</a>
-																</li>
-																<li><strong><i class="ri-linkedin-line"></i> </strong><a
-																		href="#">https://in.linkedin.com/youraccount</a>
-																</li>
-																<li><strong><i class="ri-github-line"></i> </strong><a
-																		href="#">https://github.com/youraccount</a></li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Payment</h6>
-															<ul>
-																<li><strong>Paypal : </strong>support1@exapmle.com</li>
-																<li><strong>Payoneer : </strong>support2@exapmle.com
-																</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Tax Info</h6>
-															<ul>
-																<li><strong>TIN NO : </strong>SDF5***********5F</li>
-																<li><strong>Tax ID Number : </strong>6582***********523
-																</li>
-															</ul>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="tab-pane fade" id="tab7" role="tabpanel">
-										<div class="team-overview">
-											<div class="team-details lh-card-team-content">
-												<div class="row">
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>E-mail address</h6>
-															<ul>
-																<li><strong>Email 1 : </strong>support1@exapmle.com</li>
-																<li><strong>Email 2 : </strong>support2@exapmle.com</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Contact nubmer</h6>
-															<ul>
-																<li><strong>Phone Nubmer 1 : </strong>(123) 123 456 7890
-																</li>
-																<li><strong>Phone Nubmer 2 : </strong>(123) 123 456 7890
-																</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Address</h6>
-															<ul>
-																<li>123, 2150 Sycamore Street, dummy text of
-																	the, bara cota San Jose, California - 95131.</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Address 2</h6>
-															<ul>
-																<li>123, 2150 Sycamore Street, dummy text of
-																	the, bara cota San Jose, California - 95131.</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Bank Accounts</h6>
-															<ul>
-																<li><strong>Account Name : </strong>Moris Waites</li>
-																<li><strong>Account Nubmer : </strong>123**********80
-																</li>
-																<li><strong>IFSC Code : </strong>123**********80</li>
-																<li><strong>Bank name : </strong>Barky Central Bank</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Social media</h6>
-															<ul>
-																<li><strong><i class="ri-facebook-line"></i> </strong><a
-																		href="#">https://www.facebook.com/youraccount</a>
-																</li>
-																<li><strong><i class="ri-twitter-line"></i> </strong><a
-																		href="#">https://twitter.com/youraccount</a>
-																</li>
-																<li><strong><i class="ri-linkedin-line"></i> </strong><a
-																		href="#">https://in.linkedin.com/youraccount</a>
-																</li>
-																<li><strong><i class="ri-github-line"></i> </strong><a
-																		href="#">https://github.com/youraccount</a></li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Payment</h6>
-															<ul>
-																<li><strong>Paypal : </strong>support1@exapmle.com</li>
-																<li><strong>Payoneer : </strong>support2@exapmle.com
-																</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Tax Info</h6>
-															<ul>
-																<li><strong>TIN NO : </strong>SDF5***********5F</li>
-																<li><strong>Tax ID Number : </strong>6582***********523
-																</li>
-															</ul>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="tab-pane fade" id="tab8" role="tabpanel">
-										<div class="team-overview">
-											<div class="team-details lh-card-team-content">
-												<div class="row">
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>E-mail address</h6>
-															<ul>
-																<li><strong>Email 1 : </strong>support1@exapmle.com</li>
-																<li><strong>Email 2 : </strong>support2@exapmle.com</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Contact nubmer</h6>
-															<ul>
-																<li><strong>Phone Nubmer 1 : </strong>(123) 123 456 7890
-																</li>
-																<li><strong>Phone Nubmer 2 : </strong>(123) 123 456 7890
-																</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Address</h6>
-															<ul>
-																<li>123, 2150 Sycamore Street, dummy text of
-																	the, bara cota San Jose, California - 95131.</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Address 2</h6>
-															<ul>
-																<li>123, 2150 Sycamore Street, dummy text of
-																	the, bara cota San Jose, California - 95131.</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Bank Accounts</h6>
-															<ul>
-																<li><strong>Account Name : </strong>Moris Waites</li>
-																<li><strong>Account Nubmer : </strong>123**********80
-																</li>
-																<li><strong>IFSC Code : </strong>123**********80</li>
-																<li><strong>Bank name : </strong>Barky Central Bank</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Social media</h6>
-															<ul>
-																<li><strong><i class="ri-facebook-line"></i> </strong><a
-																		href="#">https://www.facebook.com/youraccount</a>
-																</li>
-																<li><strong><i class="ri-twitter-line"></i> </strong><a
-																		href="#">https://twitter.com/youraccount</a>
-																</li>
-																<li><strong><i class="ri-linkedin-line"></i> </strong><a
-																		href="#">https://in.linkedin.com/youraccount</a>
-																</li>
-																<li><strong><i class="ri-github-line"></i> </strong><a
-																		href="#">https://github.com/youraccount</a></li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Payment</h6>
-															<ul>
-																<li><strong>Paypal : </strong>support1@exapmle.com</li>
-																<li><strong>Payoneer : </strong>support2@exapmle.com
-																</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Tax Info</h6>
-															<ul>
-																<li><strong>TIN NO : </strong>SDF5***********5F</li>
-																<li><strong>Tax ID Number : </strong>6582***********523
-																</li>
-															</ul>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="tab-pane fade" id="tab9" role="tabpanel">
-										<div class="team-overview">
-											<div class="team-details lh-card-team-content">
-												<div class="row">
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>E-mail address</h6>
-															<ul>
-																<li><strong>Email 1 : </strong>support1@exapmle.com</li>
-																<li><strong>Email 2 : </strong>support2@exapmle.com</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Contact nubmer</h6>
-															<ul>
-																<li><strong>Phone Nubmer 1 : </strong>(123) 123 456 7890
-																</li>
-																<li><strong>Phone Nubmer 2 : </strong>(123) 123 456 7890
-																</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Address</h6>
-															<ul>
-																<li>123, 2150 Sycamore Street, dummy text of
-																	the, bara cota San Jose, California - 95131.</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Address 2</h6>
-															<ul>
-																<li>123, 2150 Sycamore Street, dummy text of
-																	the, bara cota San Jose, California - 95131.</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Bank Accounts</h6>
-															<ul>
-																<li><strong>Account Name : </strong>Moris Waites</li>
-																<li><strong>Account Nubmer : </strong>123**********80
-																</li>
-																<li><strong>IFSC Code : </strong>123**********80</li>
-																<li><strong>Bank name : </strong>Barky Central Bank</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Social media</h6>
-															<ul>
-																<li><strong><i class="ri-facebook-line"></i> </strong><a
-																		href="#">https://www.facebook.com/youraccount</a>
-																</li>
-																<li><strong><i class="ri-twitter-line"></i> </strong><a
-																		href="#">https://twitter.com/youraccount</a>
-																</li>
-																<li><strong><i class="ri-linkedin-line"></i> </strong><a
-																		href="#">https://in.linkedin.com/youraccount</a>
-																</li>
-																<li><strong><i class="ri-github-line"></i> </strong><a
-																		href="#">https://github.com/youraccount</a></li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Payment</h6>
-															<ul>
-																<li><strong>Paypal : </strong>support1@exapmle.com</li>
-																<li><strong>Payoneer : </strong>support2@exapmle.com
-																</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Tax Info</h6>
-															<ul>
-																<li><strong>TIN NO : </strong>SDF5***********5F</li>
-																<li><strong>Tax ID Number : </strong>6582***********523
-																</li>
-															</ul>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="tab-pane fade" id="tab10" role="tabpanel">
-										<div class="team-overview">
-											<div class="team-details lh-card-team-content">
-												<div class="row">
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>E-mail address</h6>
-															<ul>
-																<li><strong>Email 1 : </strong>support1@exapmle.com</li>
-																<li><strong>Email 2 : </strong>support2@exapmle.com</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Contact nubmer</h6>
-															<ul>
-																<li><strong>Phone Nubmer 1 : </strong>(123) 123 456 7890
-																</li>
-																<li><strong>Phone Nubmer 2 : </strong>(123) 123 456 7890
-																</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Address</h6>
-															<ul>
-																<li>123, 2150 Sycamore Street, dummy text of
-																	the, bara cota San Jose, California - 95131.</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Address 2</h6>
-															<ul>
-																<li>123, 2150 Sycamore Street, dummy text of
-																	the, bara cota San Jose, California - 95131.</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Bank Accounts</h6>
-															<ul>
-																<li><strong>Account Name : </strong>Moris Waites</li>
-																<li><strong>Account Nubmer : </strong>123**********80
-																</li>
-																<li><strong>IFSC Code : </strong>123**********80</li>
-																<li><strong>Bank name : </strong>Barky Central Bank</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Social media</h6>
-															<ul>
-																<li><strong><i class="ri-facebook-line"></i> </strong><a
-																		href="#">https://www.facebook.com/youraccount</a>
-																</li>
-																<li><strong><i class="ri-twitter-line"></i> </strong><a
-																		href="#">https://twitter.com/youraccount</a>
-																</li>
-																<li><strong><i class="ri-linkedin-line"></i> </strong><a
-																		href="#">https://in.linkedin.com/youraccount</a>
-																</li>
-																<li><strong><i class="ri-github-line"></i> </strong><a
-																		href="#">https://github.com/youraccount</a></li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Payment</h6>
-															<ul>
-																<li><strong>Paypal : </strong>support1@exapmle.com</li>
-																<li><strong>Payoneer : </strong>support2@exapmle.com
-																</li>
-															</ul>
-														</div>
-													</div>
-													<div class="col-xxl-6 col-lg-12 col-md-6 col-sm-12">
-														<div class="lh-team-detail">
-															<h6>Tax Info</h6>
-															<ul>
-																<li><strong>TIN NO : </strong>SDF5***********5F</li>
-																<li><strong>Tax ID Number : </strong>6582***********523
-																</li>
-															</ul>
-														</div>
-													</div>
+
 												</div>
 											</div>
 										</div>
@@ -1863,7 +737,52 @@
 	<script src="../../assets_admin/js/main.js"></script>
 
 	<!-- Main Custom -->
-	<script src="assets/js/main.js"></script>
+	<script>
+		document.querySelectorAll('.user-item').forEach(item => {
+			item.addEventListener('click', function() {
+				const email = this.getAttribute('data-email');
+				const phone = this.getAttribute('data-phone');
+				const address = this.getAttribute('data-address');
+				const birthdate = this.getAttribute('data-birthdate');
+				const image = this.getAttribute('data-image');
+
+				document.querySelector('input[name="email"]').value = email;
+				document.querySelector('input[name="phone"]').value = phone;
+				document.querySelector('textarea[name="address"]').value = address;
+				document.querySelector('input[name="date"]').value = birthdate;
+
+				// Nếu bạn có phần hiển thị hình ảnh
+				document.querySelector('.profile-img').src = `../../assets_admin/img/user/${image}`;
+			});
+		});
+	</script>
+
+	<!-- xoá  -->
+	<!-- <script>
+		document.addEventListener('DOMContentLoaded', function() {
+			document.querySelectorAll('.btn-delete-user').forEach(button => {
+				button.addEventListener('click', function() {
+					const userId = this.getAttribute('data-id');
+
+					if (confirm('Bạn có chắc chắn muốn xoá nhân viên này không?')) {
+						fetch(`../../controller/cUserAction.php?action=deleteUser&id=${userId}`, {
+								method: 'GET'
+							})
+							.then(response => response.json()) // vì server trả về JSON
+							.then(data => {
+								alert(data.message); // lấy thông điệp từ JSON
+								if (data.status === 'success') {
+									location.reload();
+								}
+							})
+							.catch(error => console.error('Lỗi:', error));
+					}
+				});
+			});
+		});
+	</script> -->
+
+
 </body>
 
 

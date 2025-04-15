@@ -59,9 +59,7 @@ if (isset($_SESSION['success'])) {
 		<!-- Main CSS -->
 		<link id="mainCss" href="../../assets_admin/css/style.css" rel="stylesheet">
 </head>
-<script>
-	alert("<?php echo $successMessage; ?>");
-</script>
+
 
 <body data-lh-mode="light">
 	<main class="wrapper sb-default">
@@ -171,10 +169,9 @@ if (isset($_SESSION['success'])) {
 										<i class="fa-solid fa-code-commit"></i>Thông tin </a></li>
 								<li><a href="./team-add.php" class="lh-page-link drop">
 										<i class="fa-solid fa-code-commit"></i>Thêm nhân viên</a></li>
-								<li><a href="./team-update.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Cập nhật nhân viên</a></li>
 								<li><a href="./team-list.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Xoá nhân viên</a></li>
+										<i class="fa-solid fa-code-commit"></i>Danh sách nhân viên</a></li>
+										
 							</ul>
 						</li>
 						<li class="lh-sb-item-separator"></li>
@@ -234,17 +231,16 @@ if (isset($_SESSION['success'])) {
 						<li class="lh-sb-title condense">Login</li>
 						<li class="lh-sb-item sb-drop-item">
 							<a href="javascript:void(0)" class="lh-drop-toggle">
-								<i class="ri-pages-line"></i><span class="condense">Authentication
+								<i class="ri-pages-line"></i><span class="condense">Kho
 									<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
 							<ul class="lh-sb-drop condense">
-								<li><a href="./signin.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Đăng nhập</a></li>
-								<li><a href="./signup.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Đăng ký</a></li>
+								<li><a href="./material.php" class="lh-page-link drop">
+										<i class="fa-solid fa-code-commit"></i>Nguyên liệu</a></li>
+								<li><a href="./material-add.php" class="lh-page-link drop">
+										<i class="fa-solid fa-code-commit"></i>Thêm Nguyên liệu</a></li>
 								<li><a href="./forgot.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Quên Mật Khẩu</a></li>
-								<li><a href="./reset-password.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Đặt lại mật khẩu</a></li>
+										<i class="fa-solid fa-code-commit"></i>Cập nhật nguyên liệu</a></li>
+								
 							</ul>
 						</li>';
 						} else if ($_SESSION['role_id'] == 2) {
@@ -300,48 +296,45 @@ if (isset($_SESSION['success'])) {
 									<i class="fa-regular fa-bookmark"></i><span class="condense"><span
 											class="hover-title">Đặt chỗ</span> </span>
 								</a>
-							</li>';
+							</li>
+							<li class="lh-sb-item sb-drop-item">
+							<a href="javascript:void(0)" class="lh-drop-toggle">
+								<i class="ri-pages-line"></i><span class="condense">Kho
+									<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
+							<ul class="lh-sb-drop condense">
+								<li><a href="./material.php" class="lh-page-link drop">
+										<i class="fa-solid fa-code-commit"></i>Nguyên liệu</a></li>
+								<li><a href="./material-add.php" class="lh-page-link drop">
+										<i class="fa-solid fa-code-commit"></i>Thêm Nguyên liệu</a></li>
+								<li><a href="./forgot.php" class="lh-page-link drop">
+										<i class="fa-solid fa-code-commit"></i>Cập nhật nguyên liệu</a></li>
+								
+							</ul>
+						</li>';
 						}
 
 						?>
-						<!-- // <li class="lh-sb-item sb-drop-item">
-						// 	<a href="javascript:void(0)" class="lh-drop-toggle">
-						// 		<i class="ri-service-line"></i><span class="condense">Service pages
-						// 			<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
-						// 	<ul class="lh-sb-drop condense">
-						// 		<li><a href="./404-error-page.php" class="lh-page-link drop">
-						// 				<i class="fa-solid fa-code-commit"></i>404 error</a></li>
-						// 		<li><a href="./maintenance.php" class="lh-page-link drop">
-						// 				<i class="fa-solid fa-code-commit"></i>Maintenance</a></li>
-						// 	</ul>
-						// </li>
-						// <li class="lh-sb-item-separator"></li>
-						// <li class="lh-sb-title condense">Elements</li>
-						// <li class="lh-sb-item">
-						// 	<a href="./remix-icons.php" class="lh-page-link">
-						// 		<i class="ri-remixicon-line"></i><span class="condense"><span class="hover-title">remix
-						// 				icons</span></span></a>
-						// </li>
-						// <li class="lh-sb-item">
-						// 	<a href="./material-icons.php" class="lh-page-link">
-						// 		<i class="mdi mdi-material-ui"></i><span class="condense"><span
-						// 				class="hover-title">Material icons</span></span></a>
-						// </li>
-						// <li class="lh-sb-item">
-						// 	<a href="./alert-popup.php" class="lh-page-link">
-						// 		<i class="ri-file-warning-line"></i><span class="condense"><span
-						// 				class="hover-title">Alert Popup</span></span></a>
-						// </li>
-						// <li class="lh-sb-item-separator"></li>
-						// <li class="lh-sb-title condense">Settings</li>
-						// <li class="lh-sb-item">
-						// 	<a href="./role.php" class="lh-page-link">
-						// 		<i class="ri-magic-line"></i><span class="condense"><span
-						// 				class="hover-title">Role</span></span></a>
-						// </li> -->
+
 					</ul>
 				</div>
 			</div>
+			<div class="lh-sb-content">
+				<ul class="lh-sb-list">
+					<li class="lh-sb-item sb-drop-item">
+						<a href="javascript:void(0)" class="lh-drop-toggle">
+							<i class="fa-regular fa-clock"></i>
+							<span class="condense">Bảng Điều Khiển<i class="drop-arrow fa-regular fa-circle-left"></i></span>
+						</a>
+						<ul class="lh-sb-drop condense">
+							<li class="list"><a href="./index.php" class="lh-page-link drop">
+									<i class="fa-solid fa-code-commit"></i>Report</a></li>
+						</ul>
+					</li>
+					<li class="lh-sb-item-separator"></li>
+
+				</ul>
+			</div>
+		</div>
 		</div>
 
 		<!-- Notify sidebar -->
@@ -1267,6 +1260,9 @@ if (isset($_SESSION['success'])) {
 			</div>
 		</div>
 	</main>
+	<?php
+	include('../customer/chatbot.php');
+	?>
 
 	<!-- Vendor Custom -->
 	<script src="../../assets_admin/js/vendor/jquery-3.6.4.min.js"></script>
