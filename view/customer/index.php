@@ -93,7 +93,7 @@ error_reporting(E_ALL);
             <span class="menu-title">My Menu</span>
             <button class="lh-close">×</button>
         </div>
-        
+
     </div>
 
     <!-- Hero -->
@@ -102,10 +102,11 @@ error_reporting(E_ALL);
             <div class="row hero-image">
                 <div class="hero-section">
                     <div class="particles-bg" id="particles-js"></div>
-                    <div class="lh-hero-contain container">
+                    <div class="lh-hero-contain container mt-lg-5" style="height: 50%;">
                         <h4 data-aos="fade-up" data-aos-duration="1000">Cheft Restaurent</h4>
-                        <h1 data-aos="fade-up" data-aos-duration="1500">Bản hòa tấu của hương vị & tinh hoa</h1>
-                        <a class="lh-buttons result-placeholder" href="#rooms">
+                        <h1 data-aos="fade-up" class="mt-n4" data-aos-duration="1500">Bản hòa tấu của hương vị & tinh hoa
+                        </h1>
+                        <a class="lh-buttons result-placeholder" style="height:40px;" href="#rooms">
                             Khám phá tại đây
                         </a>
                     </div>
@@ -230,12 +231,12 @@ error_reporting(E_ALL);
                                     <div class="lh-room-size d-flex">
                                         <p>Miền Bắc <span>|</span></p>
                                         <p> ~560kcal</p>
-                                        
+
                                     </div>
                                     <p>Là một món ăn nổi tiếng của đất Thủ Đô Việt Nam.
                                         Với sự thơm ngon của nước dùng, sự dẻo dai của bánh Phở
-                                    hoà cùng với vị dai của các loại rau ăn kèm đã làm cho phở Hà Nội
-                                trở nên đặc biệt trong mắt của những tín đồ ẩm thực. </p>
+                                        hoà cùng với vị dai của các loại rau ăn kèm đã làm cho phở Hà Nội
+                                        trở nên đặc biệt trong mắt của những tín đồ ẩm thực. </p>
                                     <div class="lh-main-features">
                                         <div class="lh-contain-heading">
                                             <h4>Nguyên liệu chính</h4>
@@ -284,15 +285,15 @@ error_reporting(E_ALL);
                                     <div class="lh-room-size d-flex">
                                         <p>Miền Trung<span>|</span></p>
                                         <p>~500kcal</p>
-                                        
+
                                     </div>
-                                    <p>Bún bò Huế là một món ăn đặc sản trứ danh của vùng đất cố đô, 
-                                        mang trong mình hương vị đậm đà, cay nồng và tinh tế. Nước dùng được ninh từ xương bò và 
-                                        giò heo trong nhiều giờ, kết hợp cùng sả, mắm ruốc Huế và ớt sa tế tạo nên vị ngọt thanh 
-                                        xen lẫn chút cay đặc trưng. Tô bún được điểm xuyết bởi những lát thịt bò mềm, 
+                                    <p>Bún bò Huế là một món ăn đặc sản trứ danh của vùng đất cố đô,
+                                        mang trong mình hương vị đậm đà, cay nồng và tinh tế. Nước dùng được ninh từ xương bò và
+                                        giò heo trong nhiều giờ, kết hợp cùng sả, mắm ruốc Huế và ớt sa tế tạo nên vị ngọt thanh
+                                        xen lẫn chút cay đặc trưng. Tô bún được điểm xuyết bởi những lát thịt bò mềm,
                                         giò heo béo ngậy, chả Huế và hành ngò thơm lừng, ăn kèm rau sống,
-                                         bắp chuối và giá. Đây không chỉ là món ăn mà còn là một trải nghiệm 
-                                         ẩm thực mang đậm dấu ấn miền Trung.</p>
+                                        bắp chuối và giá. Đây không chỉ là món ăn mà còn là một trải nghiệm
+                                        ẩm thực mang đậm dấu ấn miền Trung.</p>
                                     <div class="lh-main-features">
                                         <div class="lh-contain-heading">
                                             <h4>Nguyên liệu chính</h4>
@@ -341,12 +342,12 @@ error_reporting(E_ALL);
                                         <p>Miền Nam <span>|</span></p>
                                         <p>Ngày cuối tuần, tiệc gia đình</p>
                                     </div>
-                                    <p>Lẩu mắm là tinh hoa ẩm thực của vùng sông nước miền Tây, nổi bật với hương vị mắm đậm đà 
-                                        và phong phú rau, cá đồng. Nước lẩu được nấu từ mắm cá linh hoặc mắm cá sặc kết hợp 
+                                    <p>Lẩu mắm là tinh hoa ẩm thực của vùng sông nước miền Tây, nổi bật với hương vị mắm đậm đà
+                                        và phong phú rau, cá đồng. Nước lẩu được nấu từ mắm cá linh hoặc mắm cá sặc kết hợp
                                         với sả, ớt, cà tím và nước dừa, tạo nên mùi thơm đặc trưng không thể trộn lẫn.
-                                        Điểm đặc biệt của lẩu mắm là sự kết hợp hài hoà giữa nhiều loại cá, 
-                                        tôm, mực, ba rọi và hơn chục loại rau dân dã như bông súng, rau nhút, 
-                                        kèo nèo, cải bẹ xanh... Mỗi nồi lẩu là một bản giao hưởng hương vị mộc mạc 
+                                        Điểm đặc biệt của lẩu mắm là sự kết hợp hài hoà giữa nhiều loại cá,
+                                        tôm, mực, ba rọi và hơn chục loại rau dân dã như bông súng, rau nhút,
+                                        kèo nèo, cải bẹ xanh... Mỗi nồi lẩu là một bản giao hưởng hương vị mộc mạc
                                         mà cuốn hút, khiến thực khách phải xuýt xoa.</p>
                                     <div class="lh-main-features">
                                         <div class="lh-contain-heading">
@@ -395,11 +396,11 @@ error_reporting(E_ALL);
                                     <div class="lh-room-size d-flex">
                                         <p>Món chay <span>|</span></p>
                                         <p>Thực dưỡng, Rằm, mùng 1 </p>
-                                        
+
                                     </div>
-                                    <p>Mâm cơm chay Việt là sự kết hợp hài hoà giữa màu sắc, hương vị và giá trị dinh dưỡng, 
+                                    <p>Mâm cơm chay Việt là sự kết hợp hài hoà giữa màu sắc, hương vị và giá trị dinh dưỡng,
                                         mang đến trải nghiệm thanh tịnh và tinh tế. Mỗi món ăn đều được chế biến từ rau củ tươi,
-                                         đậu phụ, nấm, tương, mắm chay, đảm bảo giữ nguyên hương vị tự nhiên và thanh đạm</p>
+                                        đậu phụ, nấm, tương, mắm chay, đảm bảo giữ nguyên hương vị tự nhiên và thanh đạm</p>
                                     <div class="lh-main-features">
                                         <div class="lh-contain-heading">
                                             <h4>Nguyên liệu chính</h4>
@@ -441,33 +442,35 @@ error_reporting(E_ALL);
     <section class="section-about bg-gray padding-tb-100">
         <div class="container">
             <div class="row">
-                <div class="col-lg-6 rs-pb-24" data-aos="fade-up" data-aos-duration="1500">
-                    <img src="../../assets_customer/img/about/about.png" alt="about" class="w-100">
+                <div class="col-lg-6 rs-pb-24 mt-3" data-aos="fade-up" data-aos-duration="1500">
+                    <img src="../../assets_customer/img/menu/Screenshot 2025-04-16 at 21.10.45.png" alt="about" class="w-100">
                 </div>
                 <div class="col-lg-6 rs-pb-24" data-aos="fade-up" data-aos-duration="2000">
                     <div class="lh-about-detail">
                         <div class="banner t-left">
-                            <h2>Find The Best City <span>Branches</span></h2>
+                            <h2>Trải nghiệm không gian ẩm thực <span>Việt</span></h2>
                         </div>
                         <div class="lh-branches-paragraph">
-                            <p>This is the dolor sit amet consectetur adipisicing elit. Quasi eos ducimus magnam unde
-                                fugit qui perferendis repudiandae modi officia. Quae eaque fugiat minima quasi sapiente,
-                                vel
-                                dolore numquam quo!</p>
+                            <p>
+                                Tại nhà hàng của chúng tôi, thực khách không chỉ thưởng thức những món ăn đậm đà bản sắc Việt,
+                                mà còn được hòa mình vào không gian mộc mạc, gần gũi với chất liệu tre, gỗ và ánh đèn vàng ấm cúng.
+                                Chúng tôi gìn giữ hương vị truyền thống trong từng chi tiết nhỏ.
+                            </p>
+
                         </div>
                         <div class="lh-branches">
                             <div class="cols">
-                                <h4> <i class="ri-arrow-right-up-line"></i> Trusted Partners</h4>
-                                <p>This is the dolor sit amet consectetur adipisicing elit. Laborum, porro.</p>
+                                <h4> <i class="ri-arrow-right-up-line"></i>Ẩm thực truyền thống</h4>
+                                <p> Mỗi món ăn là một câu chuyện văn hoá ẩm thực – từ miền núi Tây Bắc đến miền Tây sông nước</p>
                             </div>
                             <div class="cols">
-                                <h4> <i class="ri-arrow-right-up-line"></i> Laxury amenities</h4>
-                                <p>This is the dolor sit amet consectetur adipisicing elit. Laborum, porro.</p>
+                                <h4> <i class="ri-arrow-right-up-line"></i>Không gian thuần Việt</h4>
+                                <p>Lấy cảm hứng từ làng quê Việt Nam, chúng tôi mang đến cảm giác ấm cúng, thân thuộc trong từng góc nhỏ</p>
                             </div>
                         </div>
                         <div class="lh-abouts-buttons">
-                            <a class="lh-buttons result-placeholder" href="about.php">
-                                View More
+                            <a class="lh-buttons result-placeholder" href="menu.php">
+                                Khám phá thực đơn
                             </a>
                         </div>
                     </div>
@@ -480,14 +483,14 @@ error_reporting(E_ALL);
     <section class="section-amenities padding-tb-100">
         <div class="container">
             <div class="banner" data-aos="fade-up" data-aos-duration="2000">
-                <h2>Amenities At <span>Hotel</span></h2>
+                <h2>Không chỉ là ẩm thực, mà còn là<span> trải nghiệm</span></h2>
             </div>
             <div class="row mtb-m-12">
                 <div class="col-md-6 col-sm-12 m-tb-12">
                     <div class="lh-amenities" data-aos="fade-up" data-aos-duration="1500">
                         <div class="amenities-detail">
                             <div class="amenities-box">
-                                <img src="../../assets_customer/img/amenities/1.jpg" alt="amenities_1"
+                                <img src="../../assets_customer/img/amenities/am-thuc-3-mien.jpg" alt="amenities_1"
                                     class="amenities-left-image">
                             </div>
                             <div class="amenities-box">
@@ -498,9 +501,9 @@ error_reporting(E_ALL);
                                             class="svg-img" alt="amenities-dish-1">
                                     </div>
                                     <div class="amenities-contain">
-                                        <h4 class="amenities-heading">Our Restaurant</h4>
-                                        <p>This is the dolor sit amet adipisicing elit. Ducimus corrupti sit amet
-                                            tempore placeat ipsa.</p>
+                                        <h4 class="amenities-heading">Ẩm thực ba miền</h4>
+                                        <p>Thưởng thức món ăn chuẩn vị ba miền 
+                                                Bắc – Trung – Nam, đậm đà và chỉn chu.</p>
                                         <a href="facilities.php">Read more <i class="ri-arrow-right-line"></i></a>
                                     </div>
                                 </div>
@@ -512,20 +515,19 @@ error_reporting(E_ALL);
                     <div class="lh-amenities" data-aos="fade-up" data-aos-duration="2000">
                         <div class="amenities-detail">
                             <div class="amenities-box">
-                                <img src="../../assets_customer/img/amenities/2.jpg" alt="amenities_2"
+                                <img src="../../assets_customer/img/amenities/khong-gian-xanh.jpg" alt="amenities_2"
                                     class="amenities-left-image">
                             </div>
                             <div class="amenities-box">
                                 <div class="lh-amenities-in">
                                     <h4 class="side-number">02</h4>
                                     <div class="lh-top-dish">
-                                        <img src="../../assets_customer/img/amenities/amenities-dish-2.svg"
+                                        <img src="../../assets_customer/img/amenities/amenities-dish-1.svg"
                                             class="svg-img" alt="amenities-dish-2">
                                     </div>
                                     <div class="amenities-contain">
-                                        <h4 class="amenities-heading">Spa & Beauty</h4>
-                                        <p>This is the dolor sit amet adipisicing elit. Ducimus corrupti sit amet
-                                            tempore placeat ipsa.</p>
+                                        <h4 class="amenities-heading">Không gian xanh</h4>
+                                        <p>Không gian nhà gỗ, ánh đèn vàng ấm cúng, cây xanh và vật dụng dân dã.</p>
                                         <a href="facilities.php">Read more <i class="ri-arrow-right-line"></i></a>
                                     </div>
                                 </div>
@@ -540,19 +542,18 @@ error_reporting(E_ALL);
                                 <div class="lh-amenities-in lh-amenities-right">
                                     <h4 class="side-number">03</h4>
                                     <div class="lh-top-dish">
-                                        <img src="../../assets_customer/img/amenities/amenities-dish-4.svg"
+                                        <img src="../../assets_customer/img/amenities/amenities-dish-1.svg"
                                             class="svg-img" alt="amenities-dish-3">
                                     </div>
                                     <div class="amenities-contain">
-                                        <h4 class="amenities-heading">Golf & Garden</h4>
-                                        <p>This is the dolor sit amet adipisicing elit. Ducimus corrupti sit amet
-                                            tempore placeat ipsa.</p>
+                                        <h4 class="amenities-heading">Thực Đơn Theo Mùa</h4>
+                                        <p>Mỗi mùa trong năm đều có thực đơn riêng: thanh mát cho mùa hè, ấm nóng vào mùa đông, giữ nguyên tinh thần ẩm thực Việt.</p>
                                         <a href="facilities.php">Read more <i class="ri-arrow-right-line"></i></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="amenities-box">
-                                <img src="../../assets_customer/img/amenities/3.jpg" alt="amenities_3"
+                                <img src="../../assets_customer/img/amenities/am-thuc-theo-mua.png" alt="amenities_3"
                                     class="amenities-right-image">
                             </div>
                         </div>
@@ -565,19 +566,19 @@ error_reporting(E_ALL);
                                 <div class="lh-amenities-in lh-amenities-right">
                                     <h4 class="side-number">04</h4>
                                     <div class="lh-top-dish">
-                                        <img src="../../assets_customer/img/amenities/amenities-dish-3.svg"
+                                        <img src="../../assets_customer/img/amenities/amenities-dish-1.svg"
                                             class="svg-img" alt="amenities-dish-4">
                                     </div>
                                     <div class="amenities-contain">
-                                        <h4 class="amenities-heading">Fitness & Gym</h4>
-                                        <p>This is the dolor sit amet adipisicing elit. Ducimus corrupti sit amet
-                                            tempore placeat ipsa.</p>
+                                        <h4 class="amenities-heading">Gia Vị Đặc Trưng</h4>
+                                        <p>Mỗi món ăn được nâng tầm bởi những loại gia vị truyền thống. 
+                                         Tất cả tạo nên bản sắc riêng cho từng vùng miền</p>
                                         <a href="facilities.php">Read more <i class="ri-arrow-right-line"></i></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="amenities-box">
-                                <img src="../../assets_customer/img/amenities/4.jpg" alt="amenities_4"
+                                <img src="../../assets_customer/img/amenities/gia-vi-viet.jpg" alt="amenities_4"
                                     class="amenities-right-image">
                             </div>
                         </div>
@@ -592,118 +593,108 @@ error_reporting(E_ALL);
         <div class="container">
             <div class="row">
                 <div class="banner" data-aos="fade-up" data-aos-duration="1000">
-                    <h2>The Best <span>Prices</span></h2>
+                    <h2>Combo thực đơn<span> Giá tốt</span></h2>
                 </div>
                 <div class="col-lg-4 rs-pb-24">
                     <div class="lh-prices" data-aos="fade-up" data-aos-duration="1000">
-                        <img src="../../assets_customer/img/prices/1.jpg" alt="prices_1" class="prices-image">
+                        <img src="../../assets_customer/img/combo/com-truâ.jpg" alt="prices_1" class="prices-image">
                         <div class="lh-prices-out">
                             <div class="lh-prices-in">
-                                <h4 class="lh-price-dollar"><span>$</span>50<code> / Per night</code></h4>
-                                <h4 class="lh-prices-heading">Standard Room</h4>
+                                <h4 class="lh-price-dollar"><span>đ</span>70.000</h4>
+                                <h4 class="lh-prices-heading">Combo Ăn Trưa Văn Phòng</h4>
                             </div>
                             <div class="lh-prices-viwe">
                                 <ul>
                                     <li>
-                                        <span>Bed & Breakfast</span>
+                                        <span>Cơm sườn</span>
                                         <i class="ri-arrow-right-line"></i>
                                     </li>
                                     <li>
-                                        <span>Home Made Food</span>
+                                        <span>Canh rau</span>
                                         <i class="ri-arrow-right-line"></i>
                                     </li>
                                     <li>
-                                        <span>Tour Guide</span>
+                                        <span>Rau sống</span>
                                         <i class="ri-arrow-right-line"></i>
                                     </li>
                                     <li>
-                                        <span>Safety & security</span>
+                                        <span>Trà đá</span>
                                         <i class="ri-arrow-right-line"></i>
                                     </li>
-                                    <li>
-                                        <span>Local Heritage</span>
-                                        <i class="ri-arrow-right-line"></i>
-                                    </li>
+                                    
                                 </ul>
                             </div>
                             <div class="price-buttons">
-                                <a href="./room-details.php" class="lh-buttons result-placeholder">Book Now</a>
+                                <a href="./room-details.php" class="lh-buttons result-placeholder">Đặt món ngay</a>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4 rs-pb-24">
                     <div class="lh-prices" data-aos="fade-up" data-aos-duration="2000">
-                        <img src="../../assets_customer/img/prices/2.jpg" alt="prices_2" class="prices-image active">
+                        <img src="../../assets_customer/img/combo/com-gia-idnh.jpg" alt="prices_2" class="prices-image active">
                         <div class="lh-prices-out">
                             <div class="lh-prices-in">
-                                <h4 class="lh-price-dollar"><span>$</span>75<code> / Per night</code></h4>
-                                <h4 class="lh-prices-heading">Bữa sáng Premium</h4>
+                                <h4 class="lh-price-dollar"><span>đ</span>240.000</h4>
+                                <h4 class="lh-prices-heading">Combo Bữa Tối Gia Đình</h4>
                             </div>
                             <div class="lh-prices-viwe">
                                 <ul>
                                     <li>
-                                        <span>Bed & Breakfast</span>
+                                        <span>Bún bò Huế</span>
                                         <i class="ri-arrow-right-line"></i>
                                     </li>
                                     <li>
-                                        <span>Home Made Food</span>
+                                        <span>Chả Ram</span>
                                         <i class="ri-arrow-right-line"></i>
                                     </li>
                                     <li>
-                                        <span>Tour Guide</span>
+                                        <span>Rau sống</span>
                                         <i class="ri-arrow-right-line"></i>
                                     </li>
                                     <li>
-                                        <span>Safety & security</span>
+                                        <span>Nước sâm</span>
                                         <i class="ri-arrow-right-line"></i>
                                     </li>
-                                    <li>
-                                        <span>Local Heritage</span>
-                                        <i class="ri-arrow-right-line"></i>
-                                    </li>
+                                 
                                 </ul>
                             </div>
                             <div class="price-buttons">
-                                <a href="./room-details.php" class="lh-buttons-invers result-placeholder">Book Now</a>
+                                <a href="./room-details.php" class="lh-buttons-invers result-placeholder">Đặt món ngay</a>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4 rs-pb-24">
                     <div class="lh-prices" data-aos="fade-up" data-aos-duration="3000">
-                        <img src="../../assets_customer/img/prices/3.jpg" alt="prices_3" class="prices-image">
+                        <img src="../../assets_customer/img/combo/com-3-mien.jpg" alt="prices_3" class="prices-image">
                         <div class="lh-prices-out">
                             <div class="lh-prices-in">
-                                <h4 class="lh-price-dollar"><span>$</span>99<code> / Per night</code></h4>
-                                <h4 class="lh-prices-heading">Premium Suite</h4>
+                                <h4 class="lh-price-dollar"><span>đ</span>175.000</h4>
+                                <h4 class="lh-prices-heading">Combo Đặc Sản 3 Miền</h4>
                             </div>
                             <div class="lh-prices-viwe">
                                 <ul>
                                     <li>
-                                        <span>Bed & Breakfast</span>
+                                        <span>Gỏi cuốn</span>
                                         <i class="ri-arrow-right-line"></i>
                                     </li>
                                     <li>
-                                        <span>Home Made Food</span>
+                                        <span>Bánh xèo</span>
                                         <i class="ri-arrow-right-line"></i>
                                     </li>
                                     <li>
-                                        <span>Tour Guide</span>
+                                        <span>Cơm lam</span>
                                         <i class="ri-arrow-right-line"></i>
                                     </li>
                                     <li>
-                                        <span>Safety & security</span>
-                                        <i class="ri-arrow-right-line"></i>
-                                    </li>
-                                    <li>
-                                        <span>Local Heritage</span>
+                                        <span>Nước sâm</span>
                                         <i class="ri-arrow-right-line"></i>
                                     </li>
                                 </ul>
                             </div>
                             <div class="price-buttons">
-                                <a href="./room-details.php" class="lh-buttons result-placeholder">Book Now</a>
+                                <a href="./room-details.php" class="lh-buttons result-placeholder">Đặt món ngay</a>
                             </div>
                         </div>
                     </div>
@@ -735,8 +726,8 @@ error_reporting(E_ALL);
                                                             <img src="../../assets_customer/img/businessman/businessman-1.jpg"
                                                                 alt="businessman" class="businessman">
                                                             <div class="lh-testimonials-name-detalis">
-                                                                <h5>Jenifer Brown</h5>
-                                                                <span>Bristol, Uk</span>
+                                                                <h5>Hồng Ánh</h5>
+                                                                <span>QUận 3, TP.HCM</span>
                                                             </div>
                                                         </div>
                                                         <div class="lh-testimonials-side-image">
@@ -745,15 +736,10 @@ error_reporting(E_ALL);
                                                         </div>
                                                     </div>
                                                     <p>
-                                                        "This is the dolor sit amet consectetur adipisicing elit. Cumque
-                                                        odit,
-                                                        voluptatum quibusdam fugiat ratione exercitationem, voluptates
-                                                        deserunt
-                                                        atque sint veniam sit ducimus optio! Blanditiis earum nesciunt
-                                                        exercitationem, animi alias ab!"
+                                                        "Lần đầu ăn bún chả Hà Nội đúng vị như ở phố cổ. Không gian ấm cúng, nhân viên dễ thương. Sẽ quay lại"
                                                     </p>
                                                     <div class="lh-testimonials-holiday">
-                                                        <span>"Amenities At Hotel"</span>
+                                                        <span>"Đánh giá của khách hàng"</span>
                                                         <div class="lh-star">
                                                             <i class="ri-star-fill"></i>
                                                             <i class="ri-star-fill"></i>

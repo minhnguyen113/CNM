@@ -7,37 +7,22 @@ session_start();
 
 
 <!-- Mirrored from maraviyainfotech.com/projects/luxurious-html-v22/admin/./guest.php by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 21 Jan 2025 15:13:52 GMT -->
+
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="Best Luxurious Hotel Booking Template.">
-    <meta name="keywords"
-        content="hotel, booking, business, restaurant, spa, resort, landing, agency, corporate, start up, site design, new business site, business template, professional template, classic, modern">
-    <meta name="author" content="ashishmaraviya">
+	<meta name="keywords"
+		content="hotel, booking, business, restaurant, spa, resort, landing, agency, corporate, start up, site design, new business site, business template, professional template, classic, modern">
+	<meta name="author" content="ashishmaraviya">
 
 	<title>Chef Restaurent</title>
 
 	<!-- App favicon -->
-	<link rel="shortcut icon" href="../../assets_admin/img/logo/logo1.png">
-
-	<!-- Icon CSS -->
-		<link href="../../assets_admin/css/vendor/materialdesignicons.min.css" rel="stylesheet">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-
-	<ink href="../../assets_admin /css/vendor/remixicon.css" rel="stylesheet">
-
-	<!-- Vendor -->
-	<link href='../../assets_admin/css/vendor/datatables.bootstrap5.min.css' rel='stylesheet'>
-		<link href='../../assets_admin/css/vendor/responsive.datatables.min.css' rel='stylesheet'>
-		<link href='../../assets_admin/css/vendor/daterangepicker.css' rel='stylesheet'>
-		<link href="../../assets_admin/css/vendor/bootstrap.min.css" rel="stylesheet">
-		<link href="../../assets_admin/css/vendor/apexcharts.css" rel="stylesheet">
-		<link href="../../assets_admin/css/vendor/simplebar.css" rel="stylesheet">
-		<link href="../../assets_admin/css/vendor/jquery-jvectormap-1.2.2.css" rel="stylesheet">
-
-	<!-- Main CSS -->
-	<link id="mainCss" href="../../assets_admin/css/style.css" rel="stylesheet">
+	<?php
+	include('./head-resource-ad.php');
+	?>
 </head>
 
 <body data-lh-mode="light">
@@ -68,7 +53,7 @@ session_start();
 							</div>
 						</div>
 					</div>
-						<div class="right-header">
+					<div class="right-header">
 						<div class="lh-right-tool display-screen">
 							<a class="lh-screen full" href="javascript:void(0)"><i class="fa-solid fa-expand"></i></a>
 							<a class="lh-screen reset" href="javascript:void(0)">
@@ -89,38 +74,33 @@ session_start();
 						<div class="lh-right-tool lh-user-drop">
 							<div class="lh-hover-drop">
 								<div class="lh-hover-tool">
-									<img class="user" src="../../assets_admin/img/user/1.jpg" alt="user">
+									<img class="user" id="user-img" src="<?php echo !empty($data['HinhAnh']) ? '../../assets_admin/img/user/' . htmlspecialchars($data['HinhAnh']) : '../../assets_admin/img/user/minh.jpg'; ?>" alt="user">
 								</div>
 								<div class="lh-hover-drop-panel right">
 									<div class="details">
-										<h6>Moris Waites</h6>
-										<p>moris@example.com</p>
+										<ul class="border-top" style="margin-top:-20px;">
+											<li><a href="./team-profile.php">Thông tin</a></li>
+
+										</ul>
+										<ul class="border-top">
+											<li><a href="../customer/login.php"><i class="ri-logout-circle-r-line"></i>Đăng xuất</a></li>
+										</ul>
 									</div>
-									<ul class="border-top">
-										<li><a href="./team-profile.php">Profile</a></li>
-										<li><a href="#">Help</a></li>
-										<li><a href="#">Messages</a></li>
-										<li><a href="./team-update.php">Settings</a></li>
-									</ul>
-									<ul class="border-top">
-										<li><a href="./signin.php"><i class="ri-logout-circle-r-line"></i>Logout</a></li>
-									</ul>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
 		</header>
 
 		<!-- sidebar -->
-	<div class="lh-sidebar-overlay"></div>
-<div class="lh-sidebar" data-mode="light">
+		<div class="lh-sidebar-overlay"></div>
+		<div class="lh-sidebar" data-mode="light">
 			<div class="lh-sb-logo">
 				<a href="./index.php" class="sb-full"><img src="../../assets_admin/img/logo/logo2.png" alt="logo" style="width:326px;text-align:center;margin-left:-60px"></a>
 				<a href="./index.php" class="sb-collapse"><img src="../../assets_admin/img/logo/collapse-logo.png" alt="logo"></a>
 			</div>
-<div class="lh-sb-wrapper">
+			<div class="lh-sb-wrapper">
 				<div class="lh-sb-content">
 					<ul class="lh-sb-list">
 						<li class="lh-sb-item sb-drop-item">
@@ -136,7 +116,7 @@ session_start();
 						<li class="lh-sb-item-separator"></li>
 						<?php
 						if ($_SESSION['role_id'] == 1) {
-						echo '
+							echo '
 						<li class="lh-sb-title condense">Apps</li>
 						<li class="lh-sb-item sb-drop-item">
 							<a href="javascript:void(0)" class="lh-drop-toggle">
@@ -216,7 +196,7 @@ session_start();
 										<i class="fa-solid fa-code-commit"></i>Nguyên liệu</a></li>
 								<li><a href="./material-add.php" class="lh-page-link drop">
 										<i class="fa-solid fa-code-commit"></i>Thêm Nguyên liệu</a></li>
-								<li><a href="./forgot.php" class="lh-page-link drop">
+								<li><a href="./material-update.php" class="lh-page-link drop">
 										<i class="fa-solid fa-code-commit"></i>Cập nhật nguyên liệu</a></li>
 								
 							</ul>
@@ -284,11 +264,12 @@ session_start();
 										<i class="fa-solid fa-code-commit"></i>Nguyên liệu</a></li>
 								<li><a href="./signup.php" class="lh-page-link drop">
 										<i class="fa-solid fa-code-commit"></i>Thêm Nguyên liệu</a></li>
-								<li><a href="./forgot.php" class="lh-page-link drop">
+								<li><a href="./material-update.php" class="lh-page-link drop">
 										<i class="fa-solid fa-code-commit"></i>Cập nhật nguyên liệu</a></li>
 								
 							</ul>
-						</li>';}
+						</li>';
+						}
 
 						?>
 
@@ -329,142 +310,143 @@ session_start();
 						// </li> -->
 					</ul>
 				</div>
-			</div>				<div class="lh-sb-content">
-					<ul class="lh-sb-list">
-						<li class="lh-sb-item sb-drop-item">
-							<a href="javascript:void(0)" class="lh-drop-toggle">
-								<i class="fa-regular fa-clock"></i>
-								<span class="condense">Bảng Điều Khiển<i class="drop-arrow fa-regular fa-circle-left"></i></span>
-							</a>
-							<ul class="lh-sb-drop condense">
-								<li class="list"><a href="./index.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Report</a></li>
-							</ul>
-						</li>
-						<li class="lh-sb-item-separator"></li>
-						<li class="lh-sb-title condense">Apps</li>
-						<li class="lh-sb-item sb-drop-item">
-							<a href="javascript:void(0)" class="lh-drop-toggle">
-								<i class="fa-regular fa-address-card"></i><span class="condense">Nhân Viên
-									<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
-							<ul class="lh-sb-drop condense">
-								<li><a href="./team-profile.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Thông tin </a></li>
-								<li><a href="./team-add.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Thêm nhân viên</a></li>
-							
-								<li><a href="./team-list.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Xoá nhân viên</a></li>
-							</ul>
-						</li>
-						<li class="lh-sb-item-separator"></li>
-						<li class="lh-sb-title condense">Customer</li>
-						<li class="lh-sb-item">
-							<a href="./guest.php" class="lh-page-link">
-								<i class="fa-solid fa-user-group"></i><span class="condense"><span
-										class="hover-title">Khách hàng</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./guest-details.php" class="lh-page-link">
-								<i class="fa-solid fa-user-pen"></i><span class="condense">
-									<span class="hover-title">Khách hàng Chi tiết
-									</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./rooms.php" class="lh-page-link">
-								<i class="fa-solid fa-gift"></i><span class="condense"><span
-										class="hover-title">Khuyến mãi </span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./bookings.php" class="lh-page-link">
-								<i class="fa-solid fa-file"></i><span class="condense"><span
-										class="hover-title">Đặt chỗ</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./invoice.php" class="lh-page-link">
-								<i class="fa-regular fa-money-bill-1"></i><span class="condense"><span
-										class="hover-title">Hoá đơn</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item-separator"></li>
-						<li class="lh-sb-title condense">Foods</li>
-						<li class="lh-sb-item">
-							<a href="./menu.php" class="lh-page-link">
-								<i class="fa-solid fa-utensils"></i><span class="condense"><span
-										class="hover-title">Thực đơn</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./menu-add.php" class="lh-page-link">
-								<i class="fa-solid fa-utensils"></i><span class="condense"><span
-										class="hover-title">Thêm thực đơn</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./orders.php" class="lh-page-link">
-								<i class="fa-regular fa-bookmark"></i><span class="condense"><span
-										class="hover-title">Đặt chỗ</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item-separator"></li>
-						<li class="lh-sb-title condense">Login</li>
-						<li class="lh-sb-item sb-drop-item">
-							<a href="javascript:void(0)" class="lh-drop-toggle">
-								<i class="ri-pages-line"></i><span class="condense">Authentication
-									<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
-							<ul class="lh-sb-drop condense">
-								<li><a href="./signin.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Đăng nhập</a></li>
-								<li><a href="./signup.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Đăng ký</a></li>
-								<li><a href="./forgot.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Quên Mật Khẩu</a></li>
-								<li><a href="./reset-password.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Đặt lại mật khẩu</a></li>
-							</ul>
-						</li>
-						<li class="lh-sb-item sb-drop-item">
-							<a href="javascript:void(0)" class="lh-drop-toggle">
-								<i class="ri-service-line"></i><span class="condense">Service pages
-									<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
-							<ul class="lh-sb-drop condense">
-								<li><a href="./404-error-page.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>404 error</a></li>
-								<li><a href="./maintenance.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Maintenance</a></li>
-							</ul>
-						</li>
-						<li class="lh-sb-item-separator"></li>
-						<li class="lh-sb-title condense">Elements</li>
-						<li class="lh-sb-item">
-							<a href="./remix-icons.php" class="lh-page-link">
-								<i class="ri-remixicon-line"></i><span class="condense"><span class="hover-title">remix
-										icons</span></span></a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./material-icons.php" class="lh-page-link">
-								<i class="mdi mdi-material-ui"></i><span class="condense"><span
-										class="hover-title">Material icons</span></span></a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./alert-popup.php" class="lh-page-link">
-								<i class="ri-file-warning-line"></i><span class="condense"><span
-										class="hover-title">Alert Popup</span></span></a>
-						</li>
-						<li class="lh-sb-item-separator"></li>
-						<li class="lh-sb-title condense">Settings</li>
-						<li class="lh-sb-item">
-							<a href="./role.php" class="lh-page-link">
-								<i class="ri-magic-line"></i><span class="condense"><span
-										class="hover-title">Role</span></span></a>
-						</li>
-					</ul>
-				</div>
 			</div>
+			<div class="lh-sb-content">
+				<ul class="lh-sb-list">
+					<li class="lh-sb-item sb-drop-item">
+						<a href="javascript:void(0)" class="lh-drop-toggle">
+							<i class="fa-regular fa-clock"></i>
+							<span class="condense">Bảng Điều Khiển<i class="drop-arrow fa-regular fa-circle-left"></i></span>
+						</a>
+						<ul class="lh-sb-drop condense">
+							<li class="list"><a href="./index.php" class="lh-page-link drop">
+									<i class="fa-solid fa-code-commit"></i>Report</a></li>
+						</ul>
+					</li>
+					<li class="lh-sb-item-separator"></li>
+					<li class="lh-sb-title condense">Apps</li>
+					<li class="lh-sb-item sb-drop-item">
+						<a href="javascript:void(0)" class="lh-drop-toggle">
+							<i class="fa-regular fa-address-card"></i><span class="condense">Nhân Viên
+								<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
+						<ul class="lh-sb-drop condense">
+							<li><a href="./team-profile.php" class="lh-page-link drop">
+									<i class="fa-solid fa-code-commit"></i>Thông tin </a></li>
+							<li><a href="./team-add.php" class="lh-page-link drop">
+									<i class="fa-solid fa-code-commit"></i>Thêm nhân viên</a></li>
+
+							<li><a href="./team-list.php" class="lh-page-link drop">
+									<i class="fa-solid fa-code-commit"></i>Xoá nhân viên</a></li>
+						</ul>
+					</li>
+					<li class="lh-sb-item-separator"></li>
+					<li class="lh-sb-title condense">Customer</li>
+					<li class="lh-sb-item">
+						<a href="./guest.php" class="lh-page-link">
+							<i class="fa-solid fa-user-group"></i><span class="condense"><span
+									class="hover-title">Khách hàng</span> </span>
+						</a>
+					</li>
+					<li class="lh-sb-item">
+						<a href="./guest-details.php" class="lh-page-link">
+							<i class="fa-solid fa-user-pen"></i><span class="condense">
+								<span class="hover-title">Khách hàng Chi tiết
+								</span> </span>
+						</a>
+					</li>
+					<li class="lh-sb-item">
+						<a href="./rooms.php" class="lh-page-link">
+							<i class="fa-solid fa-gift"></i><span class="condense"><span
+									class="hover-title">Khuyến mãi </span> </span>
+						</a>
+					</li>
+					<li class="lh-sb-item">
+						<a href="./bookings.php" class="lh-page-link">
+							<i class="fa-solid fa-file"></i><span class="condense"><span
+									class="hover-title">Đặt chỗ</span> </span>
+						</a>
+					</li>
+					<li class="lh-sb-item">
+						<a href="./invoice.php" class="lh-page-link">
+							<i class="fa-regular fa-money-bill-1"></i><span class="condense"><span
+									class="hover-title">Hoá đơn</span> </span>
+						</a>
+					</li>
+					<li class="lh-sb-item-separator"></li>
+					<li class="lh-sb-title condense">Foods</li>
+					<li class="lh-sb-item">
+						<a href="./menu.php" class="lh-page-link">
+							<i class="fa-solid fa-utensils"></i><span class="condense"><span
+									class="hover-title">Thực đơn</span> </span>
+						</a>
+					</li>
+					<li class="lh-sb-item">
+						<a href="./menu-add.php" class="lh-page-link">
+							<i class="fa-solid fa-utensils"></i><span class="condense"><span
+									class="hover-title">Thêm thực đơn</span> </span>
+						</a>
+					</li>
+					<li class="lh-sb-item">
+						<a href="./orders.php" class="lh-page-link">
+							<i class="fa-regular fa-bookmark"></i><span class="condense"><span
+									class="hover-title">Đặt chỗ</span> </span>
+						</a>
+					</li>
+					<li class="lh-sb-item-separator"></li>
+					<li class="lh-sb-title condense">Login</li>
+					<li class="lh-sb-item sb-drop-item">
+						<a href="javascript:void(0)" class="lh-drop-toggle">
+							<i class="ri-pages-line"></i><span class="condense">Authentication
+								<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
+						<ul class="lh-sb-drop condense">
+							<li><a href="./signin.php" class="lh-page-link drop">
+									<i class="fa-solid fa-code-commit"></i>Đăng nhập</a></li>
+							<li><a href="./signup.php" class="lh-page-link drop">
+									<i class="fa-solid fa-code-commit"></i>Đăng ký</a></li>
+							<li><a href="./forgot.php" class="lh-page-link drop">
+									<i class="fa-solid fa-code-commit"></i>Quên Mật Khẩu</a></li>
+							<li><a href="./reset-password.php" class="lh-page-link drop">
+									<i class="fa-solid fa-code-commit"></i>Đặt lại mật khẩu</a></li>
+						</ul>
+					</li>
+					<li class="lh-sb-item sb-drop-item">
+						<a href="javascript:void(0)" class="lh-drop-toggle">
+							<i class="ri-service-line"></i><span class="condense">Service pages
+								<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
+						<ul class="lh-sb-drop condense">
+							<li><a href="./404-error-page.php" class="lh-page-link drop">
+									<i class="fa-solid fa-code-commit"></i>404 error</a></li>
+							<li><a href="./maintenance.php" class="lh-page-link drop">
+									<i class="fa-solid fa-code-commit"></i>Maintenance</a></li>
+						</ul>
+					</li>
+					<li class="lh-sb-item-separator"></li>
+					<li class="lh-sb-title condense">Elements</li>
+					<li class="lh-sb-item">
+						<a href="./remix-icons.php" class="lh-page-link">
+							<i class="ri-remixicon-line"></i><span class="condense"><span class="hover-title">remix
+									icons</span></span></a>
+					</li>
+					<li class="lh-sb-item">
+						<a href="./material-icons.php" class="lh-page-link">
+							<i class="mdi mdi-material-ui"></i><span class="condense"><span
+									class="hover-title">Material icons</span></span></a>
+					</li>
+					<li class="lh-sb-item">
+						<a href="./alert-popup.php" class="lh-page-link">
+							<i class="ri-file-warning-line"></i><span class="condense"><span
+									class="hover-title">Alert Popup</span></span></a>
+					</li>
+					<li class="lh-sb-item-separator"></li>
+					<li class="lh-sb-title condense">Settings</li>
+					<li class="lh-sb-item">
+						<a href="./role.php" class="lh-page-link">
+							<i class="ri-magic-line"></i><span class="condense"><span
+									class="hover-title">Role</span></span></a>
+					</li>
+				</ul>
+			</div>
+		</div>
 		</div>
 		<!-- Notify sidebar -->
 		<div class="lh-notify-bar-overlay"></div>
@@ -569,7 +551,7 @@ session_start();
 										<p class="time">5:30AM, Today</p>
 										<p class="message">Hello, Room 204 need to be clean.</p>
 										<span class="download-files">
-												<span class="download">
+											<span class="download">
 												<img src="../../assets_admin/img/room/1.png" alt="image">
 												<a href="javascript:void(0)"><i class="ri-download-2-line"></i></a>
 											</span>
@@ -687,9 +669,9 @@ session_start();
 								<h4 class="lh-card-title">Bookings</h4>
 								<div class="header-tools">
 									<a href="javascript:void(0)" class="m-r-10 lh-full-card">
-										<i class="fa-solid fa-expand"title="Full Screen"></i></a>
+										<i class="fa-solid fa-expand" title="Full Screen"></i></a>
 									<div class="lh-date-range dots">
-									<i class="fa-solid fa-sliders"></i>
+										<i class="fa-solid fa-sliders"></i>
 										<span></span>
 									</div>
 								</div>
@@ -748,7 +730,7 @@ session_start();
 												</tr>
 												<tr>
 													<td class="token">2650</td>
-														<td><img class="cat-thumb" src="../../assets_admin/img/user/2.jpg"
+													<td><img class="cat-thumb" src="../../assets_admin/img/user/2.jpg"
 															alt="clients Image"><span class="name">Zara nails
 															Pvt.</span></td>
 													<td>19/04/2024</td>
@@ -845,7 +827,7 @@ session_start();
 												</tr>
 												<tr>
 													<td class="token">2187</td>
-												<td><img class="cat-thumb" src="../../assets_admin/img/user/5.jpg"
+													<td><img class="cat-thumb" src="../../assets_admin/img/user/5.jpg"
 															alt="clients Image"><span class="name">Stanley Knife</span>
 													</td>
 													<td>22/03/2024</td>
@@ -1010,9 +992,9 @@ session_start();
 												</tr>
 												<tr>
 													<td class="token">1865</td>
-												<td><img class="cat-thumb" src="../../assets_admin/img/user/10.jpg"
+													<td><img class="cat-thumb" src="../../assets_admin/img/user/10.jpg"
 															alt="clients Image"><span class="name">Anne Ortha</span>
-													</td>													
+													</td>
 													<td>28/02/2024</td>
 													<td>05/03/2024</td>
 													<td>Passport</td>
@@ -1054,15 +1036,15 @@ session_start();
 
 		<!-- Footer -->
 		<footer>
-        <div class="container-fluid">
-          <div class="copyright">
-            <p>
-              <span id="copyright_year"></span>
-              <span style="margin-left: 22px"> Nhóm 24</span>
-            </p>
-          </div>
-        </div>
-      </footer>
+			<div class="container-fluid">
+				<div class="copyright">
+					<p>
+						<span id="copyright_year"></span>
+						<span style="margin-left: 22px"> Nhóm 24</span>
+					</p>
+				</div>
+			</div>
+		</footer>
 
 		<!-- Feature tools -->
 		<div class="lh-tools-sidebar-overlay"></div>
@@ -1132,7 +1114,7 @@ session_start();
 				</div>
 				<div class="lh-tools-block">
 					<h3>Backgrounds</h3>
-				<div class="lh-tools-info">
+					<div class="lh-tools-info">
 						<div class="lh-tools-item bg active" data-bg-mode="default">
 							<img src="../../assets_admin/img/tools/bg-0.png" alt="default">
 							<p>Default</p>
@@ -1184,31 +1166,27 @@ session_start();
 		</div>
 	</main>
 
-	<!-- Vendor Custom -->
-	<script src="../../assets_admin/js/vendor/jquery-3.6.4.min.js"></script>
-	<script src="../../assets_admin/js/vendor/simplebar.min.js"></script>
-	<script src="../../assets_admin/js/vendor/bootstrap.bundle.min.js"></script>
-	
-	<script src="../../assets_admin/js/vendor/jquery-jvectormap-1.2.2.min.js"></script>
-	<script src="../../assets_admin/js/vendor/jquery-jvectormap-world-mill-en.js"></script>
-	<!-- Data Tables -->
-	<script src='../../assets_admin/js/vendor/jquery.datatables.min.js'></script>
-	<script src='../../assets_admin/js/vendor/datatables.bootstrap5.min.js'></script>
-	<script src='../../assets_admin/js/vendor/datatables.responsive.min.js'></script>
-	<!-- Caleddar -->
-	<script src="../../assets_admin/js/vendor/jquery.simple-calendar.js"></script>
-	<!-- Date Range Picker -->
-	<script src="../../assets_admin/js/vendor/moment.min.js"></script>
-	<script src="../../assets_admin/js/vendor/daterangepicker.js"></script>
-	<script src="../../assets_admin/js/vendor/date-range.js"></script>
-
+	<?php
+	include('../customer/chatbot.php');
+	include('./footer-scripts-ad.php');
+	?>
 	<!-- Main Custom -->
-	<script src="../../assets_admin/js/main.js"></script>
+	<style>
+		#user-img {
+			width: 40px;
+			/* Kích thước nhỏ lại */
+			height: 40px;
+			border-radius: 50%;
+			/* Bo tròn thành hình tròn */
+			object-fit: cover;
+			/* Cắt ảnh để vừa khung */
+			border: 2px solid #fff;
+		}
+	</style>
 
-	<!-- Main Custom -->
-	
 </body>
 
 
 <!-- Mirrored from maraviyainfotech.com/projects/luxurious-html-v22/admin/./guest.php by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 21 Jan 2025 15:13:52 GMT -->
+
 </html>

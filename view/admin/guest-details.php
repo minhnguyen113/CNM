@@ -20,25 +20,9 @@ session_start();
 	<title>Chef Restaurent</title>
 
 	<!-- App favicon -->
-	<link rel="shortcut icon" href="../../assets_admin/img/logo/logo1.png">
-
-	<!-- Icon CSS -->
-	<link href="../../assets_admin/css/vendor/materialdesignicons.min.css" rel="stylesheet">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-
-	<ink href="../../assets_admin /css/vendor/remixicon.css" rel="stylesheet">
-
-		<!-- Vendor -->
-		<link href='../../assets_admin/css/vendor/datatables.bootstrap5.min.css' rel='stylesheet'>
-		<link href='../../assets_admin/css/vendor/responsive.datatables.min.css' rel='stylesheet'>
-		<link href='../../assets_admin/css/vendor/daterangepicker.css' rel='stylesheet'>
-		<link href="../../assets_admin/css/vendor/bootstrap.min.css" rel="stylesheet">
-		<link href="../../assets_admin/css/vendor/apexcharts.css" rel="stylesheet">
-		<link href="../../assets_admin/css/vendor/simplebar.css" rel="stylesheet">
-		<link href="../../assets_admin/css/vendor/jquery-jvectormap-1.2.2.css" rel="stylesheet">
-
-		<!-- Main CSS -->
-		<link id="mainCss" href="../../assets_admin/css/style.css" rel="stylesheet">
+	<?php
+		include('./head-resource-ad.php');
+	?>
 </head>
 
 <body data-lh-mode="light">
@@ -90,21 +74,16 @@ session_start();
 						<div class="lh-right-tool lh-user-drop">
 							<div class="lh-hover-drop">
 								<div class="lh-hover-tool">
-									<img class="user" src="../../assets_admin/img/user/1.jpg" alt="user">
+								<img class="user" id="user-img" src="<?php echo !empty($data['HinhAnh']) ? '../../assets_admin/img/user/' . htmlspecialchars($data['HinhAnh']) : '../../assets_admin/img/user/minh.jpg'; ?>" alt="user">
 								</div>
 								<div class="lh-hover-drop-panel right">
 									<div class="details">
-										<h6>Moris Waites</h6>
-										<p>moris@example.com</p>
-									</div>
-									<ul class="border-top">
-										<li><a href="./team-profile.php">Profile</a></li>
-										<li><a href="#">Help</a></li>
-										<li><a href="#">Messages</a></li>
-										<li><a href="./team-update.php">Settings</a></li>
+									<ul class="border-top" style="margin-top:-20px;">
+										<li><a href="./team-profile.php">Thông tin</a></li>
+
 									</ul>
 									<ul class="border-top">
-										<li><a href="./signin.php"><i class="ri-logout-circle-r-line"></i>Logout</a></li>
+										<li><a href="../customer/login.php"><i class="ri-logout-circle-r-line"></i>Đăng xuất</a></li>
 									</ul>
 								</div>
 							</div>
@@ -217,7 +196,7 @@ session_start();
 										<i class="fa-solid fa-code-commit"></i>Nguyên liệu</a></li>
 								<li><a href="./material-add.php" class="lh-page-link drop">
 										<i class="fa-solid fa-code-commit"></i>Thêm Nguyên liệu</a></li>
-								<li><a href="./forgot.php" class="lh-page-link drop">
+								<li><a href="./material-update.php" class="lh-page-link drop">
 										<i class="fa-solid fa-code-commit"></i>Cập nhật nguyên liệu</a></li>
 								
 							</ul>
@@ -285,48 +264,14 @@ session_start();
 										<i class="fa-solid fa-code-commit"></i>Nguyên liệu</a></li>
 								<li><a href="./material-add.php" class="lh-page-link drop">
 										<i class="fa-solid fa-code-commit"></i>Thêm Nguyên liệu</a></li>
-								<li><a href="./forgot.php" class="lh-page-link drop">
+								<li><a href="./material-update.php" class="lh-page-link drop">
 										<i class="fa-solid fa-code-commit"></i>Cập nhật nguyên liệu</a></li>
 								
 							</ul>
 						</li>';}
 
 						?>
-						<!-- // <li class="lh-sb-item sb-drop-item">
-						// 	<a href="javascript:void(0)" class="lh-drop-toggle">
-						// 		<i class="ri-service-line"></i><span class="condense">Service pages
-						// 			<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
-						// 	<ul class="lh-sb-drop condense">
-						// 		<li><a href="./404-error-page.php" class="lh-page-link drop">
-						// 				<i class="fa-solid fa-code-commit"></i>404 error</a></li>
-						// 		<li><a href="./maintenance.php" class="lh-page-link drop">
-						// 				<i class="fa-solid fa-code-commit"></i>Maintenance</a></li>
-						// 	</ul>
-						// </li>
-						// <li class="lh-sb-item-separator"></li>
-						// <li class="lh-sb-title condense">Elements</li>
-						// <li class="lh-sb-item">
-						// 	<a href="./remix-icons.php" class="lh-page-link">
-						// 		<i class="ri-remixicon-line"></i><span class="condense"><span class="hover-title">remix
-						// 				icons</span></span></a>
-						// </li>
-						// <li class="lh-sb-item">
-						// 	<a href="./material-icons.php" class="lh-page-link">
-						// 		<i class="mdi mdi-material-ui"></i><span class="condense"><span
-						// 				class="hover-title">Material icons</span></span></a>
-						// </li>
-						// <li class="lh-sb-item">
-						// 	<a href="./alert-popup.php" class="lh-page-link">
-						// 		<i class="ri-file-warning-line"></i><span class="condense"><span
-						// 				class="hover-title">Alert Popup</span></span></a>
-						// </li>
-						// <li class="lh-sb-item-separator"></li>
-						// <li class="lh-sb-title condense">Settings</li>
-						// <li class="lh-sb-item">
-						// 	<a href="./role.php" class="lh-page-link">
-						// 		<i class="ri-magic-line"></i><span class="condense"><span
-						// 				class="hover-title">Role</span></span></a>
-						// </li> -->
+					
 					</ul>
 				</div>
 			</div>				<div class="lh-sb-content">
@@ -1303,26 +1248,22 @@ session_start();
 		</div>
 	</main>
 
-	<!-- Vendor Custom -->
-	<script src="../../assets_admin/js/vendor/jquery-3.6.4.min.js"></script>
-	<script src="../../assets_admin/js/vendor/simplebar.min.js"></script>
-	<script src="../../assets_admin/js/vendor/bootstrap.bundle.min.js"></script>
+	<style>
+	#user-img{
+  width: 40px;           /* Kích thước nhỏ lại */
+  height: 40px;
+  border-radius: 50%;    /* Bo tròn thành hình tròn */
+  object-fit: cover;     /* Cắt ảnh để vừa khung */
+  border: 2px solid #fff;
+}
 
-	<script src="../../assets_admin/js/vendor/jquery-jvectormap-1.2.2.min.js"></script>
-	<script src="../../assets_admin/js/vendor/jquery-jvectormap-world-mill-en.js"></script>
-	<!-- Data Tables -->
-	<script src='../../assets_admin/js/vendor/jquery.datatables.min.js'></script>
-	<script src='../../assets_admin/js/vendor/datatables.bootstrap5.min.js'></script>
-	<script src='../../assets_admin/js/vendor/datatables.responsive.min.js'></script>
-	<!-- Caleddar -->
-	<script src="../../assets_admin/js/vendor/jquery.simple-calendar.js"></script>
-	<!-- Date Range Picker -->
-	<script src="../../assets_admin/js/vendor/moment.min.js"></script>
-	<script src="../../assets_admin/js/vendor/daterangepicker.js"></script>
-	<script src="../../assets_admin/js/vendor/date-range.js"></script>
 
-	<!-- Main Custom -->
-	<script src="../../assets_admin/js/main.js"></script>
+</style>
+
+	<?php
+	include('../customer/chatbot.php');
+	include('./footer-scripts-ad.php');
+	?>
 
 	<!-- Main Custom -->
 

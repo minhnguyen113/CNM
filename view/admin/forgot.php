@@ -15,25 +15,9 @@
 	<title>Chef Restaurent</title>
 
 	<!-- App favicon -->
-	<link rel="shortcut icon" href="../../assets_admin/img/logo/logo1.png">
-
-	<!-- Icon CSS -->
-		<link href="../../assets_admin/css/vendor/materialdesignicons.min.css" rel="stylesheet">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-
-	<ink href="../../assets_admin /css/vendor/remixicon.css" rel="stylesheet">
-
-	<!-- Vendor CSS -->
-<link href='../../assets_admin/css/vendor/datatables.bootstrap5.min.css' rel='stylesheet'>
-	<link href='../../assets_admin/css/vendor/responsive.datatables.min.css' rel='stylesheet'>
-	<link href='../../assets_admin/css/vendor/daterangepicker.css' rel='stylesheet'>
-	<link href="../../assets_admin/css/vendor/bootstrap.min.css" rel="stylesheet">
-	<link href="../../assets_admin/css/vendor/apexcharts.css" rel="stylesheet">
-	<link href="../../assets_admin/css/vendor/simplebar.css" rel="stylesheet">
-	<link href="../../assets_admin/css/vendor/jquery-jvectormap-1.2.2.css" rel="stylesheet">
-
-	<!-- Main CSS -->
-	<link id="mainCss" href="../../assets_admin/css/style.css" rel="stylesheet">
+		<?php
+		include('./head-resource-ad.php');
+	?>
 
 </head>
 
@@ -74,28 +58,10 @@
 	</main>
 
 	<!-- Vendor Custom -->
-		<script src="../../assets_admin/js/vendor/jquery-3.6.4.min.js"></script>
-	<script src="../../assets_admin/js/vendor/simplebar.min.js"></script>
-	<script src="../../assets_admin/js/vendor/bootstrap.bundle.min.js"></script>
-	
-	<script src="../../assets_admin/js/vendor/jquery-jvectormap-1.2.2.min.js"></script>
-	<script src="../../assets_admin/js/vendor/jquery-jvectormap-world-mill-en.js"></script>
-	<!-- Data Tables -->
-	<script src='../../assets_admin/js/vendor/jquery.datatables.min.js'></script>
-	<script src='../../assets_admin/js/vendor/datatables.bootstrap5.min.js'></script>
-	<script src='../../assets_admin/js/vendor/datatables.responsive.min.js'></script>
-	<!-- Caleddar -->
-	<script src="../../assets_admin/js/vendor/jquery.simple-calendar.js"></script>
-	<!-- Date Range Picker -->
-	<script src="../../assets_admin/js/vendor/moment.min.js"></script>
-	<script src="../../assets_admin/js/vendor/daterangepicker.js"></script>
-	<script src="../../assets_admin/js/vendor/date-range.js"></script>
-
-	<!-- Main Custom -->
-	<script src="../../assets_admin/js/main.js"></script>
-
-	<!-- Main Custom -->
-	<script src="assets/js/main.js"></script>
+		<?php
+	include('../customer/chatbot.php');
+	include('./footer-scripts-ad.php');
+	?>
 </body>
 
 

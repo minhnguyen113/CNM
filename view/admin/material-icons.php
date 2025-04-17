@@ -94,21 +94,16 @@ session_start();
 						<div class="lh-right-tool lh-user-drop">
 							<div class="lh-hover-drop">
 								<div class="lh-hover-tool">
-									<img class="user" src="../../assets_admin/img/user/1.jpg" alt="user">
+								<img class="user" id="user-img" src="<?php echo !empty($data['HinhAnh']) ? '../../assets_admin/img/user/' . htmlspecialchars($data['HinhAnh']) : '../../assets_admin/img/user/minh.jpg'; ?>" alt="user">
 								</div>
 								<div class="lh-hover-drop-panel right">
 									<div class="details">
-										<h6>Moris Waites</h6>
-										<p>moris@example.com</p>
-									</div>
-									<ul class="border-top">
-										<li><a href="./team-profile.php">Profile</a></li>
-										<li><a href="#">Help</a></li>
-										<li><a href="#">Messages</a></li>
-										<li><a href="./team-update.php">Settings</a></li>
+									<ul class="border-top" style="margin-top:-20px;">
+										<li><a href="./team-profile.php">Thông tin</a></li>
+
 									</ul>
 									<ul class="border-top">
-										<li><a href="./signin.php"><i class="ri-logout-circle-r-line"></i>Logout</a></li>
+										<li><a href="../customer/login.php"><i class="ri-logout-circle-r-line"></i>Đăng xuất</a></li>
 									</ul>
 								</div>
 							</div>
@@ -221,7 +216,7 @@ session_start();
 										<i class="fa-solid fa-code-commit"></i>Nguyên liệu</a></li>
 								<li><a href="./material-add.php" class="lh-page-link drop">
 										<i class="fa-solid fa-code-commit"></i>Thêm Nguyên liệu</a></li>
-								<li><a href="./forgot.php" class="lh-page-link drop">
+								<li><a href="./material-update.php" class="lh-page-link drop">
 										<i class="fa-solid fa-code-commit"></i>Cập nhật nguyên liệu</a></li>
 								
 							</ul>
@@ -289,7 +284,7 @@ session_start();
 										<i class="fa-solid fa-code-commit"></i>Nguyên liệu</a></li>
 								<li><a href="./material-add.php" class="lh-page-link drop">
 										<i class="fa-solid fa-code-commit"></i>Thêm Nguyên liệu</a></li>
-								<li><a href="./forgot.php" class="lh-page-link drop">
+								<li><a href="./material-update.php" class="lh-page-link drop">
 										<i class="fa-solid fa-code-commit"></i>Cập nhật nguyên liệu</a></li>
 								
 							</ul>
@@ -885,25 +880,10 @@ session_start();
 	</main>
 
 	<!-- Vendor Custom -->
-		<script src="../../assets_admin/js/vendor/jquery-3.6.4.min.js"></script>
-	<script src="../../assets_admin/js/vendor/simplebar.min.js"></script>
-	<script src="../../assets_admin/js/vendor/bootstrap.bundle.min.js"></script>
-	
-	<script src="../../assets_admin/js/vendor/jquery-jvectormap-1.2.2.min.js"></script>
-	<script src="../../assets_admin/js/vendor/jquery-jvectormap-world-mill-en.js"></script>
-	<!-- Data Tables -->
-	<script src='../../assets_admin/js/vendor/jquery.datatables.min.js'></script>
-	<script src='../../assets_admin/js/vendor/datatables.bootstrap5.min.js'></script>
-	<script src='../../assets_admin/js/vendor/datatables.responsive.min.js'></script>
-	<!-- Caleddar -->
-	<script src="../../assets_admin/js/vendor/jquery.simple-calendar.js"></script>
-	<!-- Date Range Picker -->
-	<script src="../../assets_admin/js/vendor/moment.min.js"></script>
-	<script src="../../assets_admin/js/vendor/daterangepicker.js"></script>
-	<script src="../../assets_admin/js/vendor/date-range.js"></script>
-
-	<!-- Main Custom -->
-	<script src="../../assets_admin/js/main.js"></script>
+	<?php
+	include('../customer/chatbot.php');
+	include('./footer-scripts-ad.php');
+	?>
 
 	<!-- Main Custom -->
 	<script src="assets/js/material-icon.js"></script>

@@ -1975,6 +1975,7 @@ label {
   -ms-flex-align: center;
   align-items: center;
 }
+
 .lh-header .lh-header-items .left-header a,
 [data-header-mode-tool="light"] .lh-header-items .left-header a {
   display: -webkit-box;
@@ -2040,6 +2041,8 @@ label {
   margin-right: 10px;
   border: 1px solid #eee;
 }
+
+
 .lh-header
   .lh-header-items
   .right-header

@@ -1,4 +1,6 @@
 <!-- CSS Plugins -->
+<link rel="stylesheet" href="../../assets_customer/css/bootstrap-5.3.5-dist/css/bootstrap-grid.min.css">
+<link rel="icon" href="../../assets_customer/img/logo/logo1.png" type="image/x-icon">
 <link rel="stylesheet" href="../../assets_customer/css/vendor/bootstrap.min.css">
 <link rel="stylesheet" href="../../assets_customer/css/vendor/magnific-popup.css">
 <link rel="stylesheet" href="../../assets_customer/css/vendor/aos.css">

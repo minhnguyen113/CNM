@@ -59,26 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
 
 	<title>Chef Restaurent</title>
 
-	<!-- App favicon -->
-	<link rel="shortcut icon" href="../../assets_admin/img/logo/logo1.png">
-
-	<!-- Icon CSS -->
-	<link href="../../assets_admin/css/vendor/materialdesignicons.min.css" rel="stylesheet">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-
-	<ink href="../../assets_admin /css/vendor/remixicon.css" rel="stylesheet">
-
-		<!-- Vendor -->
-		<link href='../../assets_admin/css/vendor/datatables.bootstrap5.min.css' rel='stylesheet'>
-		<link href='../../assets_admin/css/vendor/responsive.datatables.min.css' rel='stylesheet'>
-		<link href='../../assets_admin/css/vendor/daterangepicker.css' rel='stylesheet'>
-		<link href="../../assets_admin/css/vendor/bootstrap.min.css" rel="stylesheet">
-		<link href="../../assets_admin/css/vendor/apexcharts.css" rel="stylesheet">
-		<link href="../../assets_admin/css/vendor/simplebar.css"rel="stylesheet">
-		<link href="../../assets_admin/css/vendor/jquery-jvectormap-1.2.2.css" rel="stylesheet">
-		<script src="../../assets_admin/js/vendor/apexcharts.min.js"></script>
-		<!-- Main CSS -->
-		<link id="mainCss" href="../../assets_admin/css/style.css" rel="stylesheet">
+	
 </head>
 
 <body data-lh-mode="light">
@@ -149,7 +130,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
 										<li><a href="./team-update.php">Settings</a></li>
 									</ul>
 									<ul class="border-top">
-										<li><a href="./Login/login.php"><i class="ri-logout-circle-r-line"></i>Logout</a></li>
+										<li><a href="login.php"><i class="ri-logout-circle-r-line"></i>Logout</a></li>
 									</ul>
 								</div>
 							</div>
@@ -262,7 +243,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
 										<i class="fa-solid fa-code-commit"></i>Nguyên liệu</a></li>
 								<li><a href="./material-add.php" class="lh-page-link drop">
 										<i class="fa-solid fa-code-commit"></i>Thêm Nguyên liệu</a></li>
-								<li><a href="./forgot.php" class="lh-page-link drop">
+								<li><a href="./material-update.php" class="lh-page-link drop">
 										<i class="fa-solid fa-code-commit"></i>Cập nhật nguyên liệu</a></li>
 								
 							</ul>
@@ -330,7 +311,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
 										<i class="fa-solid fa-code-commit"></i>Nguyên liệu</a></li>
 								<li><a href="./material-add.php" class="lh-page-link drop">
 										<i class="fa-solid fa-code-commit"></i>Thêm Nguyên liệu</a></li>
-								<li><a href="./forgot.php" class="lh-page-link drop">
+								<li><a href="./material-update.php" class="lh-page-link drop">
 										<i class="fa-solid fa-code-commit"></i>Cập nhật nguyên liệu</a></li>
 								
 							</ul>

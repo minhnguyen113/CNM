@@ -15,28 +15,9 @@
 	<title>Chef Restaurent</title>
 
 	<!-- App favicon -->
-	<link rel="shortcut icon" href="../../assets_admin/img/logo/logo1.png">
-
-	<!-- Icon CSS -->
-		<link href="../../assets_admin/css/vendor/materialdesignicons.min.css" rel="stylesheet">
-
-	<ink href="../../assets_admin /css/vendor/remixicon.css" rel="stylesheet">
-	<link href="assets/css/vendor/sweetalert2.min.css" rel="stylesheet">
-	<link href="assets/css/vendor/animate.min.css" rel="stylesheet">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-
-
-	<!-- Vendor CSS -->
-<link href='../../assets_admin/css/vendor/datatables.bootstrap5.min.css' rel='stylesheet'>
-	<link href='../../assets_admin/css/vendor/responsive.datatables.min.css' rel='stylesheet'>
-	<link href='../../assets_admin/css/vendor/daterangepicker.css' rel='stylesheet'>
-	<link href="../../assets_admin/css/vendor/bootstrap.min.css" rel="stylesheet">
-	<link href="../../assets_admin/css/vendor/apexcharts.css" rel="stylesheet">
-	<link href="../../assets_admin/css/vendor/simplebar.css" rel="stylesheet">
-	<link href="../../assets_admin/css/vendor/jquery-jvectormap-1.2.2.css" rel="stylesheet">
-
-	<!-- Main CSS -->
-	<link id="mainCss" href="../../assets_admin/css/style.css" rel="stylesheet">
+	<?php
+		include('./head-resource-ad.php');
+	?>
 
 </head>
 
@@ -94,21 +75,16 @@
 						<div class="lh-right-tool lh-user-drop">
 							<div class="lh-hover-drop">
 								<div class="lh-hover-tool">
-									<img class="user" src="../../assets_admin/img/user/1.jpg" alt="user">
+								<img class="user" id="user-img" src="<?php echo !empty($data['HinhAnh']) ? '../../assets_admin/img/user/' . htmlspecialchars($data['HinhAnh']) : '../../assets_admin/img/user/minh.jpg'; ?>" alt="user">
 								</div>
 								<div class="lh-hover-drop-panel right">
 									<div class="details">
-										<h6>Moris Waites</h6>
-										<p>moris@example.com</p>
-									</div>
-									<ul class="border-top">
-										<li><a href="./team-profile.php">Profile</a></li>
-										<li><a href="#">Help</a></li>
-										<li><a href="#">Messages</a></li>
-										<li><a href="./team-update.php">Settings</a></li>
+									<ul class="border-top" style="margin-top:-20px;">
+										<li><a href="./team-profile.php">Thông tin</a></li>
+
 									</ul>
 									<ul class="border-top">
-										<li><a href="./signin.php"><i class="ri-logout-circle-r-line"></i>Logout</a></li>
+										<li><a href="../customer/login.php"><i class="ri-logout-circle-r-line"></i>Đăng xuất</a></li>
 									</ul>
 								</div>
 							</div>
@@ -221,7 +197,7 @@
 										<i class="fa-solid fa-code-commit"></i>Nguyên liệu</a></li>
 								<li><a href="./material-add.php" class="lh-page-link drop">
 										<i class="fa-solid fa-code-commit"></i>Thêm Nguyên liệu</a></li>
-								<li><a href="./forgot.php" class="lh-page-link drop">
+								<li><a href="./material-update.php" class="lh-page-link drop">
 										<i class="fa-solid fa-code-commit"></i>Cập nhật nguyên liệu</a></li>
 								
 							</ul>
@@ -289,7 +265,7 @@
 										<i class="fa-solid fa-code-commit"></i>Nguyên liệu</a></li>
 								<li><a href="./material-add.php" class="lh-page-link drop">
 										<i class="fa-solid fa-code-commit"></i>Thêm Nguyên liệu</a></li>
-								<li><a href="./forgot.php" class="lh-page-link drop">
+								<li><a href="./material-update.php" class="lh-page-link drop">
 										<i class="fa-solid fa-code-commit"></i>Cập nhật nguyên liệu</a></li>
 								
 							</ul>
@@ -826,27 +802,11 @@
 		</div>
 	</main>
 
-	<!-- Vendor Custom -->
-	<script src="../../assets_admin/js/vendor/jquery-3.6.4.min.js"></script>
-	<script src="../../assets_admin/js/vendor/simplebar.min.js"></script>
-	<script src="../../assets_admin/js/vendor/bootstrap.bundle.min.js"></script>
-	
-	<script src="../../assets_admin/js/vendor/jquery-jvectormap-1.2.2.min.js"></script>
-	<script src="../../assets_admin/js/vendor/jquery-jvectormap-world-mill-en.js"></script>
-	<!-- Data Tables -->
-	<script src='../../assets_admin/js/vendor/jquery.datatables.min.js'></script>
-	<script src='../../assets_admin/js/vendor/datatables.bootstrap5.min.js'></script>
-	<script src='../../assets_admin/js/vendor/datatables.responsive.min.js'></script>
-	<!-- Caleddar -->
-	<script src="../../assets_admin/js/vendor/jquery.simple-calendar.js"></script>
-	<!-- Date Range Picker -->
-	<script src="../../assets_admin/js/vendor/moment.min.js"></script>
-	<script src="../../assets_admin/js/vendor/daterangepicker.js"></script>
-	<script src="../../assets_admin/js/vendor/date-range.js"></script>
-
-	<!-- Main Custom -->
-	<script src="../../assets_admin/js/main.js"></script>
-</body>
+	<?php
+	include('../customer/chatbot.php');
+	include('./footer-scripts-ad.php');
+	?>
+	</body>
 
 
 <!-- Mirrored from maraviyainfotech.com/projects/luxurious-html-v22/admin/alert-popup.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 21 Jan 2025 15:13:59 GMT -->

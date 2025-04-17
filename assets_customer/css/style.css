@@ -1388,6 +1388,7 @@ select {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  height:40px;
 }
 .lh-buttons:hover {
   background: none;
@@ -1914,7 +1915,7 @@ a.back-to-top:hover {
 /* Responsive */
 @media screen and (max-width: 1399px) {
   .banner h2 {
-    font-size: 35px;
+    font-size: 32px;
     padding-bottom: 0px;
   }
   .banner h2 span::after {
