@@ -122,4 +122,83 @@ class UserModel
 
         return $result;
     }
+
+    // xem danh sách khách hàng
+    public function getAllCustomers()
+    {
+        $p = new ketnoi();
+        $con = $p->Moketnoi();
+        $sql = "SELECT * FROM NguoiDung WHERE ID_Role = 3";
+        $result = mysqli_query($con, $sql);
+        if (!$result) {
+            die("Lỗi truy vấn: " . mysqli_error($con));
+        }
+        $p->Dongketnoi($con);
+        return $result;
+    }
+
+    //thêm khách hàng
+
+    public function addCustomer($username, $email, $phone, $address, $date, $avatarFileName, $password)
+    {
+        $p = new ketnoi();
+        $con = $p->Moketnoi();
+    
+        // Chuẩn hoá dữ liệu đầu vào
+        $phone = trim($phone);
+        $email = trim($email);
+        $username = trim($username);
+    
+        // Kiểm tra số điện thoại đã tồn tại
+        $checkPhoneQuery = "SELECT * FROM NguoiDung WHERE TRIM(SoDienThoai) = ?";
+        $stmt = mysqli_prepare($con, $checkPhoneQuery);
+        mysqli_stmt_bind_param($stmt, "s", $phone);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+    
+        if (mysqli_num_rows($result) > 0) {
+            return "phone_exists"; 
+        }
+    
+        // Thêm người dùng mới
+        $insertQuery = "INSERT INTO NguoiDung (TenUser, Email, SoDienThoai, DiaChi, NgaySinh, HinhAnh, MatKhau, ID_Role)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, 3)";
+        $stmt = mysqli_prepare($con, $insertQuery);
+        mysqli_stmt_bind_param($stmt, "sssssss", $username, $email, $phone, $address, $date, $avatarFileName, $password);
+        $success = mysqli_stmt_execute($stmt);
+    
+        $p->Dongketnoi($con);
+        return $success;
+    }
+    
+
+    // xoa khách hàng
+    public function deleteCustomer($id)
+    {
+        $p = new ketnoi();
+        $con = $p->Moketnoi();
+
+        // Chuẩn bị câu lệnh SQL
+        $sql = "DELETE FROM NguoiDung WHERE ID_User = ? AND ID_Role = 3";
+        $stmt = mysqli_prepare($con, $sql);
+
+        if ($stmt) {
+            // Gán giá trị vào tham số
+            mysqli_stmt_bind_param($stmt, "i", $id);
+
+            // Thực thi câu lệnh
+            $result = mysqli_stmt_execute($stmt);
+
+            // Đóng statement
+            mysqli_stmt_close($stmt);
+        } else {
+            // Nếu lỗi prepare, trả về false
+            $result = false;
+        }
+
+        // Đóng kết nối
+        $p->Dongketnoi($con);
+
+        return $result;
+    }
 }

@@ -68,7 +68,7 @@ error_reporting(E_ALL);
 
                                 <li class="nav-item dropdown">
                                     <?php if (isset($_SESSION['username'])): ?>
-                                        <a class="nav-link dropdown-toggle" href="team-profile.php">
+                                        <a class="nav-link dropdown-toggle" href="team-profile-cus.php">
                                             Xin chào, <?php echo htmlspecialchars($_SESSION['username']); ?>
                                         </a>
                                         <ul class="dropdown-menu">
@@ -857,62 +857,57 @@ error_reporting(E_ALL);
     <section class="section-blog bg-gray padding-tb-100">
         <div class="container">
             <div class="banner" data-aos="fade-up" data-aos-duration="2000">
-                <h2>Stay Update With <span>Us</span></h2>
+                <h2>Có gì mới tại nhà hàng của <span> chúng tôi ?</span></h2>
             </div>
             <div class="slick-slider blog-slider" data-aos="fade-up" data-aos-duration="2000">
                 <div class="blog-card">
-                    <figure><img src="../../assets_customer/img/blog/2.jpg" alt="blog-img" class="blog-image-top">
+                    <figure><img src="../../assets_customer/img/blog/banh-mi-phomai.jpg" alt="blog-img" class="blog-image-top">
                     </figure>
                     <div class="lh-blog">
                         <div class="lh-blog-date">
-                            <span><code>Restaurant</code> - 09 Jan 2024 - 05 Comment</span>
+                            <span><code>Món ăn mới</code> - 22 Jan 2025 - 05 Comment</span>
                         </div>
-                        <a class="top-heding" href="blog-details.php">Offers Exclusive amenities & Facilities To Guests
-                            and free offers.</a>
+                        <a class="top-heding" href="#">Ra mắt món Bánh mì thịt nướng phô mai – kết hợp hoàn hảo giữa truyền thống và hiện đại. Đừng bỏ lỡ!</a>
                     </div>
                 </div>
                 <div class="blog-card">
-                    <figure><img src="../../assets_customer/img/blog/3.jpg" alt="blog-img" class="blog-image-top">
+                    <figure><img src="../../assets_customer/img/blog/bua-sang.jpg" alt="blog-img" class="blog-image-top">
                     </figure>
                     <div class="lh-blog">
                         <div class="lh-blog-date">
-                            <span><code>Marketing</code> - 15 Feb 2024 - 22 Comment</span>
+                            <span><code>Thực đơn</code> - 15 Jan 2025 - 22 Comment</span>
                         </div>
-                        <a class="top-heding" href="blog-details.php">Announces A Private Island Hotel In The Maldives
-                            for couple.</a>
+                        <a class="top-heding" href="#">Nhà hàng vừa cập nhật thực đơn buổi sáng với nhiều món ăn nhẹ, dinh dưỡng và hấp dẫn.</a>
                     </div>
                 </div>
                 <div class="blog-card">
-                    <figure><img src="../../assets_customer/img/blog/4.jpg" alt="blog-img" class="blog-image-top">
+                    <figure><img src="../../assets_customer/img/blog/sale-20.jpg" alt="blog-img" class="blog-image-top">
                     </figure>
                     <div class="lh-blog">
                         <div class="lh-blog-date">
-                            <span><code>Hotel</code> - 22 Dec 2024 - 00 Comment</span>
+                            <span><code>Khuyến Mãi</code> 01 Apr 2025 - 00 Comment</span>
                         </div>
-                        <a class="top-heding" href="blog-details.php">Exclusive amenities Facilities to Guests Offers
-                            rooms free.</a>
+                        <a class="top-heding" href="#">Giảm 20% cho hóa đơn trên 300.000đ từ 01–15/4. Áp dụng cho khách đặt bàn trước online!</a>
                     </div>
                 </div>
                 <div class="blog-card">
-                    <figure><img src="../../assets_customer/img/blog/5.jpg" alt="blog-img" class="blog-image-top">
+                    <figure><img src="../../assets_customer/img/blog/banh-flan.jpg" alt="blog-img" class="blog-image-top">
                     </figure>
                     <div class="lh-blog">
                         <div class="lh-blog-date">
-                            <span><code>Rooms</code> - 11 Nov 2024 - 01 Comment</span>
+                            <span><code>Món tráng miệng mới</code> - 11 Feb 2025 - 01 Comment</span>
                         </div>
-                        <a class="top-heding" href="blog-details.php">Island Hotel In The Maldives Exclusive amenities
-                            Facilities.</a>
+                        <a class="top-heding" href="blog-details.php">Thưởng thức bánh flan phô mai caramel mềm mịn, ngọt nhẹ, được làm thủ công mỗi ngày.</a>
                     </div>
                 </div>
                 <div class="blog-card">
-                    <figure><img src="../../assets_customer/img/blog/6.jpg" alt="blog-img" class="blog-image-top">
+                    <figure><img src="../../assets_customer/img/blog/giam-10.jpg" alt="blog-img" class="blog-image-top">
                     </figure>
                     <div class="lh-blog">
                         <div class="lh-blog-date">
-                            <span><code>Spa</code> - 02 Mar 2024 - 25 Comment</span>
+                            <span><code>Đồ uống đặc biệt</code>02 Nov 2024 - 25 Comment</span>
                         </div>
-                        <a class="top-heding" href="blog-details.php">Amenities Facilities to Guests Offers rooms free
-                            Exclusive.</a>
+                        <a class="top-heding" href="blog-details.php">Giảm 10% cho các loại trà trái cây tươi – chỉ áp dụng trong khung giờ từ 14h đến 17h mỗi ngày.</a>
                     </div>
                 </div>
             </div>
@@ -932,31 +927,19 @@ error_reporting(E_ALL);
                             <ul>
                                 <li>
                                     <code>*</code>
-                                    <a href="./index.php">Home</a>
+                                    <a href="./index.php">Trang chủ</a>
                                 </li>
                                 <li>
                                     <code>*</code>
-                                    <a href="about.php">About</a>
+                                    <a href="./discount.php">Khuyến mãi</a>
                                 </li>
                                 <li>
                                     <code>*</code>
-                                    <a href="room-details.php">Rooms & suites</a>
+                                    <a href="./book.php">Đặt bàn</a>
                                 </li>
                                 <li>
                                     <code>*</code>
-                                    <a href="spa.php">spa & Wellness</a>
-                                </li>
-                                <li>
-                                    <code>*</code>
-                                    <a href="restaurant.php">Restaurant</a>
-                                </li>
-                                <li>
-                                    <code>*</code>
-                                    <a href="gallery.php">Gallery</a>
-                                </li>
-                                <li>
-                                    <code>*</code>
-                                    <a href="contact.php">Contact</a>
+                                    <a href="./menu.php">Thực đơn</a>
                                 </li>
                             </ul>
                         </div>
@@ -967,9 +950,7 @@ error_reporting(E_ALL);
                                 <img src="../../assets_customer/img/logo/logo1.png" alt="logo">
                             </div>
                             <div class="lh-footer-social">
-                                <p>This is the dolor sit amet consectetur adipisicing elit. Libero voluptatem soluta
-                                    eaque
-                                    ullam accusantium animi!</p>
+                                <p>Chào mừng đến với nhà hàng Chef – nơi hội tụ tinh hoa ẩm thực Việt. Chúng tôi luôn mang đến cho bạn trải nghiệm tuyệt vời nhất từ món ăn đến phục vụ.</p>
                                 <form class="lh-control-footer" role="search">
                                     <div class="lh-control-inner-icons">
                                         <i class="ri-send-plane-line"></i>
@@ -999,22 +980,21 @@ error_reporting(E_ALL);
                     <div class="col-lg-3 col-md-6 rs-pb-24 order-lg-3 order-md-3 order-3">
                         <div class="lh-footer-cols-contain ">
                             <div class="lh-footer-heading">
-                                <h4>Contact Information</h4>
+                                <h4>Thông tin liên lạc</h4>
                             </div>
                             <div class="lh-footer-contact-infoemation">
                                 <ul>
                                     <li class="lh-information">
-                                        <h5 class="heading">Location</h5>
-                                        <span>5 Green st.Huntington stati on, Ny 11746, Libero voluptatem soluta
-                                            Bharat.</span>
+                                        <h5 class="heading">Địa chỉ</h5>
+                                        <span>4 Nguyễn Văn Bảo, Gò Vấp, TP. Hồ Chí Minh</span>
                                     </li>
                                     <li class="lh-information">
                                         <h5 class="heading">Email</h5>
                                         <span>example@ec-email.com</span>
                                     </li>
                                     <li class="lh-information">
-                                        <h5 class="heading">Phone No</h5>
-                                        <span>+91(1234)(567)(890)</span>
+                                        <h5 class="heading">Điện thoại</h5>
+                                        <span>+84 379789461</span>
                                     </li>
                                 </ul>
                             </div>
@@ -1023,8 +1003,7 @@ error_reporting(E_ALL);
                 </div>
             </div>
             <div class="footer-bottom-copy">
-                <span>Copyright @ <span id="copyright_year"></span> <a href="./index.php">Luxurious</a> All Rights
-                    Reserved</span>
+                <span>Nhóm 24 <span id="copyright_year"></span> <a href="./index.php">Chef Restaurent</a></span>
             </div>
         </div>
     </footer>

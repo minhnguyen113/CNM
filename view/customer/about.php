@@ -612,25 +612,24 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-6 rs-pb-24 order-lg-3 order-md-3 order-3">
+                      <div class="col-lg-3 col-md-6 rs-pb-24 order-lg-3 order-md-3 order-3">
                         <div class="lh-footer-cols-contain ">
                             <div class="lh-footer-heading">
-                                <h4>Contact Information</h4>
+                                <h4>Thông tin liên lạc</h4>
                             </div>
                             <div class="lh-footer-contact-infoemation">
                                 <ul>
                                     <li class="lh-information">
-                                        <h5 class="heading">Location</h5>
-                                        <span>5 Green st.Huntington stati on, Ny 11746, Libero voluptatem soluta
-                                            Bharat.</span>
+                                        <h5 class="heading">Địa chỉ</h5>
+                                        <span>4 Nguyễn Văn Bảo, Gò Vấp, TP. Hồ Chí Minh</span>
                                     </li>
                                     <li class="lh-information">
                                         <h5 class="heading">Email</h5>
                                         <span>example@ec-email.com</span>
                                     </li>
                                     <li class="lh-information">
-                                        <h5 class="heading">Phone No</h5>
-                                        <span>+91(1234)(567)(890)</span>
+                                        <h5 class="heading">Điện thoại</h5>
+                                        <span>+84 379789461</span>
                                     </li>
                                 </ul>
                             </div>

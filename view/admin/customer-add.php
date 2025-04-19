@@ -29,14 +29,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Gọi controller
     $userController = new UserController();
-    $result = $userController->StaffAddUser($username, $email, $phone, $address, $date, $avatarFileName, $password, $roleId);
+    $result = $userController->StaffAddCustomer($username, $email, $phone, $address, $date, $avatarFileName, $password);
 
     if ($result === "phone_exists") {
         echo "<script>alert('Số điện thoại đã tồn tại!'); history.back();</script>";
     } elseif ($result) {
-        echo "<script>alert('Thêm nhân viên thành công!'); window.location.href='team-list.php';</script>";
+        echo "<script>alert('Thêm thành viên thành công!'); window.location.href='list-customer.php';</script>";
     } else {
-        echo "<script>alert('Có lỗi xảy ra khi thêm nhân viên.'); history.back();</script>";
+        echo "<script>alert('Có lỗi xảy ra khi thêm thành viên.'); history.back();</script>";
     }
 }
 

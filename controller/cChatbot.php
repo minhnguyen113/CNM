@@ -7,31 +7,19 @@ class ChatbotController
     {
         header('Content-Type: application/json');
 
-        // Kiểm tra nếu có dữ liệu từ phía client gửi lên
         if (isset($_POST['message'])) {
             $model = new ChatbotModel();
+            $message = trim($_POST['message']);
 
-            // B1: Lấy câu hỏi gốc từ người dùng
-            $cauHoiGoc = trim($_POST['message']);
+            $response = $model->xuLyCauHoi($message);
 
-            // B2: Tách từ khóa thông minh từ câu hỏi
-            $tuKhoa = $model->tachTuKhoa($cauHoiGoc);
-
-            // B3: Tìm món ăn theo từ khóa đã tách
-            $ketQua = $model->timMonAn($tuKhoa);
-
-            // B4: Nếu không có kết quả thì lấy món ăn gợi ý
-            if (empty($ketQua)) {
-                $ketQua = $model->layMonAnGoiY();
-            }
-
-            // B5: Trả kết quả JSON về cho frontend
             echo json_encode([
                 'success' => true,
-                'data' => $ketQua
+                'type' => $response['type'],
+                'data' => $response['data'] ?? [],
+                'message' => $response['message'] ?? ''
             ]);
         } else {
-            // Trường hợp không nhận được dữ liệu
             echo json_encode([
                 'success' => false,
                 'message' => 'Không nhận được tin nhắn từ client.'
@@ -40,6 +28,5 @@ class ChatbotController
     }
 }
 
-// Khởi tạo controller và xử lý yêu cầu
 $chatbotController = new ChatbotController();
 $chatbotController->xuLyYeuCauChat();

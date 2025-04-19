@@ -88,12 +88,31 @@ class UserController
 
     // Xóa nhân viên
     
-    
-
     public function StaffDeleteUser($iduser)
     {
         $model = new UserModel();
         return $model->deleteUser($iduser);
     }
-    
+
+    // Lấy danh sách tất cả khách hàng
+    public function StaffGetAllCustomers()
+    {
+        $model = new UserModel();
+        return $model->getAllCustomers();
+    }
+
+    //them khách hàng
+    public function StaffAddCustomer($username, $email, $phone, $address, $date, $avatarFileName, $password)
+    {
+        $model = new UserModel();
+        return $model->addCustomer($username, $email, $phone, $address, $date, $avatarFileName, $password);
+    }
+
+
+    //Xoá khách hàng
+    public function StaffDeleteCustomer($iduser)
+    {
+        $model = new UserModel();
+        return $model->deleteCustomer($iduser);
+    }
 }

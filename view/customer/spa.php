@@ -364,59 +364,64 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-lg-6 rs-pb-24 order-lg-2 order-md-1 order-1">
-                    <div class="lh-social-media">
-                        <div class="footer-logos">
-                            <img src="assets/img/logo/logo.png" alt="logo">
-                        </div>
-                        <div class="lh-footer-social">
-                            <p>This is the dolor sit amet consectetur adipisicing elit. Libero voluptatem soluta eaque
-                                ullam accusantium animi!</p>
-                            <form class="lh-control-footer" role="search">
-                                <div class="lh-control-inner-icons">
-                                    <i class="ri-send-plane-line"></i>
-                                </div>
-                                <input class="form-control shadow-none me-4" type="search" placeholder="Subscribe..."
-                                    aria-label="Search">
-                            </form>
-                        </div>
-                        <div class="lh-follow-social">
-                            <h4 class="heading">Follow On Social</h4>
-                            <div class="footer-logo-image">
-                                <a href="#"><img src="assets/img/logo/facebook.png" alt="facebook"></a>
-                                <a href="#"><img src="assets/img/logo/twitter.png" alt="twitter"></a>
-                                <a href="#"><img src="assets/img/logo/instagram.png" alt="instagram"></a>
-                                <a href="#"><img src="assets/img/logo/linkedin.png" alt="linkedin"></a>
-                                <a href="#"><img src="assets/img/logo/dribbble.png" alt="dribbble"></a>
-                                <a href="#"><img src="assets/img/logo/pinterest.png" alt="pinterest"></a>
+                <div class="col-lg-3 col-md-6 rs-pb-24 p-991 order-lg-1 order-md-2 order-2">
+                        <div class="lh-footer-cols-contain">
+                            <div class="lh-footer-heading">
+                                <h4>Explore</h4>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 rs-pb-24 order-lg-3 order-md-3 order-3">
-                    <div class="lh-footer-cols-contain ">
-                        <div class="lh-footer-heading">
-                            <h4>Contact Information</h4>
-                        </div>
-                        <div class="lh-footer-contact-infoemation">
                             <ul>
-                                <li class="lh-information">
-                                    <h5 class="heading">Location</h5>
-                                    <span>5 Green st.Huntington stati on, Ny 11746, Libero voluptatem soluta
-                                        Bharat.</span>
+                                <li>
+                                    <code>*</code>
+                                    <a href="./index.php">Trang chủ</a>
                                 </li>
-                                <li class="lh-information">
-                                    <h5 class="heading">Email</h5>
-                                    <span>example@ec-email.com</span>
+                                <li>
+                                    <code>*</code>
+                                    <a href="./discount.php">Khuyến mãi</a>
                                 </li>
-                                <li class="lh-information">
-                                    <h5 class="heading">Phone No</h5>
-                                    <span>+91(1234)(567)(890)</span>
+                                <li>
+                                    <code>*</code>
+                                    <a href="./book.php">Đặt bàn</a>
+                                </li>
+                                <li>
+                                    <code>*</code>
+                                    <a href="./menu.php">Thực đơn</a>
                                 </li>
                             </ul>
                         </div>
                     </div>
-                </div>
+                    <div class="col-lg-6 rs-pb-24 order-lg-2 order-md-1 order-1">
+                        <div class="lh-social-media">
+                            <div class="footer-logos">
+                                <img src="../../assets_customer/img/logo/logo1.png" alt="logo">
+                            </div>
+                            <div class="lh-footer-social">
+                                <p>Chào mừng đến với nhà hàng Chef – nơi hội tụ tinh hoa ẩm thực Việt. Chúng tôi luôn mang đến cho bạn trải nghiệm tuyệt vời nhất từ món ăn đến phục vụ.</p>
+                                <form class="lh-control-footer" role="search">
+                                    <div class="lh-control-inner-icons">
+                                        <i class="ri-send-plane-line"></i>
+                                    </div>
+                                    <input class="form-control shadow-none me-4" type="search"
+                                        placeholder="Subscribe..." aria-label="Search">
+                                </form>
+                            </div>
+                            <div class="lh-follow-social">
+                                <h4 class="heading">Follow On Social</h4>
+                                <div class="footer-logo-image">
+                                    <a href="#"><img src="../../assets_customer/img/logo/facebook.png"
+                                            alt="facebook"></a>
+                                    <a href="#"><img src="../../assets_customer/img/logo/twitter.png" alt="twitter"></a>
+                                    <a href="#"><img src="../../assets_customer/img/logo/instagram.png"
+                                            alt="instagram"></a>
+                                    <a href="#"><img src="../../assets_customer/img/logo/linkedin.png"
+                                            alt="linkedin"></a>
+                                    <a href="#"><img src="../../assets_customer/img/logo/dribbble.png"
+                                            alt="dribbble"></a>
+                                    <a href="#"><img src="../../assets_customer/img/logo/pinterest.png"
+                                            alt="pinterest"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
             </div>
         </div>
             <div class="footer-bottom-copy">

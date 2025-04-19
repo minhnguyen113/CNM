@@ -135,13 +135,13 @@ session_start();
 						<li class="lh-sb-item-separator"></li>
 						<li class="lh-sb-title condense">Customer</li>
 						<li class="lh-sb-item">
-							<a href="./guest.php" class="lh-page-link">
+							<a href="./list-customer.php" class="lh-page-link">
 								<i class="fa-solid fa-user-group"></i><span class="condense"><span
 										class="hover-title">Khách hàng</span> </span>
 							</a>
 						</li>
 						<li class="lh-sb-item">
-							<a href="./guest-details.php" class="lh-page-link">
+							<a href="./customer-details.php" class="lh-page-link">
 								<i class="fa-solid fa-user-pen"></i><span class="condense">
 									<span class="hover-title">Khách hàng Chi tiết
 									</span> </span>
@@ -205,18 +205,18 @@ session_start();
 							echo '<li class="lh-sb-item-separator"></li>
 							<li class="lh-sb-title condense">Customer</li>
 							<li class="lh-sb-item">
-								<a href="./guest.php" class="lh-page-link">
+								<a href="./list-customer.php" class="lh-page-link">
 									<i class="fa-solid fa-user-group"></i><span class="condense"><span
 											class="hover-title">Khách hàng</span> </span>
 								</a>
 							</li>
 							<li class="lh-sb-item">
-								<a href="./guest-details.php" class="lh-page-link">
-									<i class="fa-solid fa-user-pen"></i><span class="condense">
-										<span class="hover-title">Khách hàng Chi tiết
-										</span> </span>
-								</a>
-							</li>
+							<a href="./customer-details.php" class="lh-page-link">
+								<i class="fa-solid fa-user-pen"></i><span class="condense">
+									<span class="hover-title">Khách hàng Chi tiết
+									</span> </span>
+							</a>
+						</li>
 							<li class="lh-sb-item">
 								<a href="./rooms.php" class="lh-page-link">
 									<i class="fa-solid fa-gift"></i><span class="condense"><span

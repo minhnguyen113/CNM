@@ -17,7 +17,40 @@ class ChatbotModel extends ketnoi
         10 => ['món chiên', 'chiên', 'trứng chiên', 'giòn', 'lá lốt']
     ];
     
-    
+      // ✅ Xử lý câu hỏi người dùng
+public function xuLyCauHoi($cauHoi)
+{
+    $cauHoi = strtolower(trim($cauHoi));
+    $idThucDon = $this->tachTuKhoa($cauHoi);
+
+    if ($idThucDon !== null) {
+        return [
+            'type' => 'result',
+            'data' => $this->timMonAn($idThucDon)
+        ];
+    }
+
+    if (preg_match('/\b(xin chào|chào|hello|hi|hey|có ai không)\b/u', $cauHoi)) {
+        return [
+            'type' => 'greeting',
+            'message' => 'Dạ em chào anh/chị! Mình đang cần tìm món theo vùng nào ạ? Ví dụ: miền bắc, món nướng...'
+        ];
+    }
+
+    if (preg_match('/\b(món|ăn|gợi ý|giới thiệu|đặc sản)\b/u', $cauHoi)) {
+        return [
+            'type' => 'suggestion',
+            'data' => $this->layMonAnGoiY()
+        ];
+    }
+
+    return [
+        'type' => 'unknown',
+        'message' => 'Mình chưa hiểu rõ câu hỏi của anh/chị ạ, mình có thể hỏi về món ăn hoặc vùng miền cụ thể nhé!',
+        'data' => []
+    ];
+}
+
 
     // ✅ Tách từ khóa từ câu hỏi người dùng → ID_ThucDon
     public function tachTuKhoa($cauHoi)
