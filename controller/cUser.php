@@ -115,4 +115,12 @@ class UserController
         $model = new UserModel();
         return $model->deleteCustomer($iduser);
     }
+
+    // xem chi tiết khách hàng
+    public function StaffGetCustomerById($iduser)
+    {
+        $model = new UserModel();
+        $customer =  $model->getCustomerById($iduser);
+        return (mysqli_num_rows($customer) > 0) ? $customer : false;
+    }
 }

@@ -17,7 +17,7 @@
 
 	<!-- App favicon -->
 	<?php
-		include('./head-resource-ad.php');
+	include('./head-resource-ad.php');
 	?>
 </head>
 
@@ -70,33 +70,33 @@
 						<div class="lh-right-tool lh-user-drop">
 							<div class="lh-hover-drop">
 								<div class="lh-hover-tool">
-								<img class="user" id="user-img" src="<?php echo !empty($data['HinhAnh']) ? '../../assets_admin/img/user/' . htmlspecialchars($data['HinhAnh']) : '../../assets_admin/img/user/minh.jpg'; ?>" alt="user">
+									<img class="user" id="user-img" src="<?php echo !empty($data['HinhAnh']) ? '../../assets_admin/img/user/' . htmlspecialchars($data['HinhAnh']) : '../../assets_admin/img/user/minh.jpg'; ?>" alt="user">
 								</div>
 								<div class="lh-hover-drop-panel right">
 									<div class="details">
-									<ul class="border-top" style="margin-top:-20px;">
-										<li><a href="./team-profile.php">Thông tin</a></li>
+										<ul class="border-top" style="margin-top:-20px;">
+											<li><a href="./team-profile.php">Thông tin</a></li>
 
-									</ul>
-									<ul class="border-top">
-										<li><a href="../customer/login.php"><i class="ri-logout-circle-r-line"></i>Đăng xuất</a></li>
-									</ul>
+										</ul>
+										<ul class="border-top">
+											<li><a href="../customer/login.php"><i class="ri-logout-circle-r-line"></i>Đăng xuất</a></li>
+										</ul>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
 		</header>
 
 		<!-- sidebar -->
 		<div class="lh-sidebar-overlay"></div>
 		<div class="lh-sidebar" data-mode="light">
 			<div class="lh-sb-logo">
-				<a href="./index.php" class="sb-full"><img src="../../assets_admin/img/logo/logo2.png" alt="logo" style ="width:326px;text-align:center;margin-left:-60px"></a>
+				<a href="./index.php" class="sb-full"><img src="../../assets_admin/img/logo/logo2.png" alt="logo" style="width:326px;text-align:center;margin-left:-60px"></a>
 				<a href="./index.php" class="sb-collapse"><img src="../../assets_admin/img/logo/collapse-logo.png" alt="logo"></a>
 			</div>
-<div class="lh-sb-wrapper">
+			<div class="lh-sb-wrapper">
 				<div class="lh-sb-content">
 					<ul class="lh-sb-list">
 						<li class="lh-sb-item sb-drop-item">
@@ -110,337 +110,150 @@
 							</ul>
 						</li>
 						<li class="lh-sb-item-separator"></li>
-					<?php
-						if ($_SESSION['role_id'] == 1) {
-						echo '
-						<li class="lh-sb-title condense">Apps</li>
-						<li class="lh-sb-item sb-drop-item">
-							<a href="javascript:void(0)" class="lh-drop-toggle">
-								<i class="fa-regular fa-address-card"></i><span class="condense">Nhân Viên
-									<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
-							<ul class="lh-sb-drop condense">
-								<li><a href="./team-profile.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Thông tin </a></li>
-								<li><a href="./team-add.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Thêm nhân viên</a></li>
-								<li><a href="./team-list.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Danh sách nhân viên</a></li>
-										
-							</ul>
-						</li>
-						<li class="lh-sb-item-separator"></li>
-						<li class="lh-sb-title condense">Customer</li>
-						<li class="lh-sb-item">
-							<a href="./list-customer.php" class="lh-page-link">
-								<i class="fa-solid fa-user-group"></i><span class="condense"><span
-										class="hover-title">Khách hàng</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./customer-details.php" class="lh-page-link">
-								<i class="fa-solid fa-user-pen"></i><span class="condense">
-									<span class="hover-title">Khách hàng Chi tiết
-									</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./rooms.php" class="lh-page-link">
-								<i class="fa-solid fa-gift"></i><span class="condense"><span
-										class="hover-title">Khuyến mãi </span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./bookings.php" class="lh-page-link">
-								<i class="fa-solid fa-file"></i><span class="condense"><span
-										class="hover-title">Đặt chỗ</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./invoice.php" class="lh-page-link">
-								<i class="fa-regular fa-money-bill-1"></i><span class="condense"><span
-										class="hover-title">Hoá đơn</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item-separator"></li>
-						<li class="lh-sb-title condense">Foods</li>
-						<li class="lh-sb-item">
-							<a href="./menu.php" class="lh-page-link">
-								<i class="fa-solid fa-utensils"></i><span class="condense"><span
-										class="hover-title">Thực đơn</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./menu-add.php" class="lh-page-link">
-								<i class="fa-solid fa-utensils"></i><span class="condense"><span
-										class="hover-title">Thêm thực đơn</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./orders.php" class="lh-page-link">
-								<i class="fa-regular fa-bookmark"></i><span class="condense"><span
-										class="hover-title">Đặt chỗ</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item-separator"></li>
-						<li class="lh-sb-title condense">Login</li>
-						<li class="lh-sb-item sb-drop-item">
-							<a href="javascript:void(0)" class="lh-drop-toggle">
-								<i class="ri-pages-line"></i><span class="condense">Kho
-									<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
-							<ul class="lh-sb-drop condense">
-								<li><a href="./material.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Nguyên liệu</a></li>
-								<li><a href="./material-add.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Thêm Nguyên liệu</a></li>
-								<li><a href="./material-update.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Cập nhật nguyên liệu</a></li>
-								
-							</ul>
-						</li>';
-						} else if ($_SESSION['role_id'] == 2) {
-							echo '<li class="lh-sb-item-separator"></li>
-							<li class="lh-sb-title condense">Customer</li>
-							<li class="lh-sb-item">
-								<a href="./list-customer.php" class="lh-page-link">
-									<i class="fa-solid fa-user-group"></i><span class="condense"><span
-											class="hover-title">Khách hàng</span> </span>
-								</a>
-							</li>
-							<li class="lh-sb-item">
-							<a href="./customer-details.php" class="lh-page-link">
-								<i class="fa-solid fa-user-pen"></i><span class="condense">
-									<span class="hover-title">Khách hàng Chi tiết
-									</span> </span>
-							</a>
-						</li>
-							<li class="lh-sb-item">
-								<a href="./rooms.php" class="lh-page-link">
-									<i class="fa-solid fa-gift"></i><span class="condense"><span
-											class="hover-title">Khuyến mãi </span> </span>
-								</a>
-							</li>
-							<li class="lh-sb-item">
-								<a href="./bookings.php" class="lh-page-link">
-									<i class="fa-solid fa-file"></i><span class="condense"><span
-											class="hover-title">Đặt chỗ</span> </span>
-								</a>
-							</li>
-							<li class="lh-sb-item">
-								<a href="./invoice.php" class="lh-page-link">
-									<i class="fa-regular fa-money-bill-1"></i><span class="condense"><span
-											class="hover-title">Hoá đơn</span> </span>
-								</a>
-							</li>
-							<li class="lh-sb-item-separator"></li>
-							<li class="lh-sb-title condense">Foods</li>
-							<li class="lh-sb-item">
-								<a href="./menu.php" class="lh-page-link">
-									<i class="fa-solid fa-utensils"></i><span class="condense"><span
-											class="hover-title">Thực đơn</span> </span>
-								</a>
-							</li>
-							<li class="lh-sb-item">
-								<a href="./menu-add.php" class="lh-page-link">
-									<i class="fa-solid fa-utensils"></i><span class="condense"><span
-											class="hover-title">Thêm thực đơn</span> </span>
-								</a>
-							</li>
-							<li class="lh-sb-item">
-								<a href="./orders.php" class="lh-page-link">
-									<i class="fa-regular fa-bookmark"></i><span class="condense"><span
-											class="hover-title">Đặt chỗ</span> </span>
-								</a>
-							</li>
-							<li class="lh-sb-item sb-drop-item">
-							<a href="javascript:void(0)" class="lh-drop-toggle">
-								<i class="ri-pages-line"></i><span class="condense">Kho
-									<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
-							<ul class="lh-sb-drop condense">
-								<li><a href="./material.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Nguyên liệu</a></li>
-								<li><a href="./material-add.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Thêm Nguyên liệu</a></li>
-								<li><a href="./material-update.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Cập nhật nguyên liệu</a></li>
-								
-							</ul>
-						</li>';}
-
+						<?php
+						include('./setRole.php');
 						?>
-						<!-- // <li class="lh-sb-item sb-drop-item">
-						// 	<a href="javascript:void(0)" class="lh-drop-toggle">
-						// 		<i class="ri-service-line"></i><span class="condense">Service pages
-						// 			<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
-						// 	<ul class="lh-sb-drop condense">
-						// 		<li><a href="./404-error-page.php" class="lh-page-link drop">
-						// 				<i class="fa-solid fa-code-commit"></i>404 error</a></li>
-						// 		<li><a href="./maintenance.php" class="lh-page-link drop">
-						// 				<i class="fa-solid fa-code-commit"></i>Maintenance</a></li>
-						// 	</ul>
-						// </li>
-						// <li class="lh-sb-item-separator"></li>
-						// <li class="lh-sb-title condense">Elements</li>
-						// <li class="lh-sb-item">
-						// 	<a href="./remix-icons.php" class="lh-page-link">
-						// 		<i class="ri-remixicon-line"></i><span class="condense"><span class="hover-title">remix
-						// 				icons</span></span></a>
-						// </li>
-						// <li class="lh-sb-item">
-						// 	<a href="./material-icons.php" class="lh-page-link">
-						// 		<i class="mdi mdi-material-ui"></i><span class="condense"><span
-						// 				class="hover-title">Material icons</span></span></a>
-						// </li>
-						// <li class="lh-sb-item">
-						// 	<a href="./alert-popup.php" class="lh-page-link">
-						// 		<i class="ri-file-warning-line"></i><span class="condense"><span
-						// 				class="hover-title">Alert Popup</span></span></a>
-						// </li>
-						// <li class="lh-sb-item-separator"></li>
-						// <li class="lh-sb-title condense">Settings</li>
-						// <li class="lh-sb-item">
-						// 	<a href="./role.php" class="lh-page-link">
-						// 		<i class="ri-magic-line"></i><span class="condense"><span
-						// 				class="hover-title">Role</span></span></a>
-						// </li> -->
-					</ul>
-				</div>
-			</div>				<div class="lh-sb-content">
-					<ul class="lh-sb-list">
-						<li class="lh-sb-item sb-drop-item">
-							<a href="javascript:void(0)" class="lh-drop-toggle">
-								<i class="ri-dashboard-3-line"></i>
-								<span class="condense">Bảng Điều Khiển<i class="drop-arrow ri-arrow-down-s-line"></i></span>
-							</a>
-							<ul class="lh-sb-drop condense">
-								<li class="list"><a href="./index.php" class="lh-page-link drop"><i
-											class="ri-git-commit-line"></i>Report</a></li>
-							</ul>
-						</li>
-						<li class="lh-sb-item-separator"></li>
-						<li class="lh-sb-title condense">Apps</li>
-						<li class="lh-sb-item sb-drop-item">
-							<a href="javascript:void(0)" class="lh-drop-toggle">
-								<i class="ri-shield-user-line"></i><span class="condense">Nhân Viên<i
-										class="drop-arrow ri-arrow-down-s-line"></i></span></a>
-							<ul class="lh-sb-drop condense">
-								<li><a href="./team-profile.php" class="lh-page-link drop"><i
-											class="ri-git-commit-line"></i>Thông tin </a></li>
-								<li><a href="./team-add.php" class="lh-page-link drop"><i
-											class="ri-git-commit-line"></i>Thêm nhân viên</a></li>
-								<li><a href="./team-update.php" class="lh-page-link drop"><i
-											class="ri-git-commit-line"></i>Cập nhật nhân viên</a></li>
-								<li><a href="./team-list.php" class="lh-page-link drop"><i
-											class="ri-git-commit-line"></i>Xoá nhân viên</a></li>
-							</ul>
-						</li>
-						<li class="lh-sb-item-separator"></li>
-						<li class="lh-sb-title condense">Customer</li>
-						<li class="lh-sb-item">
-							<a href="./guest.php" class="lh-page-link">
-								<i class="ri-group-line"></i><span class="condense"><span
-										class="hover-title">Khách hàng</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./guest-details.php" class="lh-page-link">
-								<i class="ri-user-search-line"></i><span class="condense"><span class="hover-title">Khách hàng
-										Chi tiết
-									</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./rooms.php" class="lh-page-link">
-								<i class="ri-home-8-line"></i><span class="condense"><span
-										class="hover-title">Khuyến mãi </span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./bookings.php" class="lh-page-link">
-								<i class="ri-contacts-book-line"></i><span class="condense"><span
-										class="hover-title">Đặt chỗ</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./invoice.php" class="lh-page-link">
-								<i class="ri-bill-line"></i><span class="condense"><span
-										class="hover-title">Hoá đơn</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item-separator"></li>
-						<li class="lh-sb-title condense">Foods</li>
-						<li class="lh-sb-item">
-							<a href="./menu.php" class="lh-page-link">
-								<i class="ri-restaurant-2-line"></i><span class="condense"><span
-										class="hover-title">Thực đơn</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./menu-add.php" class="lh-page-link">
-								<i class="ri-restaurant-2-line"></i><span class="condense"><span
-										class="hover-title">Thêm thực đơn</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./orders.php" class="lh-page-link">
-								<i class="ri-bookmark-3-line"></i><span class="condense"><span
-										class="hover-title">Đặt chỗ</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item-separator"></li>
-						<li class="lh-sb-title condense">Login</li>
-						<li class="lh-sb-item sb-drop-item">
-							<a href="javascript:void(0)" class="lh-drop-toggle">
-								<i class="ri-pages-line"></i><span class="condense">Authentication<i
-										class="drop-arrow ri-arrow-down-s-line"></i></span></a>
-							<ul class="lh-sb-drop condense">
-								<li><a href="./signin.php" class="lh-page-link drop"><i
-											class="ri-git-commit-line"></i>Đăng nhập</a></li>
-								<li><a href="./signup.php" class="lh-page-link drop"><i
-											class="ri-git-commit-line"></i>Đăng ký</a></li>
-								<li><a href="./forgot.php" class="lh-page-link drop"><i
-											class="ri-git-commit-line"></i>Quên Mật Khẩu</a></li>
-								<li><a href="./reset-password.php" class="lh-page-link drop"><i
-											class="ri-git-commit-line"></i>Đặt lại mật khẩu</a></li>
-							</ul>
-						</li>
-						<li class="lh-sb-item sb-drop-item">
-							<a href="javascript:void(0)" class="lh-drop-toggle">
-								<i class="ri-service-line"></i><span class="condense">Service pages<i
-										class="drop-arrow ri-arrow-down-s-line"></i></span></a>
-							<ul class="lh-sb-drop condense">
-								<li><a href="./404-error-page.php" class="lh-page-link drop"><i
-											class="ri-git-commit-line"></i>404 error</a></li>
-								<li><a href="./maintenance.php" class="lh-page-link drop"><i
-											class="ri-git-commit-line"></i>Maintenance</a></li>
-							</ul>
-						</li>
-						<li class="lh-sb-item-separator"></li>
-						<li class="lh-sb-title condense">Elements</li>
-						<li class="lh-sb-item">
-							<a href="./remix-icons.php" class="lh-page-link">
-								<i class="ri-remixicon-line"></i><span class="condense"><span class="hover-title">remix
-										icons</span></span></a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./material-icons.php" class="lh-page-link">
-								<i class="mdi mdi-material-ui"></i><span class="condense"><span
-										class="hover-title">Material icons</span></span></a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./alert-popup.php" class="lh-page-link">
-								<i class="ri-file-warning-line"></i><span class="condense"><span
-										class="hover-title">Alert Popup</span></span></a>
-						</li>
-						<li class="lh-sb-item-separator"></li>
-						<li class="lh-sb-title condense">Settings</li>
-						<li class="lh-sb-item">
-							<a href="./role.php" class="lh-page-link">
-								<i class="ri-magic-line"></i><span class="condense"><span
-										class="hover-title">Role</span></span></a>
-						</li>
+
 					</ul>
 				</div>
 			</div>
+			<div class="lh-sb-content">
+				<ul class="lh-sb-list">
+					<li class="lh-sb-item sb-drop-item">
+						<a href="javascript:void(0)" class="lh-drop-toggle">
+							<i class="ri-dashboard-3-line"></i>
+							<span class="condense">Bảng Điều Khiển<i class="drop-arrow ri-arrow-down-s-line"></i></span>
+						</a>
+						<ul class="lh-sb-drop condense">
+							<li class="list"><a href="./index.php" class="lh-page-link drop"><i
+										class="ri-git-commit-line"></i>Report</a></li>
+						</ul>
+					</li>
+					<li class="lh-sb-item-separator"></li>
+					<li class="lh-sb-title condense">Apps</li>
+					<li class="lh-sb-item sb-drop-item">
+						<a href="javascript:void(0)" class="lh-drop-toggle">
+							<i class="ri-shield-user-line"></i><span class="condense">Nhân Viên<i
+									class="drop-arrow ri-arrow-down-s-line"></i></span></a>
+						<ul class="lh-sb-drop condense">
+							<li><a href="./team-profile.php" class="lh-page-link drop"><i
+										class="ri-git-commit-line"></i>Thông tin </a></li>
+							<li><a href="./team-add.php" class="lh-page-link drop"><i
+										class="ri-git-commit-line"></i>Thêm nhân viên</a></li>
+							<li><a href="./team-update.php" class="lh-page-link drop"><i
+										class="ri-git-commit-line"></i>Cập nhật nhân viên</a></li>
+							<li><a href="./team-list.php" class="lh-page-link drop"><i
+										class="ri-git-commit-line"></i>Xoá nhân viên</a></li>
+						</ul>
+					</li>
+					<li class="lh-sb-item-separator"></li>
+					<li class="lh-sb-title condense">Customer</li>
+					<li class="lh-sb-item">
+						<a href="./guest.php" class="lh-page-link">
+							<i class="ri-group-line"></i><span class="condense"><span
+									class="hover-title">Khách hàng</span> </span>
+						</a>
+					</li>
+					<li class="lh-sb-item">
+						<a href="./guest-details.php" class="lh-page-link">
+							<i class="ri-user-search-line"></i><span class="condense"><span class="hover-title">Khách hàng
+									Chi tiết
+								</span> </span>
+						</a>
+					</li>
+					<li class="lh-sb-item">
+						<a href="./rooms.php" class="lh-page-link">
+							<i class="ri-home-8-line"></i><span class="condense"><span
+									class="hover-title">Khuyến mãi </span> </span>
+						</a>
+					</li>
+					<li class="lh-sb-item">
+						<a href="./bookings.php" class="lh-page-link">
+							<i class="ri-contacts-book-line"></i><span class="condense"><span
+									class="hover-title">Đặt chỗ</span> </span>
+						</a>
+					</li>
+					<li class="lh-sb-item">
+						<a href="./invoice.php" class="lh-page-link">
+							<i class="ri-bill-line"></i><span class="condense"><span
+									class="hover-title">Hoá đơn</span> </span>
+						</a>
+					</li>
+					<li class="lh-sb-item-separator"></li>
+					<li class="lh-sb-title condense">Foods</li>
+					<li class="lh-sb-item">
+						<a href="./menu.php" class="lh-page-link">
+							<i class="ri-restaurant-2-line"></i><span class="condense"><span
+									class="hover-title">Thực đơn</span> </span>
+						</a>
+					</li>
+					<li class="lh-sb-item">
+						<a href="./menu-add.php" class="lh-page-link">
+							<i class="ri-restaurant-2-line"></i><span class="condense"><span
+									class="hover-title">Thêm thực đơn</span> </span>
+						</a>
+					</li>
+					<li class="lh-sb-item">
+						<a href="./orders.php" class="lh-page-link">
+							<i class="ri-bookmark-3-line"></i><span class="condense"><span
+									class="hover-title">Đặt chỗ</span> </span>
+						</a>
+					</li>
+					<li class="lh-sb-item-separator"></li>
+					<li class="lh-sb-title condense">Login</li>
+					<li class="lh-sb-item sb-drop-item">
+						<a href="javascript:void(0)" class="lh-drop-toggle">
+							<i class="ri-pages-line"></i><span class="condense">Authentication<i
+									class="drop-arrow ri-arrow-down-s-line"></i></span></a>
+						<ul class="lh-sb-drop condense">
+							<li><a href="./signin.php" class="lh-page-link drop"><i
+										class="ri-git-commit-line"></i>Đăng nhập</a></li>
+							<li><a href="./signup.php" class="lh-page-link drop"><i
+										class="ri-git-commit-line"></i>Đăng ký</a></li>
+							<li><a href="./forgot.php" class="lh-page-link drop"><i
+										class="ri-git-commit-line"></i>Quên Mật Khẩu</a></li>
+							<li><a href="./reset-password.php" class="lh-page-link drop"><i
+										class="ri-git-commit-line"></i>Đặt lại mật khẩu</a></li>
+						</ul>
+					</li>
+					<li class="lh-sb-item sb-drop-item">
+						<a href="javascript:void(0)" class="lh-drop-toggle">
+							<i class="ri-service-line"></i><span class="condense">Service pages<i
+									class="drop-arrow ri-arrow-down-s-line"></i></span></a>
+						<ul class="lh-sb-drop condense">
+							<li><a href="./404-error-page.php" class="lh-page-link drop"><i
+										class="ri-git-commit-line"></i>404 error</a></li>
+							<li><a href="./maintenance.php" class="lh-page-link drop"><i
+										class="ri-git-commit-line"></i>Maintenance</a></li>
+						</ul>
+					</li>
+					<li class="lh-sb-item-separator"></li>
+					<li class="lh-sb-title condense">Elements</li>
+					<li class="lh-sb-item">
+						<a href="./remix-icons.php" class="lh-page-link">
+							<i class="ri-remixicon-line"></i><span class="condense"><span class="hover-title">remix
+									icons</span></span></a>
+					</li>
+					<li class="lh-sb-item">
+						<a href="./material-icons.php" class="lh-page-link">
+							<i class="mdi mdi-material-ui"></i><span class="condense"><span
+									class="hover-title">Material icons</span></span></a>
+					</li>
+					<li class="lh-sb-item">
+						<a href="./alert-popup.php" class="lh-page-link">
+							<i class="ri-file-warning-line"></i><span class="condense"><span
+									class="hover-title">Alert Popup</span></span></a>
+					</li>
+					<li class="lh-sb-item-separator"></li>
+					<li class="lh-sb-title condense">Settings</li>
+					<li class="lh-sb-item">
+						<a href="./role.php" class="lh-page-link">
+							<i class="ri-magic-line"></i><span class="condense"><span
+									class="hover-title">Role</span></span></a>
+					</li>
+				</ul>
+			</div>
+		</div>
 		</div>
 		<!-- Notify sidebar -->
 		<div class="lh-notify-bar-overlay"></div>
@@ -545,7 +358,7 @@
 										<p class="time">5:30AM, Today</p>
 										<p class="message">Hello, Room 204 need to be clean.</p>
 										<span class="download-files">
-												<span class="download">
+											<span class="download">
 												<img src="../../assets_admin/img/room/1.png" alt="image">
 												<a href="javascript:void(0)"><i class="ri-download-2-line"></i></a>
 											</span>
@@ -1248,7 +1061,7 @@
 				</div>
 				<div class="lh-tools-block">
 					<h3>Backgrounds</h3>
-				<div class="lh-tools-info">
+					<div class="lh-tools-info">
 						<div class="lh-tools-item bg active" data-bg-mode="default">
 							<img src="../../assets_admin/img/tools/bg-0.png" alt="default">
 							<p>Default</p>
@@ -1307,7 +1120,7 @@
 	?>
 
 	<!-- Main Custom -->
-	
+
 </body>
 
 

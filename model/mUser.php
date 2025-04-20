@@ -201,4 +201,19 @@ class UserModel
 
         return $result;
     }
+
+    // xem thông tin chi tiết khách hàng
+    public function getCustomerById($id)
+    {
+        $p = new ketnoi();
+        $con = $p->Moketnoi();
+        $sql = "SELECT * FROM NguoiDung WHERE ID_User = '$id' AND ID_Role = 3";
+        $result = mysqli_query($con, $sql);
+        if (!$result) {
+            die("Lỗi truy vấn: " . mysqli_error($con));
+        }
+        $p->Dongketnoi($con);
+        return $result;
+    }
+
 }
