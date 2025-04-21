@@ -2,14 +2,10 @@
 session_start();
 include_once(__DIR__ . "../../../controller/cUser.php");
 
-
 if (isset($_SESSION['error'])) {
     $error = $_SESSION['error'];
-    unset($_SESSION['error']); // Xóa session lỗi sau khi hiển thị
+    unset($_SESSION['error']);
 }
-
-
-
 
 // Xử lý khi submit form
 if (isset($_POST['btn-dangnhap'])) {
@@ -17,10 +13,17 @@ if (isset($_POST['btn-dangnhap'])) {
     $password = $_POST['mk'];
 
     $userController = new UserController();
-    $userController->handleLogin($sdt, $password);
-}
+    $user = $userController->handleLogin($sdt, $password); // ✅ Trả về dữ liệu user
 
+    // Nếu đăng nhập thành công → cập nhật CheckIn
+    if ($user && isset($user['ID_User'])) {
+        include_once(__DIR__ . "../../../model/mUser.php");
+        $model = new UserModel();
+        $model->updateCheckIn($user['ID_User']);
+    }
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -38,7 +41,7 @@ if (isset($_POST['btn-dangnhap'])) {
         <div class="content">
             <header>Đăng nhập</header>
 
-            
+
 
             <!-- Form login -->
             <form id="loginForm" action="" method="POST">

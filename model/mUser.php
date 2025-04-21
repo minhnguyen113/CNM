@@ -17,6 +17,21 @@ class UserModel
         $result = mysqli_query($this->conn, $sql);
         return mysqli_fetch_assoc($result);
     }
+    // Cập nhật thời gian CheckIn khi đăng nhập
+    public function updateCheckIn($id)
+    {
+        $now = date('Y-m-d H:i:s');
+        $sql = "UPDATE NguoiDung SET CheckIn = '$now' WHERE ID_User = $id";
+        return mysqli_query($this->conn, $sql);
+    }
+
+    // Cập nhật thời gian CheckOut khi đăng xuất
+    public function updateCheckOut($id)
+    {
+        $now = date('Y-m-d H:i:s');
+        $sql = "UPDATE NguoiDung SET CheckOut = '$now' WHERE ID_User = $id";
+        return mysqli_query($this->conn, $sql);
+    }
 
 
     // Lấy danh sách tất cả nhân viên
@@ -143,34 +158,34 @@ class UserModel
     {
         $p = new ketnoi();
         $con = $p->Moketnoi();
-    
+
         // Chuẩn hoá dữ liệu đầu vào
         $phone = trim($phone);
         $email = trim($email);
         $username = trim($username);
-    
+
         // Kiểm tra số điện thoại đã tồn tại
         $checkPhoneQuery = "SELECT * FROM NguoiDung WHERE TRIM(SoDienThoai) = ?";
         $stmt = mysqli_prepare($con, $checkPhoneQuery);
         mysqli_stmt_bind_param($stmt, "s", $phone);
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
-    
+
         if (mysqli_num_rows($result) > 0) {
-            return "phone_exists"; 
+            return "phone_exists";
         }
-    
+
         // Thêm người dùng mới
         $insertQuery = "INSERT INTO NguoiDung (TenUser, Email, SoDienThoai, DiaChi, NgaySinh, HinhAnh, MatKhau, ID_Role)
                         VALUES (?, ?, ?, ?, ?, ?, ?, 3)";
         $stmt = mysqli_prepare($con, $insertQuery);
         mysqli_stmt_bind_param($stmt, "sssssss", $username, $email, $phone, $address, $date, $avatarFileName, $password);
         $success = mysqli_stmt_execute($stmt);
-    
+
         $p->Dongketnoi($con);
         return $success;
     }
-    
+
 
     // xoa khách hàng
     public function deleteCustomer($id)
@@ -215,5 +230,4 @@ class UserModel
         $p->Dongketnoi($con);
         return $result;
     }
-
 }

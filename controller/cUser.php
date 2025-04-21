@@ -31,6 +31,9 @@ class UserController
             $_SESSION['role_name'] = 'User'; // hoặc lấy từ bảng role
             $_SESSION['phone'] = $user['SoDienThoai'];
 
+            $this->userModel->updateCheckIn($user['ID_User']);
+
+
             // Phân quyền chính xác
             if ($user['ID_Role'] == 1) {
                 $_SESSION['success'] = 'Chào mừng Quản lý';

@@ -5,6 +5,13 @@ include_once(__DIR__ . "/../../controller/cUser.php");
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+
+if (!isset($_SESSION['role_id'])) {
+    header("Location: ../customer/login.php");
+    exit;
+}
+
+
 $userId = $_GET['id'] ?? null;
 $data = [];
 if ($userId) {
@@ -497,7 +504,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
 						</ul>
 					</div>
 					<div class="lh-tools">
-						<a href="javascript:void(0)" title="Refresh" class="refresh"><i class="fa-solid fa-arrows-rotate"></i></a>
+						<a href="javascript:void(0)" title="Refresh" id="refreshBtn" class="refresh">
+							<i class="fa-solid fa-arrows-rotate"></i>
+						</a>
+
 						<div id="pagedate">
 							<div class="lh-date-range" title="Date">
 								<span></span>
@@ -1117,6 +1127,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
 			border: 2px solid #fff;
 		}
 	</style>
+	<!-- refresh  -->
+	<script>
+		document.getElementById("refreshBtn").addEventListener("click", function() {
+			location.reload(); // Câu lệnh reload toàn trang
+		});
+	</script>
+
 
 	<?php
 	include('../customer/chatbot.php');

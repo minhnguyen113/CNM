@@ -1,8 +1,23 @@
-<?php
-session_start();
-session_unset(); // Xóa tất cả các biến session
-session_destroy(); // ✅ Khuyến nghị thêm để huỷ session hoàn toàn
 
-header("Location: ../index.php"); // ✅ Đúng theo yêu cầu của bạn
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+session_start();
+include_once(__DIR__ . "../../../model/mUser.php");
+
+// Nếu đã đăng nhập → cập nhật thời gian CheckOut
+if (isset($_SESSION['user_id'])) {
+    $userModel = new UserModel();
+    $userModel->updateCheckOut($_SESSION['user_id']);
+}
+
+// Xóa session
+session_unset(); 
+session_destroy(); 
+
+// Chuyển về trang chủ
+header("Location: ../index.php");
 exit();
 ?>

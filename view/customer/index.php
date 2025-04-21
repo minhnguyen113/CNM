@@ -897,7 +897,7 @@ error_reporting(E_ALL);
                         <div class="lh-blog-date">
                             <span><code>Món tráng miệng mới</code> - 11 Feb 2025 - 01 Comment</span>
                         </div>
-                        <a class="top-heding" href="blog-details.php">Thưởng thức bánh flan phô mai caramel mềm mịn, ngọt nhẹ, được làm thủ công mỗi ngày.</a>
+                        <a class="top-heding" href="#">Thưởng thức bánh flan phô mai caramel mềm mịn, ngọt nhẹ, được làm thủ công mỗi ngày.</a>
                     </div>
                 </div>
                 <div class="blog-card">
@@ -907,7 +907,7 @@ error_reporting(E_ALL);
                         <div class="lh-blog-date">
                             <span><code>Đồ uống đặc biệt</code>02 Nov 2024 - 25 Comment</span>
                         </div>
-                        <a class="top-heding" href="blog-details.php">Giảm 10% cho các loại trà trái cây tươi – chỉ áp dụng trong khung giờ từ 14h đến 17h mỗi ngày.</a>
+                        <a class="top-heding" href="#">Giảm 10% cho các loại trà trái cây tươi – chỉ áp dụng trong khung giờ từ 14h đến 17h mỗi ngày.</a>
                     </div>
                 </div>
             </div>
