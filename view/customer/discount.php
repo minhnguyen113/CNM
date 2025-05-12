@@ -4,6 +4,11 @@ session_start();
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+
+include_once("../../controller/cDiscount.php");
+$discountController = new DiscountController();
+$discounts = $discountController->getAllDiscounts();
+
 ?>
 
 <!DOCTYPE html>
@@ -11,6 +16,7 @@ error_reporting(E_ALL);
 
 
 <!-- Mirrored from maraviyainfotech.com/projects/luxurious-html-v22/luxurious-html/gallery.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 21 Jan 2025 15:10:48 GMT -->
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,12 +26,12 @@ error_reporting(E_ALL);
         content="hotel, booking, business, restaurant, spa, resort, landing, agency, corporate, start up, site design, new business site, business template, professional template, classic, modern">
     <title>Chef Restaurent</title>
 
-   <?php
-        include('./head-resources.php');
+    <?php
+    include('./head-resources.php');
     ?>
 
     <!-- Main Style -->
-	<link id="mainCss" href="../../assets_customer/css/style.css" rel="stylesheet">
+    <link id="mainCss" href="../../assets_customer/css/style.css" rel="stylesheet">
 
 </head>
 
@@ -38,12 +44,12 @@ error_reporting(E_ALL);
 
     <!-- Header -->
     <header>
-        
+
         <div class="lh-header" style="height:180px;">
             <div class="container h-100">
                 <div class="row h-100">
                     <nav class="navbar navbar-expand-lg h-100">
-                          <a class="navbar-brand" href="./index.php">
+                        <a class="navbar-brand" href="./index.php">
                             <img src="../../assets_customer/img/logo/logo1.png" alt="logo" class="lh-logo">
                         </a>
                         <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="collapse"
@@ -58,7 +64,7 @@ error_reporting(E_ALL);
                                         <a class="nav-link dropdown-toggle" href="../index.php">Trang chủ</a>
 
                                     </a>
-                                  
+
                                 </li>
                                 <li class="nav-item dropdown">
                                     <a href="javascript:void(0)" role="button" data-bs-toggle="dropdown">
@@ -66,27 +72,31 @@ error_reporting(E_ALL);
 
 
                                     </a>
-                                    
+
                                 </li>
                                 <li class="nav-item dropdown">
-                                    <a  href="javascript:void(0)" role="button" data-bs-toggle="dropdown">
-                                    <a class="nav-link dropdown-toggle" href="book.php"> Đặt bàn</a>
+                                    <a href="javascript:void(0)" role="button" data-bs-toggle="dropdown">
+                                        <a class="nav-link dropdown-toggle" href="book.php"> Đặt bàn</a>
                                     </a>
                                 </li>
-                                
+
                                 <li class="nav-item dropdown">
                                     <a class="nav-link" href="menu.php">
                                         Thực đơn
                                     </a>
                                 </li>
-                               <li class="nav-item dropdown">
+                                  <li class="nav-item dropdown">
                                     <?php if (isset($_SESSION['username'])): ?>
-                                        <a class="nav-link dropdown-toggle" href="team-profile.php">
-                                            Xin chào, <?php echo htmlspecialchars($_SESSION['username']); ?>
-                                        </a>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="logout.php">Đăng xuất</a></li>
-                                        </ul>
+                                        <?php if ($_SESSION['role_id'] == 1 || $_SESSION['role_id'] == 2): ?>
+                                            <a class="nav-link dropdown-toggle" href="../admin/index.php">Quản lý</a>
+                                        <?php elseif ($_SESSION['role_id'] == 3): ?>
+                                            <a class="nav-link dropdown-toggle" href="team-profile-cus.php">
+                                                Xin chào, <?php echo htmlspecialchars($_SESSION['username']); ?>
+                                            </a>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="logout.php">Đăng Xuất</a></li>
+                                            </ul>
+                                        <?php endif; ?>
                                     <?php else: ?>
                                         <a class="nav-link dropdown-toggle" href="login.php">Đăng nhập</a>
                                     <?php endif; ?>
@@ -100,7 +110,7 @@ error_reporting(E_ALL);
     </header>
 
     <!-- Mobile-menu -->
-   
+
 
     <!-- Banner -->
     <section class="section-banner">
@@ -130,74 +140,27 @@ error_reporting(E_ALL);
         <div class="container">
             <div class="row mb-m-24" data-aos="fade-up" data-aos-duration="1500">
                 <div class="banner">
-                    <h2>Latest <span>Gallery</span></h2>
+                    <h2><span>Khuyến mãi</span></h2>
                 </div>
                 <div class="card-columns">
-                    <figure class="magnific-img">
-                        <a class="gallery-img" href="assets/img/gallery/gallery_img_1.jpg" title="Mobile App">
-                            <img class="example-image" src="assets/img/gallery/gallery_img_thumb_1.jpg"
-                                alt="portfolio img">
-                        </a>
-                    </figure>
-                    <figure>
-                        <a class="gallery-img" href="assets/img/gallery/gallery_img_5.jpg" title="Template Project">
-                            <img class="example-image" src="assets/img/gallery/gallery_img_thumb_5.jpg"
-                                alt="portfolio img">
-                        </a>
-                    </figure>
-                    <figure>
-                        <a class="gallery-img" href="assets/img/gallery/gallery_img_9.jpg"
-                            title="Wordpress Development">
-                            <img src="assets/img/gallery/gallery_img_thumb_9.jpg" alt="portfolio img">
-                        </a>
-                    </figure>
-                    <figure>
-                        <a class="gallery-img" href="assets/img/gallery/gallery_img_2.jpg" title="Magento Project">
-                            <img src="assets/img/gallery/gallery_img_thumb_2.jpg" alt="portfolio img">
-                        </a>
-                    </figure>
-                    <figure>
-                        <a class="gallery-img" href="assets/img/gallery/gallery_img_6.jpg" title="Mobile App">
-                            <img src="assets/img/gallery/gallery_img_thumb_6.jpg" alt="portfolio img">
-                        </a>
-                    </figure>
-                    <figure>
-                        <a class="gallery-img" href="assets/img/gallery/gallery_img_10.jpg" title="Template Project">
-                            <img src="assets/img/gallery/gallery_img_thumb_10.jpg" alt="portfolio img">
-                        </a>
-                    </figure>
-                    <figure>
-                        <a class="gallery-img" href="assets/img/gallery/gallery_img_3.jpg" title="Web Development">
-                            <img src="assets/img/gallery/gallery_img_thumb_3.jpg" alt="portfolio img">
-                        </a>
-                    </figure>
-                    <figure>
-                        <a class="gallery-img" href="assets/img/gallery/gallery_img_7.jpg" title="Shopify Project">
-                            <img src="assets/img/gallery/gallery_img_thumb_7.jpg" alt="portfolio img">
-                        </a>
-                    </figure>
-                    <figure>
-                        <a class="gallery-img" href="assets/img/gallery/gallery_img_11.jpg" title="Prestashop site">
-                            <img src="assets/img/gallery/gallery_img_thumb_11.jpg" alt="portfolio img">
-                        </a>
-                    </figure>
-                    <figure>
-                        <a class="gallery-img" href="assets/img/gallery/gallery_img_4.jpg" title="Python Development">
-                            <img src="assets/img/gallery/gallery_img_thumb_4.jpg" alt="portfolio img">
-                        </a>
-                    </figure>
-                    <figure>
-                        <a class="gallery-img" href="assets/img/gallery/gallery_img_8.jpg" title="HTML Project">
-                            <img src="assets/img/gallery/gallery_img_thumb_8.jpg" alt="portfolio img">
-                        </a>
-                    </figure>
-                    <figure>
-                        <a class="gallery-img" href="assets/img/gallery/gallery_img_12.jpg" title="Web Development">
-                            <img src="assets/img/gallery/gallery_img_thumb_12.jpg" alt="portfolio img">
-                        </a>
-                    </figure>
+                    <?php while ($row = mysqli_fetch_assoc($discounts)): ?>
+                        <figure class="magnific-img" style="height: 360px;">
+                            <a class="gallery-img" href="javascript:void(0)" title="<?php echo htmlspecialchars($row['TenKhuyenMai']); ?>">
+                                <img class="example-image" src="../../assets_customer/img/team/discount.jpg" alt="discount" style="width:100%; border-radius:8px;">
+                            </a>
+                            <figcaption class="mt-2">
+                                <h5 style="font-weight: bold; color:#000;"><?php echo htmlspecialchars($row['TenKhuyenMai']); ?></h5>
+                                <p class="mt-1">
+                                    Giảm giá: <strong><?php echo $row['GiamGia'] * 100; ?>%</strong><br>
+                                    <small>Từ <?php echo date("d/m/Y", strtotime($row['NgayBatDau'])); ?>
+                                        đến <?php echo date("d/m/Y", strtotime($row['NgayKetThuc'])); ?></small>
+                                </p>
+                            </figcaption>
+                        </figure>
+                    <?php endwhile; ?>
                 </div>
             </div>
+
         </div>
     </section>
 
@@ -205,8 +168,8 @@ error_reporting(E_ALL);
     <footer>
         <div class="container">
             <div class="footer-top-section">
-            <div class="row">
-                <div class="col-lg-3 col-md-6 rs-pb-24 p-991 order-lg-1 order-md-2 order-2">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 rs-pb-24 p-991 order-lg-1 order-md-2 order-2">
                         <div class="lh-footer-cols-contain">
                             <div class="lh-footer-heading">
                                 <h4>Explore</h4>
@@ -287,8 +250,8 @@ error_reporting(E_ALL);
                             </div>
                         </div>
                     </div>
+                </div>
             </div>
-        </div>
             <div class="footer-bottom-copy">
                 <span>Copyright @ <span id="copyright_year"></span> <a href="./index.php">Luxurious</a> All Rights Reserved</span>
             </div>
@@ -360,7 +323,7 @@ error_reporting(E_ALL);
                 <div class="heading">
                     <h2>Skin mode</h2>
                 </div>
-               <ul class="skin-mode">
+                <ul class="skin-mode">
                     <li class="skin-1">
                         <span class="lh-all-color"><img src="../../assets_customer/img/skin/1.png" alt="skin-1"></span>
                     </li>
@@ -387,8 +350,8 @@ error_reporting(E_ALL);
     </div>
 
     <!-- Plugins JS -->
-   <?php
-        include('./footer-scripts.php');
+    <?php
+    include('./footer-scripts.php');
     ?>
 
 
@@ -397,4 +360,5 @@ error_reporting(E_ALL);
 
 
 <!-- Mirrored from maraviyainfotech.com/projects/luxurious-html-v22/luxurious-html/gallery.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 21 Jan 2025 15:10:55 GMT -->
+
 </html>

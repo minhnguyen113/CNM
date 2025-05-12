@@ -15,6 +15,37 @@ class UserController
         $this->userModel = new UserModel();
     }
 
+
+    //signup
+   // Hàm xử lý đăng ký tài khoản khách hàng
+public function signup($username, $email, $phone, $address, $dob, $password)
+{
+    // Mặc định role là 3 - Customer
+    $idrole = 3;
+    $avatar = ''; // bạn có thể thêm xử lý upload sau
+
+    // Mã hóa mật khẩu
+    $passwordHashed = md5($password);
+
+    $result = $this->userModel->addCustomer($username, $email, $phone, $address, $dob, $avatar, $passwordHashed);
+    
+    if ($result) {
+        $_SESSION['success'] = "Đăng ký thành công. Mời bạn đăng nhập!";
+        header("Location: ../loginlogout/login.php");
+        exit;
+    } else {
+        $_SESSION['error'] = "Đăng ký thất bại. Vui lòng thử lại.";
+        header("Location: ../loginlogout/signup.php");
+        exit;
+    }
+}
+
+    
+  
+    
+    
+
+
     // login
     public function handleLogin($sdt, $password)
     {
@@ -75,7 +106,7 @@ class UserController
         $staff =  $model->getUserById($iduser);
         return (mysqli_num_rows($staff) > 0) ? $staff : false;
     }
-    // Cập nhật thông tin nhân viên
+    // Cập nhật thông tin nhân viên, khách hàng
     public function StaffUpdateUserById($id, $email, $phone, $address, $date, $avatarFileName)
     {
         $model = new UserModel();

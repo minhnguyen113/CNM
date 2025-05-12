@@ -80,14 +80,18 @@
                                         Thực đơn
                                     </a>
                                 </li>
-                               <li class="nav-item dropdown">
+                                 <li class="nav-item dropdown">
                                     <?php if (isset($_SESSION['username'])): ?>
-                                        <a class="nav-link dropdown-toggle" href="team-profile.php">
-                                            Xin chào, <?php echo htmlspecialchars($_SESSION['username']); ?>
-                                        </a>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="logout.php">Đăng xuất</a></li>
-                                        </ul>
+                                        <?php if ($_SESSION['role_id'] == 1 || $_SESSION['role_id'] == 2): ?>
+                                            <a class="nav-link dropdown-toggle" href="../admin/index.php">Quản lý</a>
+                                        <?php elseif ($_SESSION['role_id'] == 3): ?>
+                                            <a class="nav-link dropdown-toggle" href="team-profile-cus.php">
+                                                Xin chào, <?php echo htmlspecialchars($_SESSION['username']); ?>
+                                            </a>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="logout.php">Đăng Xuất</a></li>
+                                            </ul>
+                                        <?php endif; ?>
                                     <?php else: ?>
                                         <a class="nav-link dropdown-toggle" href="login.php">Đăng nhập</a>
                                     <?php endif; ?>

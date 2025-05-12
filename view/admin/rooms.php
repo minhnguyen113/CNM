@@ -913,9 +913,10 @@ session_start();
 		<!-- Feature tools -->
 		<div class="lh-tools-sidebar-overlay"></div>
 		<div class="lh-tools-sidebar">
-			<a href="javascript:void(0)" class="lh-tools-sidebar-toggle in-out">
-				<i class="ri-settings-4-line"></i>
-			</a>
+			 <a href="javascript:void(0)" class="lh-tools-sidebar-toggle in-out">
+        <i class="fa-solid fa-gear"></i>
+
+      </a>
 			<div class="lh-bar-title">
 				<h6>Tools</h6>
 				<a href="javascript:void(0)" class="close-tools"><i class="ri-close-line"></i></a>

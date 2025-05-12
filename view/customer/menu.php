@@ -1,9 +1,24 @@
 <?php
 session_start();
+include_once("../../controller/cMenu.php");
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+
+
+$menuCtrl = new MenuController();
+
+// Ví dụ hiển thị món ăn Miền Bắc (ID_ThucDon = 1)
+$monAnMienBac = $menuCtrl->getMonAnTheoThucDon(1);
+$monAnMienNam = $menuCtrl->getMonAnTheoThucDon(3);
+$monAnMienTrung = $menuCtrl->getMonAnTheoThucDon(2);
+$monAnDuongPho = $menuCtrl->getMonAnTheoThucDon(4);
+$monAnMonChay = $menuCtrl->getMonAnTheoThucDon(6);
+$haiSanVietNam = $menuCtrl->getMonAnTheoThucDon(7);
+$monNuongTruyenThong = $menuCtrl->getMonAnTheoThucDon(9);
+
+
 ?>
 
 
@@ -12,6 +27,7 @@ error_reporting(E_ALL);
 
 
 <!-- Mirrored from maraviyainfotech.com/projects/luxurious-html-v22/luxurious-html/restaurant.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 21 Jan 2025 15:10:12 GMT -->
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -21,12 +37,12 @@ error_reporting(E_ALL);
         content="hotel, booking, business, restaurant, spa, resort, landing, agency, corporate, start up, site design, new business site, business template, professional template, classic, modern">
     <title>Chef Restaurent</title>
 
-   <?php
-        include('./head-resources.php');
+    <?php
+    include('./head-resources.php');
     ?>
 
     <!-- Main Style -->
-	<link id="mainCss" href="../../assets_customer/css/style.css" rel="stylesheet">
+    <link id="mainCss" href="../../assets_customer/css/style.css" rel="stylesheet">
 
 </head>
 
@@ -39,11 +55,12 @@ error_reporting(E_ALL);
 
     <!-- Header -->
     <header>
-        
- <div class="lh-header h-180" >            <div class="container h-100">
+
+        <div class="lh-header h-180">
+            <div class="container h-100">
                 <div class="row h-100">
                     <nav class="navbar navbar-expand-lg h-100">
-                          <a class="navbar-brand" href="./index.php">
+                        <a class="navbar-brand" href="./index.php">
                             <img src="../../assets_customer/img/logo/logo1.png" alt="logo" class="lh-logo">
                         </a>
                         <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="collapse"
@@ -58,36 +75,40 @@ error_reporting(E_ALL);
                                         <a class="nav-link dropdown-toggle" href="../index.php">Trang chủ</a>
 
                                     </a>
-                                  
+
                                 </li>
-                               <li class="nav-item dropdown">
+                                <li class="nav-item dropdown">
                                     <a href="javascript:void(0)" role="button" data-bs-toggle="dropdown">
                                         <a class="nav-link dropdown-toggle" href="./discount.php"> Khuyến mãi</a>
 
 
                                     </a>
-                                    
+
                                 </li>
                                 <li class="nav-item dropdown">
-                                    <a  href="javascript:void(0)" role="button" data-bs-toggle="dropdown">
-                                    <a class="nav-link dropdown-toggle" href="book.php"> Đặt bàn</a>
+                                    <a href="javascript:void(0)" role="button" data-bs-toggle="dropdown">
+                                        <a class="nav-link dropdown-toggle" href="book.php"> Đặt bàn</a>
                                     </a>
-                                   
+
                                 </li>
-                                
+
                                 <li class="nav-item dropdown">
                                     <a class="nav-link" href="menu.php">
                                         Thực đơn
                                     </a>
                                 </li>
-                                <li class="nav-item dropdown">
+                                  <li class="nav-item dropdown">
                                     <?php if (isset($_SESSION['username'])): ?>
-                                        <a class="nav-link dropdown-toggle" href="team-profile.php">
-                                            Xin chào, <?php echo htmlspecialchars($_SESSION['username']); ?>
-                                        </a>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="logout.php">Đăng xuất</a></li>
-                                        </ul>
+                                        <?php if ($_SESSION['role_id'] == 1 || $_SESSION['role_id'] == 2): ?>
+                                            <a class="nav-link dropdown-toggle" href="../admin/index.php">Quản lý</a>
+                                        <?php elseif ($_SESSION['role_id'] == 3): ?>
+                                            <a class="nav-link dropdown-toggle" href="team-profile-cus.php">
+                                                Xin chào, <?php echo htmlspecialchars($_SESSION['username']); ?>
+                                            </a>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="logout.php">Đăng Xuất</a></li>
+                                            </ul>
+                                        <?php endif; ?>
                                     <?php else: ?>
                                         <a class="nav-link dropdown-toggle" href="login.php">Đăng nhập</a>
                                     <?php endif; ?>
@@ -101,7 +122,7 @@ error_reporting(E_ALL);
     </header>
 
     <!-- Mobile-menu -->
-   
+
 
     <!-- Banner -->
     <section class="section-banner">
@@ -109,15 +130,15 @@ error_reporting(E_ALL);
             <div class="banner-overlay"></div>
             <div class="banner-section">
                 <div class="lh-banner-contain">
-                    <h2>Restaurant</h2>
+                    <h2>Thực đơn</h2>
                     <div class="lh-breadcrumb">
                         <h5>
                             <span class="lh-inner-breadcrumb">
-                                <a href="./index.php">Home</a>
+                                <a href="./index.php">Trang chủ</a>
                             </span>
                             <span> / </span>
                             <span>
-                                <a href="javascript:void(0)">Restaurant</a>
+                                <a href="javascript:void(0)">Thực đơn</a>
                             </span>
                         </h5>
                     </div>
@@ -130,380 +151,162 @@ error_reporting(E_ALL);
     <section class="section-restaurant padding-tb-100">
         <div class="container">
             <div class="banner" data-aos="fade-up" data-aos-duration="1000">
-                <h2>Restaurant <span>Menu</span></h2>
+                <h2><span>Thực đơn</span></h2>
             </div>
             <nav class="p-0" data-aos="fade-up" data-aos-duration="1500">
                 <div class="nav nav-tabs lh-menu-restaurant" id="nav-tab" role="tablist">
                     <button class="nav-link active lh-menu-buttons" id="nav-Breakfast-tab" data-bs-toggle="tab"
                         data-bs-target="#nav-Breakfast" type="button" role="tab" aria-controls="nav-Breakfast"
                         aria-selected="true">
-                        Breakfast
+                        Miền Bắc
                     </button>
                     <button class="nav-link lh-menu-buttons" id="nav-Lunch-tab" data-bs-toggle="tab"
                         data-bs-target="#nav-Lunch" type="button" role="tab" aria-controls="nav-Lunch"
                         aria-selected="false">
-                        Lunch
+                        Miền Nam
                     </button>
                     <button class="nav-link lh-menu-buttons" id="nav-Dinner-tab" data-bs-toggle="tab"
                         data-bs-target="#nav-Dinner" type="button" role="tab" aria-controls="nav-Dinner"
                         aria-selected="false">
-                        Dinner
+                        Miền Trung
                     </button>
                     <button class="nav-link lh-menu-buttons" id="nav-Starters-tab" data-bs-toggle="tab"
                         data-bs-target="#nav-Starters" type="button" role="tab" aria-controls="nav-Starters"
                         aria-selected="false">
-                        Starters
+                        Món ăn đường phố
                     </button>
                     <button class="nav-link lh-menu-buttons" id="nav-Beverages-tab" data-bs-toggle="tab"
                         data-bs-target="#nav-Beverages" type="button" role="tab" aria-controls="nav-Beverages"
                         aria-selected="false">
-                        Beverages
+                        Món chay Việt
+                    </button>
+                    <button class="nav-link lh-menu-buttons" id="nav-seaFood-tab" data-bs-toggle="tab"
+                        data-bs-target="#nav-seaFood" type="button" role="tab" aria-controls="nav-Beverages"
+                        aria-selected="false">
+                        Hải sản Việt Nam
                     </button>
                 </div>
             </nav>
             <div class="tab-content ld-menu-contact border-none" id="nav-tabContent">
-                <div class="tab-pane fade active show" id="nav-Breakfast" role="tabpanel"
-                    aria-labelledby="nav-Breakfast-tab">
+                <div class="tab-pane fade active show" id="nav-Breakfast" role="tabpanel" aria-labelledby="nav-Breakfast-tab">
+                    <!-- mon an mien Bac -->
                     <div class="row p-0 lh-Breakfast-rs">
-                        <div class="col-lg-6">
-                            <div class="ld-restaurant-menu" data-aos="fade-up" data-aos-duration="1500">
-                                <div class="ld-restaurant-menu-image">
-                                    <img src="assets/img/restaurant/1.jpg" alt="restaurant-1">
-                                </div>
-                                <div class="ld-restaurant-menu-contain">
-                                    <h4>Mustrd Chicken with <span>$60</span></h4>
-                                    <p>This is the dolor sit amet consectetur adipisicing elit. Id non
-                                        namsequicum voluptatum soluta sed placeat.</p>
-                                </div>
-                            </div>
-                            <div class="ld-restaurant-menu" data-aos="fade-up" data-aos-duration="1800">
-                                <div class="ld-restaurant-menu-image">
-                                    <img src="assets/img/restaurant/2.jpg" alt="restaurant-2">
-                                </div>
-                                <div class="ld-restaurant-menu-contain">
-                                    <h4>Pan Con Berenjina Frita <span>$30</span></h4>
-                                    <p>This is the dolor sit amet consectetur adipisicing elit. Id non
-                                        namsequicum voluptatum soluta sed placeat.</p>
+                        <?php foreach (array_slice($monAnMienBac, 0, 6) as $index => $mon): ?>
+                            <div class="col-lg-6" style="padding: 20px 20px;">
+                                <div class="ld-restaurant-menu" data-aos="fade-up" data-aos-duration="<?= 1500 + $index * 200 ?>">
+                                    <div class="ld-restaurant-menu-image">
+                                        <img src="../../assets_admin/img/restaurant/<?= htmlspecialchars($mon['HinhAnh']) ?>" alt="<?= htmlspecialchars($mon['TenMon']) ?>">
+                                    </div>
+                                    <div class="ld-restaurant-menu-contain">
+                                        <h4><?= htmlspecialchars($mon['TenMon']) ?> <span><?= number_format($mon['Gia'], 0, ',', '.') ?>₫</span></h4>
+                                        <p>Hương vị đặc trưng miền Bắc, đậm đà và tinh tế</p>
+
+                                    </div>
                                 </div>
                             </div>
-                            <div class="ld-restaurant-menu" data-aos="fade-up" data-aos-duration="2100">
-                                <div class="ld-restaurant-menu-image">
-                                    <img src="assets/img/restaurant/3.jpg" alt="restaurant-3">
-                                </div>
-                                <div class="ld-restaurant-menu-contain">
-                                    <h4>Salmon Tataki Capaccio <span>$45</span></h4>
-                                    <p>This is the dolor sit amet consectetur adipisicing elit. Id non
-                                        namsequicum voluptatum soluta sed placeat.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="ld-restaurant-menu" data-aos="fade-up" data-aos-duration="1500">
-                                <div class="ld-restaurant-menu-image">
-                                    <img src="assets/img/restaurant/4.jpg" alt="restaurant-4">
-                                </div>
-                                <div class="ld-restaurant-menu-contain">
-                                    <h4>Lubina Marinada <span>$15</span></h4>
-                                    <p>This is the dolor sit amet consectetur adipisicing elit. Id non
-                                        namsequicum voluptatum soluta sed placeat.</p>
-                                </div>
-                            </div>
-                            <div class="ld-restaurant-menu" data-aos="fade-up" data-aos-duration="1800">
-                                <div class="ld-restaurant-menu-image">
-                                    <img src="assets/img/restaurant/5.jpg" alt="restaurant-5">
-                                </div>
-                                <div class="ld-restaurant-menu-contain">
-                                    <h4>Nashville Hot Chicken <span>$30</span></h4>
-                                    <p>This is the dolor sit amet consectetur adipisicing elit. Id non
-                                        namsequicum voluptatum soluta sed placeat.</p>
-                                </div>
-                            </div>
-                            <div class="ld-restaurant-menu" data-aos="fade-up" data-aos-duration="2100">
-                                <div class="ld-restaurant-menu-image">
-                                    <img src="assets/img/restaurant/6.jpg" alt="restaurant-6">
-                                </div>
-                                <div class="ld-restaurant-menu-contain">
-                                    <h4>Biscuits and Gravy <span>$55</span></h4>
-                                    <p>This is the dolor sit amet consectetur adipisicing elit. Id non
-                                        namsequicum voluptatum soluta sed placeat.</p>
-                                </div>
-                            </div>
-                        </div>
+                        <?php endforeach; ?>
+
                     </div>
                 </div>
+
+                <!-- mon an mien nam -->
+
                 <div class="tab-pane fade" id="nav-Lunch" role="tabpanel" aria-labelledby="nav-Lunch-tab">
                     <div class="row p-0 lh-Breakfast-rs">
-                        <div class="col-lg-6">
-                            <div class="ld-restaurant-menu">
-                                <div class="ld-restaurant-menu-image">
-                                    <img src="assets/img/restaurant/1.jpg" alt="restaurant-1">
-                                </div>
-                                <div class="ld-restaurant-menu-contain">
-                                    <h4>Mustrd Chicken with <span>$50</span></h4>
-                                    <p>This is the dolor sit amet consectetur adipisicing elit. Id non
-                                        namsequicum voluptatum soluta sed placeat.</p>
-                                </div>
-                            </div>
-                            <div class="ld-restaurant-menu">
-                                <div class="ld-restaurant-menu-image">
-                                    <img src="assets/img/restaurant/2.jpg" alt="restaurant-2">
-                                </div>
-                                <div class="ld-restaurant-menu-contain">
-                                    <h4>Pan Con Berenjina Frita <span>$80</span></h4>
-                                    <p>This is the dolor sit amet consectetur adipisicing elit. Id non
-                                        namsequicum voluptatum soluta sed placeat.</p>
+                        <?php foreach (array_slice($monAnMienNam, 0, 6) as $index => $mon): ?>
+                            <div class="col-lg-6" style="padding: 20px 20px;">
+                                <div class="ld-restaurant-menu" data-aos="fade-up" data-aos-duration="<?= 1500 + $index * 200 ?>">
+                                    <div class="ld-restaurant-menu-image">
+                                        <img src="../../assets_admin/img/restaurant/<?= htmlspecialchars($mon['HinhAnh']) ?>" alt="<?= htmlspecialchars($mon['TenMon']) ?>">
+                                    </div>
+                                    <div class="ld-restaurant-menu-contain">
+                                        <h4><?= htmlspecialchars($mon['TenMon']) ?> <span><?= number_format($mon['Gia'], 0, ',', '.') ?>₫</span></h4>
+                                        <p>Ngọt ngào, hài hòa – đặc trưng vị miền sông nước</p>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="ld-restaurant-menu">
-                                <div class="ld-restaurant-menu-image">
-                                    <img src="assets/img/restaurant/3.jpg" alt="restaurant-3">
-                                </div>
-                                <div class="ld-restaurant-menu-contain">
-                                    <h4>Salmon Tataki Capaccio <span>$40</span></h4>
-                                    <p>This is the dolor sit amet consectetur adipisicing elit. Id non
-                                        namsequicum voluptatum soluta sed placeat.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="ld-restaurant-menu">
-                                <div class="ld-restaurant-menu-image">
-                                    <img src="assets/img/restaurant/4.jpg" alt="restaurant-4">
-                                </div>
-                                <div class="ld-restaurant-menu-contain">
-                                    <h4>Lubina Marinada <span>$60</span></h4>
-                                    <p>This is the dolor sit amet consectetur adipisicing elit. Id non
-                                        namsequicum voluptatum soluta sed placeat.</p>
-                                </div>
-                            </div>
-                            <div class="ld-restaurant-menu">
-                                <div class="ld-restaurant-menu-image">
-                                    <img src="assets/img/restaurant/5.jpg" alt="restaurant-5">
-                                </div>
-                                <div class="ld-restaurant-menu-contain">
-                                    <h4>Nashville Hot Chicken <span>$70</span></h4>
-                                    <p>This is the dolor sit amet consectetur adipisicing elit. Id non
-                                        namsequicum voluptatum soluta sed placeat.</p>
-                                </div>
-                            </div>
-                            <div class="ld-restaurant-menu">
-                                <div class="ld-restaurant-menu-image">
-                                    <img src="assets/img/restaurant/6.jpg" alt="restaurant-6">
-                                </div>
-                                <div class="ld-restaurant-menu-contain">
-                                    <h4>Biscuits and Gravy <span>$90</span></h4>
-                                    <p>This is the dolor sit amet consectetur adipisicing elit. Id non
-                                        namsequicum voluptatum soluta sed placeat.</p>
-                                </div>
-                            </div>
-                        </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
+                <!--  món ăn miền trung -->
                 <div class="tab-pane fade" id="nav-Dinner" role="tabpanel" aria-labelledby="nav-Dinner-tab">
                     <div class="row p-0 lh-Breakfast-rs">
-                        <div class="col-lg-6">
-                            <div class="ld-restaurant-menu">
-                                <div class="ld-restaurant-menu-image">
-                                    <img src="assets/img/restaurant/1.jpg" alt="restaurant-1">
-                                </div>
-                                <div class="ld-restaurant-menu-contain">
-                                    <h4>Mustrd Chicken with <span>$10</span></h4>
-                                    <p>This is the dolor sit amet consectetur adipisicing elit. Id non
-                                        namsequicum voluptatum soluta sed placeat.</p>
-                                </div>
-                            </div>
-                            <div class="ld-restaurant-menu">
-                                <div class="ld-restaurant-menu-image">
-                                    <img src="assets/img/restaurant/2.jpg" alt="restaurant-2">
-                                </div>
-                                <div class="ld-restaurant-menu-contain">
-                                    <h4>Pan Con Berenjina Frita <span>$50</span></h4>
-                                    <p>This is the dolor sit amet consectetur adipisicing elit. Id non
-                                        namsequicum voluptatum soluta sed placeat.</p>
+                        <?php foreach (array_slice($monAnMienTrung, 0, 6) as $index => $mon): ?>
+                            <div class="col-lg-6" style="padding: 20px 20px;">
+                                <div class="ld-restaurant-menu" data-aos="fade-up" data-aos-duration="<?= 1500 + $index * 200 ?>">
+                                    <div class="ld-restaurant-menu-image">
+                                        <img src="../../assets_admin/img/restaurant/<?= htmlspecialchars($mon['HinhAnh']) ?>" alt="<?= htmlspecialchars($mon['TenMon']) ?>">
+                                    </div>
+                                    <div class="ld-restaurant-menu-contain">
+                                        <h4><?= htmlspecialchars($mon['TenMon']) ?> <span><?= number_format($mon['Gia'], 0, ',', '.') ?>₫</span></h4>
+                                        <p>Ngọt ngào, hài hòa – đặc trưng vị miền sông nước</p>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="ld-restaurant-menu">
-                                <div class="ld-restaurant-menu-image">
-                                    <img src="assets/img/restaurant/3.jpg" alt="restaurant-3">
-                                </div>
-                                <div class="ld-restaurant-menu-contain">
-                                    <h4>Salmon Tataki Capaccio <span>$70</span></h4>
-                                    <p>This is the dolor sit amet consectetur adipisicing elit. Id non
-                                        namsequicum voluptatum soluta sed placeat.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="ld-restaurant-menu">
-                                <div class="ld-restaurant-menu-image">
-                                    <img src="assets/img/restaurant/4.jpg" alt="restaurant-4">
-                                </div>
-                                <div class="ld-restaurant-menu-contain">
-                                    <h4>Lubina Marinada <span>$40</span></h4>
-                                    <p>This is the dolor sit amet consectetur adipisicing elit. Id non
-                                        namsequicum voluptatum soluta sed placeat.</p>
-                                </div>
-                            </div>
-                            <div class="ld-restaurant-menu">
-                                <div class="ld-restaurant-menu-image">
-                                    <img src="assets/img/restaurant/5.jpg" alt="restaurant-5">
-                                </div>
-                                <div class="ld-restaurant-menu-contain">
-                                    <h4>Nashville Hot Chicken <span>$60</span></h4>
-                                    <p>This is the dolor sit amet consectetur adipisicing elit. Id non
-                                        namsequicum voluptatum soluta sed placeat.</p>
-                                </div>
-                            </div>
-                            <div class="ld-restaurant-menu">
-                                <div class="ld-restaurant-menu-image">
-                                    <img src="assets/img/restaurant/6.jpg" alt="restaurant-6">
-                                </div>
-                                <div class="ld-restaurant-menu-contain">
-                                    <h4>Biscuits and Gravy <span>$70</span></h4>
-                                    <p>This is the dolor sit amet consectetur adipisicing elit. Id non
-                                        namsequicum voluptatum soluta sed placeat.</p>
-                                </div>
-                            </div>
-                        </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
+                <!-- món ăn đường phố-->
                 <div class="tab-pane fade" id="nav-Starters" role="tabpanel" aria-labelledby="nav-Starters-tab">
                     <div class="row p-0 lh-Breakfast-rs">
-                        <div class="col-lg-6">
-                            <div class="ld-restaurant-menu">
-                                <div class="ld-restaurant-menu-image">
-                                    <img src="assets/img/restaurant/1.jpg" alt="restaurant-1">
-                                </div>
-                                <div class="ld-restaurant-menu-contain">
-                                    <h4>Mustrd Chicken with <span>$70</span></h4>
-                                    <p>This is the dolor sit amet consectetur adipisicing elit. Id non
-                                        namsequicum voluptatum soluta sed placeat.</p>
-                                </div>
-                            </div>
-                            <div class="ld-restaurant-menu">
-                                <div class="ld-restaurant-menu-image">
-                                    <img src="assets/img/restaurant/2.jpg" alt="restaurant-2">
-                                </div>
-                                <div class="ld-restaurant-menu-contain">
-                                    <h4>Pan Con Berenjina Frita <span>$50</span></h4>
-                                    <p>This is the dolor sit amet consectetur adipisicing elit. Id non
-                                        namsequicum voluptatum soluta sed placeat.</p>
+                        <?php foreach (array_slice($monAnDuongPho, 0, 6) as $index => $mon): ?>
+                            <div class="col-lg-6" style="padding: 20px 20px;">
+                                <div class="ld-restaurant-menu" data-aos="fade-up" data-aos-duration="<?= 1500 + $index * 200 ?>">
+                                    <div class="ld-restaurant-menu-image">
+                                        <img src="../../assets_admin/img/restaurant/<?= htmlspecialchars($mon['HinhAnh']) ?>" alt="<?= htmlspecialchars($mon['TenMon']) ?>">
+                                    </div>
+                                    <div class="ld-restaurant-menu-contain">
+                                        <h4><?= htmlspecialchars($mon['TenMon']) ?> <span><?= number_format($mon['Gia'], 0, ',', '.') ?>₫</span></h4>
+                                        <p>Ngọt ngào, hài hòa – đặc trưng vị miền sông nước</p>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="ld-restaurant-menu">
-                                <div class="ld-restaurant-menu-image">
-                                    <img src="assets/img/restaurant/3.jpg" alt="restaurant-3">
-                                </div>
-                                <div class="ld-restaurant-menu-contain">
-                                    <h4>Salmon Tataki Capaccio <span>$20</span></h4>
-                                    <p>This is the dolor sit amet consectetur adipisicing elit. Id non
-                                        namsequicum voluptatum soluta sed placeat.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="ld-restaurant-menu">
-                                <div class="ld-restaurant-menu-image">
-                                    <img src="assets/img/restaurant/4.jpg" alt="restaurant-4">
-                                </div>
-                                <div class="ld-restaurant-menu-contain">
-                                    <h4>Lubina Marinada <span>$60</span></h4>
-                                    <p>This is the dolor sit amet consectetur adipisicing elit. Id non
-                                        namsequicum voluptatum soluta sed placeat.</p>
-                                </div>
-                            </div>
-                            <div class="ld-restaurant-menu">
-                                <div class="ld-restaurant-menu-image">
-                                    <img src="assets/img/restaurant/5.jpg" alt="restaurant-5">
-                                </div>
-                                <div class="ld-restaurant-menu-contain">
-                                    <h4>Nashville Hot Chicken <span>$40</span></h4>
-                                    <p>This is the dolor sit amet consectetur adipisicing elit. Id non
-                                        namsequicum voluptatum soluta sed placeat.</p>
-                                </div>
-                            </div>
-                            <div class="ld-restaurant-menu">
-                                <div class="ld-restaurant-menu-image">
-                                    <img src="assets/img/restaurant/6.jpg" alt="restaurant-6">
-                                </div>
-                                <div class="ld-restaurant-menu-contain">
-                                    <h4>Biscuits and Gravy <span>$80</span></h4>
-                                    <p>This is the dolor sit amet consectetur adipisicing elit. Id non
-                                        namsequicum voluptatum soluta sed placeat.</p>
-                                </div>
-                            </div>
-                        </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
+                <!-- món chay Việt -->
                 <div class="tab-pane fade" id="nav-Beverages" role="tabpanel" aria-labelledby="nav-Beverages-tab">
                     <div class="row p-0 lh-Breakfast-rs">
-                        <div class="col-lg-6">
-                            <div class="ld-restaurant-menu">
-                                <div class="ld-restaurant-menu-image">
-                                    <img src="assets/img/restaurant/1.jpg" alt="restaurant-1">
-                                </div>
-                                <div class="ld-restaurant-menu-contain">
-                                    <h4>Mustrd Chicken with <span>$70</span></h4>
-                                    <p>This is the dolor sit amet consectetur adipisicing elit. Id non
-                                        namsequicum voluptatum soluta sed placeat.</p>
-                                </div>
-                            </div>
-                            <div class="ld-restaurant-menu">
-                                <div class="ld-restaurant-menu-image">
-                                    <img src="assets/img/restaurant/2.jpg" alt="restaurant-2">
-                                </div>
-                                <div class="ld-restaurant-menu-contain">
-                                    <h4>Pan Con Berenjina Frita <span>$65</span></h4>
-                                    <p>This is the dolor sit amet consectetur adipisicing elit. Id non
-                                        namsequicum voluptatum soluta sed placeat.</p>
+                        <?php foreach (array_slice($monAnMonChay, 0, 6) as $index => $mon): ?>
+                            <div class="col-lg-6" style="padding: 20px 20px;">
+                                <div class="ld-restaurant-menu" data-aos="fade-up" data-aos-duration="<?= 1500 + $index * 200 ?>">
+                                    <div class="ld-restaurant-menu-image">
+                                        <img src="../../assets_admin/img/restaurant/<?= htmlspecialchars($mon['HinhAnh']) ?>" alt="<?= htmlspecialchars($mon['TenMon']) ?>">
+                                    </div>
+                                    <div class="ld-restaurant-menu-contain">
+                                        <h4><?= htmlspecialchars($mon['TenMon']) ?> <span><?= number_format($mon['Gia'], 0, ',', '.') ?>₫</span></h4>
+                                        <p>Ngọt ngào, hài hòa – đặc trưng vị miền sông nước</p>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="ld-restaurant-menu">
-                                <div class="ld-restaurant-menu-image">
-                                    <img src="assets/img/restaurant/3.jpg" alt="restaurant-3">
-                                </div>
-                                <div class="ld-restaurant-menu-contain">
-                                    <h4>Salmon Tataki Capaccio <span>$55</span></h4>
-                                    <p>This is the dolor sit amet consectetur adipisicing elit. Id non
-                                        namsequicum voluptatum soluta sed placeat.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="ld-restaurant-menu">
-                                <div class="ld-restaurant-menu-image">
-                                    <img src="assets/img/restaurant/4.jpg" alt="restaurant-4">
-                                </div>
-                                <div class="ld-restaurant-menu-contain">
-                                    <h4>Lubina Marinada <span>$50</span></h4>
-                                    <p>This is the dolor sit amet consectetur adipisicing elit. Id non
-                                        namsequicum voluptatum soluta sed placeat.</p>
-                                </div>
-                            </div>
-                            <div class="ld-restaurant-menu">
-                                <div class="ld-restaurant-menu-image">
-                                    <img src="assets/img/restaurant/5.jpg" alt="restaurant-5">
-                                </div>
-                                <div class="ld-restaurant-menu-contain">
-                                    <h4>Nashville Hot Chicken <span>$10</span></h4>
-                                    <p>This is the dolor sit amet consectetur adipisicing elit. Id non
-                                        namsequicum voluptatum soluta sed placeat.</p>
-                                </div>
-                            </div>
-                            <div class="ld-restaurant-menu">
-                                <div class="ld-restaurant-menu-image">
-                                    <img src="assets/img/restaurant/6.jpg" alt="restaurant-6">
-                                </div>
-                                <div class="ld-restaurant-menu-contain">
-                                    <h4>Biscuits and Gravy <span>$90</span></h4>
-                                    <p>This is the dolor sit amet consectetur adipisicing elit. Id non
-                                        namsequicum voluptatum soluta sed placeat.</p>
-                                </div>
-                            </div>
-                        </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
-            </div>
+
+                <!-- món chay Hải Sản -->
+                <div class="tab-pane fade" id="nav-seaFood" role="tabpanel" aria-labelledby="nav-seaFood-tab">
+                    <div class="row p-0 lh-Breakfast-rs">
+                        <?php foreach (array_slice($haiSanVietNam, 0, 6) as $index => $mon): ?>
+                            <div class="col-lg-6" style="padding: 20px 20px;">
+                                <div class="ld-restaurant-menu" data-aos="fade-up" data-aos-duration="<?= 1500 + $index * 200 ?>">
+                                    <div class="ld-restaurant-menu-image">
+                                        <img src="../../assets_admin/img/restaurant/<?= htmlspecialchars($mon['HinhAnh']) ?>" alt="<?= htmlspecialchars($mon['TenMon']) ?>">
+                                    </div>
+                                    <div class="ld-restaurant-menu-contain">
+                                        <h4><?= htmlspecialchars($mon['TenMon']) ?> <span><?= number_format($mon['Gia'], 0, ',', '.') ?>₫</span></h4>
+                                        <p>Ngọt ngào, hài hòa – đặc trưng vị miền sông nước</p>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach;?>
+                    </div>
+                </div>
+
+            </div>  
+
+
+        </div>
+        </div>
         </div>
     </section>
 
@@ -568,7 +371,7 @@ error_reporting(E_ALL);
                                                 <div class="lh-testimonials-contain">
                                                     <div class="d-flex">
                                                         <div class="lh-testimonials-inner">
-                                                           <img src="../../assets_customer/img/businessman/businessman-2.jpg"
+                                                            <img src="../../assets_customer/img/businessman/businessman-2.jpg"
                                                                 alt="businessman" class="businessman">
                                                             <div class="lh-testimonials-name-detalis">
                                                                 <h5>John Doe</h5>
@@ -614,7 +417,7 @@ error_reporting(E_ALL);
                                                 <div class="lh-testimonials-contain">
                                                     <div class="d-flex">
                                                         <div class="lh-testimonials-inner">
-                                                        <img src="../../assets_customer/img/businessman/businessman-3.jpg"
+                                                            <img src="../../assets_customer/img/businessman/businessman-3.jpg"
                                                                 alt="businessman" class="businessman">
                                                             <div class="lh-testimonials-name-detalis">
                                                                 <h5>Moris Selemen</h5>
@@ -713,8 +516,8 @@ error_reporting(E_ALL);
     <footer>
         <div class="container">
             <div class="footer-top-section">
-            <div class="row">          
-                <div class="col-lg-3 col-md-6 rs-pb-24 p-991 order-lg-1 order-md-2 order-2">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 rs-pb-24 p-991 order-lg-1 order-md-2 order-2">
                         <div class="lh-footer-cols-contain">
                             <div class="lh-footer-heading">
                                 <h4>Explore</h4>
@@ -795,8 +598,8 @@ error_reporting(E_ALL);
                             </div>
                         </div>
                     </div>
+                </div>
             </div>
-        </div>
             <div class="footer-bottom-copy">
                 <span>Copyright @ <span id="copyright_year"></span> <a href="./index.php">Luxurious</a> All Rights Reserved</span>
             </div>
@@ -868,7 +671,7 @@ error_reporting(E_ALL);
                 <div class="heading">
                     <h2>Skin mode</h2>
                 </div>
-               <ul class="skin-mode">
+                <ul class="skin-mode">
                     <li class="skin-1">
                         <span class="lh-all-color"><img src="../../assets_customer/img/skin/1.png" alt="skin-1"></span>
                     </li>
@@ -895,8 +698,8 @@ error_reporting(E_ALL);
     </div>
 
     <!-- Plugins JS -->
-   <?php
-        include('./footer-scripts.php');
+    <?php
+    include('./footer-scripts.php');
     ?>
 
 
@@ -905,4 +708,5 @@ error_reporting(E_ALL);
 
 
 <!-- Mirrored from maraviyainfotech.com/projects/luxurious-html-v22/luxurious-html/restaurant.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 21 Jan 2025 15:10:27 GMT -->
+
 </html>

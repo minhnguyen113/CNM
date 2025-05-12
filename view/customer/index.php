@@ -68,16 +68,21 @@ error_reporting(E_ALL);
 
                                 <li class="nav-item dropdown">
                                     <?php if (isset($_SESSION['username'])): ?>
-                                        <a class="nav-link dropdown-toggle" href="team-profile-cus.php">
-                                            Xin chào, <?php echo htmlspecialchars($_SESSION['username']); ?>
-                                        </a>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="logout.php">Đăng xuất</a></li>
-                                        </ul>
+                                        <?php if ($_SESSION['role_id'] == 1 || $_SESSION['role_id'] == 2): ?>
+                                            <a class="nav-link dropdown-toggle" href="../admin/index.php">Quản lý</a>
+                                        <?php elseif ($_SESSION['role_id'] == 3): ?>
+                                            <a class="nav-link dropdown-toggle" href="team-profile-cus.php">
+                                                Xin chào, <?php echo htmlspecialchars($_SESSION['username']); ?>
+                                            </a>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="logout.php">Đăng Xuất</a></li>
+                                            </ul>
+                                        <?php endif; ?>
                                     <?php else: ?>
                                         <a class="nav-link dropdown-toggle" href="login.php">Đăng nhập</a>
                                     <?php endif; ?>
                                 </li>
+
                             </ul>
                         </div>
                     </nav>
@@ -104,9 +109,9 @@ error_reporting(E_ALL);
                     <div class="particles-bg" id="particles-js"></div>
                     <div class="lh-hero-contain container mt-lg-5" style="height: 50%;">
                         <h4 data-aos="fade-up" data-aos-duration="1000">Cheft Restaurent</h4>
-                        <h1 data-aos="fade-up" class="mt-n4" data-aos-duration="1500">Bản hòa tấu của hương vị & tinh hoa
+                        <h1 data-aos="fade-up" class="mt-n4 text-white p-3" data-aos-duration="1500">Hương Vị Lên Ngôi – Nơi Tinh Hoa Hội Tụ
                         </h1>
-                        <a class="lh-buttons result-placeholder" style="height:40px;" href="#rooms">
+                        <a class="lh-buttons result-placeholder text-decoration-none" style="height:40px;" href="#rooms">
                             Khám phá tại đây
                         </a>
                     </div>
@@ -502,8 +507,8 @@ error_reporting(E_ALL);
                                     </div>
                                     <div class="amenities-contain">
                                         <h4 class="amenities-heading">Ẩm thực ba miền</h4>
-                                        <p>Thưởng thức món ăn chuẩn vị ba miền 
-                                                Bắc – Trung – Nam, đậm đà và chỉn chu.</p>
+                                        <p>Thưởng thức món ăn chuẩn vị ba miền
+                                            Bắc – Trung – Nam, đậm đà và chỉn chu.</p>
                                         <a href="facilities.php">Read more <i class="ri-arrow-right-line"></i></a>
                                     </div>
                                 </div>
@@ -571,8 +576,8 @@ error_reporting(E_ALL);
                                     </div>
                                     <div class="amenities-contain">
                                         <h4 class="amenities-heading">Gia Vị Đặc Trưng</h4>
-                                        <p>Mỗi món ăn được nâng tầm bởi những loại gia vị truyền thống. 
-                                         Tất cả tạo nên bản sắc riêng cho từng vùng miền</p>
+                                        <p>Mỗi món ăn được nâng tầm bởi những loại gia vị truyền thống.
+                                            Tất cả tạo nên bản sắc riêng cho từng vùng miền</p>
                                         <a href="facilities.php">Read more <i class="ri-arrow-right-line"></i></a>
                                     </div>
                                 </div>
@@ -621,7 +626,7 @@ error_reporting(E_ALL);
                                         <span>Trà đá</span>
                                         <i class="ri-arrow-right-line"></i>
                                     </li>
-                                    
+
                                 </ul>
                             </div>
                             <div class="price-buttons">
@@ -656,7 +661,7 @@ error_reporting(E_ALL);
                                         <span>Nước sâm</span>
                                         <i class="ri-arrow-right-line"></i>
                                     </li>
-                                 
+
                                 </ul>
                             </div>
                             <div class="price-buttons">
@@ -1114,6 +1119,12 @@ error_reporting(E_ALL);
 
 
 </body>
+
+<style>
+    a{
+        text-decoration: none;
+    }
+</style>
 
 
 <!-- Mirrored from maraviyainfotech.com/projects/luxurious-html-v22/luxurious-html/./index.php by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 21 Jan 2025 15:10:44 GMT -->
