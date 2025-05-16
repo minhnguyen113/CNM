@@ -143,23 +143,53 @@ $other_id = $admin['ID_User']; // luôn là admin
     <!-- Contact -->
     <section class="section-contact padding-tb-100">
         <div class="container">
-            <div class="lh-contact-touch" data-aos="fade-up" data-aos-duration="2000">
-                <div class="row">
-                    <div class="col-lg-12 rs-pb-24">
-                        <div class="lh-contact-touch-inner">
-                            <div class="chat-container">
-                                <div class="chat-header">Liên hệ với chúng tôi</div>
-                                <div id="chat-messages"></div>
-                                <form id="chat-form" class="chat-form" autocomplete="off">
-                                    <input type="hidden" id="other_id" value="<?= $other_id ?>">
-                                    <input type="text" id="message" placeholder="Nhập tin nhắn..." required>
-                                    <button type="submit">Gửi</button>
-                                </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+            <div class="chat-container">
+    <div class="chat-header">Chat với Admin</div>
+    <div id="chat-messages"></div>
+    <form id="chat-form" class="chat-form" autocomplete="off">
+        <input type="hidden" id="other_id" value="<?= $other_id ?>">
+        <input type="text" id="message" placeholder="Nhập tin nhắn..." required>
+        <button type="submit">Gửi</button>
+    </form>
+</div>
+<script>
+const other_id = document.getElementById('other_id').value;
+function fetchMessages() {
+    fetch('chat_api.php', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: 'action=fetch&other_id=' + other_id
+    })
+    .then(res => res.json())
+    .then(messages => {
+        let html = '';
+        messages.forEach(msg => {
+            html += `<div class="msg ${msg.sender_id == <?= $user_id ?> ? 'me' : 'other'}">
+                <span class="sender">${msg.sender_name}:</span>
+                ${msg.message}
+                <span class="time">(${msg.created_at})</span>
+            </div>`;
+        });
+        document.getElementById('chat-messages').innerHTML = html;
+        document.getElementById('chat-messages').scrollTop = 99999;
+    });
+}
+document.getElementById('chat-form').onsubmit = function(e) {
+    e.preventDefault();
+    const msg = document.getElementById('message').value;
+    if (!msg.trim()) return;
+    fetch('chat_api.php', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: 'action=send&other_id=' + other_id + '&message=' + encodeURIComponent(msg)
+    }).then(() => {
+        document.getElementById('message').value = '';
+        fetchMessages();
+    });
+};
+setInterval(fetchMessages, 1000);
+fetchMessages();
+</script>
         </div>
     </section>
 
