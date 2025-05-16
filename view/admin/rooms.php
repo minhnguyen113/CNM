@@ -1,6 +1,50 @@
 <?php
 session_start();
+include_once("../../controller/cKhuyenMai.php");
+$khuyenMaiController = new KhuyenMaiController();
+
+// Xử lý các action từ form
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+	$action = $_POST['action'];
+
+	switch ($action) {
+		case 'add':
+			$tenKM = $_POST['tenKM'];
+			$giamGia = $_POST['giamGia'];
+			$ngayBD = $_POST['ngayBD'];
+			$ngayKT = $_POST['ngayKT'];
+
+			if ($khuyenMaiController->addKhuyenMai($tenKM, $giamGia, $ngayBD, $ngayKT)) {
+				$_SESSION['success'] = "Thêm khuyến mãi thành công!";
+			}
+			break;
+
+		case 'edit':
+			$id = $_POST['id'];
+			$tenKM = $_POST['tenKM'];
+			$giamGia = $_POST['giamGia'];
+			$ngayBD = $_POST['ngayBD'];
+			$ngayKT = $_POST['ngayKT'];
+
+			if ($khuyenMaiController->updateKhuyenMai($id, $tenKM, $giamGia, $ngayBD, $ngayKT)) {
+				$_SESSION['success'] = "Cập nhật khuyến mãi thành công!";
+			}
+			break;
+
+		case 'delete':
+			$id = $_POST['id'];
+			if ($khuyenMaiController->deleteKhuyenMai($id)) {
+				$_SESSION['success'] = "Xóa khuyến mãi thành công!";
+			}
+			break;
+	}
+
+	// Refresh lại trang sau khi xử lý
+	header("Location: rooms.php");
+	exit;
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -28,7 +72,7 @@ session_start();
 	<ink href="../../assets_admin /css/vendor/remixicon.css" rel="stylesheet">
 
 		<!-- Vendor -->
-	<link href='../../assets_admin/css/vendor/datatables.bootstrap5.min.css' rel='stylesheet'>
+		<link href='../../assets_admin/css/vendor/datatables.bootstrap5.min.css' rel='stylesheet'>
 		<link href='../../assets_admin/css/vendor/responsive.datatables.min.css' rel='stylesheet'>
 		<link href='../../assets_admin/css/vendor/daterangepicker.css' rel='stylesheet'>
 		<link href="../../assets_admin/css/vendor/bootstrap.min.css" rel="stylesheet">
@@ -68,44 +112,44 @@ session_start();
 							</div>
 						</div>
 					</div>
-					<div class="right-header">
-
-
+						<div class="right-header">
 						<div class="lh-right-tool display-screen">
-							<a class="lh-screen full" href="javascript:void(0)"><i class="ri-fullscreen-line"></i></a>
-							<a class="lh-screen reset" href="javascript:void(0)"><i
-									class="ri-fullscreen-exit-line"></i></a>
+							<a class="lh-screen full" href="javascript:void(0)"><i class="fa-solid fa-expand"></i></a>
+							<a class="lh-screen reset" href="javascript:void(0)">
+								<!-- <i class="ri-fullscreen-exit-line"></i> -->
+								<i class="fa-solid fa-expand"></i>
+							</a>
 						</div>
 						<div class="lh-right-tool">
 							<a class="lh-notify" href="javascript:void(0)">
-								<i class="ri-notification-2-line"></i>
+								<i class="fa-regular fa-bell"></i>
 								<span class="label"></span>
 							</a>
 						</div>
 						<div class="lh-right-tool display-dark">
-							<a class="lh-mode dark" href="javascript:void(0)"><i class="ri-moon-clear-line"></i></a>
-							<a class="lh-mode light" href="javascript:void(0)"><i class="ri-sun-line"></i></a>
+							<a class="lh-mode dark" href="javascript:void(0)"><i class="fa-regular fa-moon"></i></a>
+							<a class="lh-mode light" href="javascript:void(0)"><i class="fa-regular fa-sun"></i></a>
 						</div>
 						<div class="lh-right-tool lh-user-drop">
 							<div class="lh-hover-drop">
 								<div class="lh-hover-tool">
-								<img class="user" id="user-img" src="<?php echo !empty($data['HinhAnh']) ? '../../assets_admin/img/user/' . htmlspecialchars($data['HinhAnh']) : '../../assets_admin/img/user/minh.jpg'; ?>" alt="user">
+									<img class="user" id="user-img" src="<?php echo !empty($data['HinhAnh']) ? '../../assets_admin/img/user/' . htmlspecialchars($data['HinhAnh']) : '../../assets_admin/img/user/minh.jpg'; ?>" alt="user">
 								</div>
 								<div class="lh-hover-drop-panel right">
 									<div class="details">
-									<ul class="border-top" style="margin-top:-20px;">
-										<li><a href="./team-profile.php">Thông tin</a></li>
+										<ul class="border-top" style="margin-top:-20px;">
+											<li><a href="./team-profile.php">Thông tin</a></li>
 
-									</ul>
-									<ul class="border-top">
-										<li><a href="../customer/login.php"><i class="ri-logout-circle-r-line"></i>Đăng xuất</a></li>
-									</ul>
+										</ul>
+										<ul class="border-top">
+											<li><a href="../customer/login.php"><i class="ri-logout-circle-r-line"></i>Đăng xuất</a></li>
+										</ul>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
 		</header>
 
 		<!-- sidebar -->
@@ -115,7 +159,7 @@ session_start();
 				<a href="./index.php" class="sb-full"><img src="../../assets_admin/img/logo/logo2.png" alt="logo" style="width:326px;text-align:center;margin-left:-60px"></a>
 				<a href="./index.php" class="sb-collapse"><img src="../../assets_admin/img/logo/collapse-logo.png" alt="logo"></a>
 			</div>
-<div class="lh-sb-wrapper">
+			<div class="lh-sb-wrapper">
 				<div class="lh-sb-content">
 					<ul class="lh-sb-list">
 						<li class="lh-sb-item sb-drop-item">
@@ -129,182 +173,150 @@ session_start();
 							</ul>
 						</li>
 						<li class="lh-sb-item-separator"></li>
-<?php
-								include('./setRole.php');
-							?>
-						<!-- // <li class="lh-sb-item sb-drop-item">
-						// 	<a href="javascript:void(0)" class="lh-drop-toggle">
-						// 		<i class="ri-service-line"></i><span class="condense">Service pages
-						// 			<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
-						// 	<ul class="lh-sb-drop condense">
-						// 		<li><a href="./404-error-page.php" class="lh-page-link drop">
-						// 				<i class="fa-solid fa-code-commit"></i>404 error</a></li>
-						// 		<li><a href="./maintenance.php" class="lh-page-link drop">
-						// 				<i class="fa-solid fa-code-commit"></i>Maintenance</a></li>
-						// 	</ul>
-						// </li>
-						// <li class="lh-sb-item-separator"></li>
-						// <li class="lh-sb-title condense">Elements</li>
-						// <li class="lh-sb-item">
-						// 	<a href="./remix-icons.php" class="lh-page-link">
-						// 		<i class="ri-remixicon-line"></i><span class="condense"><span class="hover-title">remix
-						// 				icons</span></span></a>
-						// </li>
-						// <li class="lh-sb-item">
-						// 	<a href="./material-icons.php" class="lh-page-link">
-						// 		<i class="mdi mdi-material-ui"></i><span class="condense"><span
-						// 				class="hover-title">Material icons</span></span></a>
-						// </li>
-						// <li class="lh-sb-item">
-						// 	<a href="./alert-popup.php" class="lh-page-link">
-						// 		<i class="ri-file-warning-line"></i><span class="condense"><span
-						// 				class="hover-title">Alert Popup</span></span></a>
-						// </li>
-						// <li class="lh-sb-item-separator"></li>
-						// <li class="lh-sb-title condense">Settings</li>
-						// <li class="lh-sb-item">
-						// 	<a href="./role.php" class="lh-page-link">
-						// 		<i class="ri-magic-line"></i><span class="condense"><span
-						// 				class="hover-title">Role</span></span></a>
-						// </li> -->
-					</ul>
-				</div>
-			</div>				<div class="lh-sb-content">
-					<ul class="lh-sb-list">
-						<li class="lh-sb-item sb-drop-item">
-							<a href="javascript:void(0)" class="lh-drop-toggle">
-								<i class="fa-regular fa-clock"></i>
-								<span class="condense">Bảng Điều Khiển<i class="drop-arrow fa-regular fa-circle-left"></i></span>
-							</a>
-							<ul class="lh-sb-drop condense">
-								<li class="list"><a href="./index.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Report</a></li>
-							</ul>
-						</li>
-						<li class="lh-sb-item-separator"></li>
-						<li class="lh-sb-title condense">Apps</li>
-						<li class="lh-sb-item sb-drop-item">
-							<a href="javascript:void(0)" class="lh-drop-toggle">
-								<i class="fa-regular fa-address-card"></i><span class="condense">Nhân Viên
-									<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
-							<ul class="lh-sb-drop condense">
-								<li><a href="./team-profile.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Thông tin </a></li>
-								<li><a href="./team-add.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Thêm nhân viên</a></li>
-							
-								<li><a href="./team-list.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Xoá nhân viên</a></li>
-							</ul>
-						</li>
-						<li class="lh-sb-item-separator"></li>
-						<li class="lh-sb-title condense">Customer</li>
-						<li class="lh-sb-item">
-							<a href="./list-customer.php" class="lh-page-link">
-								<i class="fa-solid fa-user-group"></i><span class="condense"><span
-										class="hover-title">Khách hàng</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./customer-details.php" class="lh-page-link">
-								<i class="fa-solid fa-user-pen"></i><span class="condense">
-									<span class="hover-title">Khách hàng Chi tiết
-									</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./rooms.php" class="lh-page-link">
-								<i class="fa-solid fa-gift"></i><span class="condense"><span
-										class="hover-title">Khuyến mãi </span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./bookings.php" class="lh-page-link">
-								<i class="fa-solid fa-file"></i><span class="condense"><span
-										class="hover-title">Đặt chỗ</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./invoice.php" class="lh-page-link">
-								<i class="fa-regular fa-money-bill-1"></i><span class="condense"><span
-										class="hover-title">Hoá đơn</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item-separator"></li>
-						<li class="lh-sb-title condense">Foods</li>
-						<li class="lh-sb-item">
-							<a href="./menu.php" class="lh-page-link">
-								<i class="fa-solid fa-utensils"></i><span class="condense"><span
-										class="hover-title">Thực đơn</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./menu-add.php" class="lh-page-link">
-								<i class="fa-solid fa-utensils"></i><span class="condense"><span
-										class="hover-title">Thêm thực đơn</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./orders.php" class="lh-page-link">
-								<i class="fa-regular fa-bookmark"></i><span class="condense"><span
-										class="hover-title">Đặt chỗ</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item-separator"></li>
-						<li class="lh-sb-title condense">Login</li>
-						<li class="lh-sb-item sb-drop-item">
-							<a href="javascript:void(0)" class="lh-drop-toggle">
-								<i class="ri-pages-line"></i><span class="condense">Authentication
-									<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
-							<ul class="lh-sb-drop condense">
-								<li><a href="./signin.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Đăng nhập</a></li>
-								<li><a href="./signup.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Đăng ký</a></li>
-								<li><a href="./forgot.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Quên Mật Khẩu</a></li>
-								<li><a href="./reset-password.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Đặt lại mật khẩu</a></li>
-							</ul>
-						</li>
-						<li class="lh-sb-item sb-drop-item">
-							<a href="javascript:void(0)" class="lh-drop-toggle">
-								<i class="ri-service-line"></i><span class="condense">Service pages
-									<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
-							<ul class="lh-sb-drop condense">
-								<li><a href="./404-error-page.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>404 error</a></li>
-								<li><a href="./maintenance.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Maintenance</a></li>
-							</ul>
-						</li>
-						<li class="lh-sb-item-separator"></li>
-						<li class="lh-sb-title condense">Elements</li>
-						<li class="lh-sb-item">
-							<a href="./remix-icons.php" class="lh-page-link">
-								<i class="ri-remixicon-line"></i><span class="condense"><span class="hover-title">remix
-										icons</span></span></a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./material-icons.php" class="lh-page-link">
-								<i class="mdi mdi-material-ui"></i><span class="condense"><span
-										class="hover-title">Material icons</span></span></a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./alert-popup.php" class="lh-page-link">
-								<i class="ri-file-warning-line"></i><span class="condense"><span
-										class="hover-title">Alert Popup</span></span></a>
-						</li>
-						<li class="lh-sb-item-separator"></li>
-						<li class="lh-sb-title condense">Settings</li>
-						<li class="lh-sb-item">
-							<a href="./role.php" class="lh-page-link">
-								<i class="ri-magic-line"></i><span class="condense"><span
-										class="hover-title">Role</span></span></a>
-						</li>
+						<?php
+						include('./setRole.php');
+						?>
+
+
 					</ul>
 				</div>
 			</div>
+			<div class="lh-sb-content">
+				<ul class="lh-sb-list">
+					<li class="lh-sb-item sb-drop-item">
+						<a href="javascript:void(0)" class="lh-drop-toggle">
+							<i class="fa-regular fa-clock"></i>
+							<span class="condense">Bảng Điều Khiển<i class="drop-arrow fa-regular fa-circle-left"></i></span>
+						</a>
+						<ul class="lh-sb-drop condense">
+							<li class="list"><a href="./index.php" class="lh-page-link drop">
+									<i class="fa-solid fa-code-commit"></i>Report</a></li>
+						</ul>
+					</li>
+					<li class="lh-sb-item-separator"></li>
+					<li class="lh-sb-title condense">Apps</li>
+					<li class="lh-sb-item sb-drop-item">
+						<a href="javascript:void(0)" class="lh-drop-toggle">
+							<i class="fa-regular fa-address-card"></i><span class="condense">Nhân Viên
+								<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
+						<ul class="lh-sb-drop condense">
+							<li><a href="./team-profile.php" class="lh-page-link drop">
+									<i class="fa-solid fa-code-commit"></i>Thông tin </a></li>
+							<li><a href="./team-add.php" class="lh-page-link drop">
+									<i class="fa-solid fa-code-commit"></i>Thêm nhân viên</a></li>
+
+							<li><a href="./team-list.php" class="lh-page-link drop">
+									<i class="fa-solid fa-code-commit"></i>Xoá nhân viên</a></li>
+						</ul>
+					</li>
+					<li class="lh-sb-item-separator"></li>
+					<li class="lh-sb-title condense">Customer</li>
+					<li class="lh-sb-item">
+						<a href="./list-customer.php" class="lh-page-link">
+							<i class="fa-solid fa-user-group"></i><span class="condense"><span
+									class="hover-title">Khách hàng</span> </span>
+						</a>
+					</li>
+					<li class="lh-sb-item">
+						<a href="./customer-details.php" class="lh-page-link">
+							<i class="fa-solid fa-user-pen"></i><span class="condense">
+								<span class="hover-title">Khách hàng Chi tiết
+								</span> </span>
+						</a>
+					</li>
+					<li class="lh-sb-item">
+						<a href="./rooms.php" class="lh-page-link">
+							<i class="fa-solid fa-gift"></i><span class="condense"><span
+									class="hover-title">Khuyến mãi </span> </span>
+						</a>
+					</li>
+					<li class="lh-sb-item">
+						<a href="./bookings.php" class="lh-page-link">
+							<i class="fa-solid fa-file"></i><span class="condense"><span
+									class="hover-title">Đặt chỗ</span> </span>
+						</a>
+					</li>
+					<li class="lh-sb-item">
+						<a href="./invoice.php" class="lh-page-link">
+							<i class="fa-regular fa-money-bill-1"></i><span class="condense"><span
+									class="hover-title">Hoá đơn</span> </span>
+						</a>
+					</li>
+					<li class="lh-sb-item-separator"></li>
+					<li class="lh-sb-title condense">Foods</li>
+					<li class="lh-sb-item">
+						<a href="./menu.php" class="lh-page-link">
+							<i class="fa-solid fa-utensils"></i><span class="condense"><span
+									class="hover-title">Thực đơn</span> </span>
+						</a>
+					</li>
+					<li class="lh-sb-item">
+						<a href="./menu-add.php" class="lh-page-link">
+							<i class="fa-solid fa-utensils"></i><span class="condense"><span
+									class="hover-title">Thêm thực đơn</span> </span>
+						</a>
+					</li>
+					<li class="lh-sb-item">
+						<a href="./orders.php" class="lh-page-link">
+							<i class="fa-regular fa-bookmark"></i><span class="condense"><span
+									class="hover-title">Đặt chỗ</span> </span>
+						</a>
+					</li>
+					<li class="lh-sb-item-separator"></li>
+					<li class="lh-sb-title condense">Login</li>
+					<li class="lh-sb-item sb-drop-item">
+						<a href="javascript:void(0)" class="lh-drop-toggle">
+							<i class="ri-pages-line"></i><span class="condense">Authentication
+								<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
+						<ul class="lh-sb-drop condense">
+							<li><a href="./signin.php" class="lh-page-link drop">
+									<i class="fa-solid fa-code-commit"></i>Đăng nhập</a></li>
+							<li><a href="./signup.php" class="lh-page-link drop">
+									<i class="fa-solid fa-code-commit"></i>Đăng ký</a></li>
+							<li><a href="./forgot.php" class="lh-page-link drop">
+									<i class="fa-solid fa-code-commit"></i>Quên Mật Khẩu</a></li>
+							<li><a href="./reset-password.php" class="lh-page-link drop">
+									<i class="fa-solid fa-code-commit"></i>Đặt lại mật khẩu</a></li>
+						</ul>
+					</li>
+					<li class="lh-sb-item sb-drop-item">
+						<a href="javascript:void(0)" class="lh-drop-toggle">
+							<i class="ri-service-line"></i><span class="condense">Service pages
+								<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
+						<ul class="lh-sb-drop condense">
+							<li><a href="./404-error-page.php" class="lh-page-link drop">
+									<i class="fa-solid fa-code-commit"></i>404 error</a></li>
+							<li><a href="./maintenance.php" class="lh-page-link drop">
+									<i class="fa-solid fa-code-commit"></i>Maintenance</a></li>
+						</ul>
+					</li>
+					<li class="lh-sb-item-separator"></li>
+					<li class="lh-sb-title condense">Elements</li>
+					<li class="lh-sb-item">
+						<a href="./remix-icons.php" class="lh-page-link">
+							<i class="ri-remixicon-line"></i><span class="condense"><span class="hover-title">remix
+									icons</span></span></a>
+					</li>
+					<li class="lh-sb-item">
+						<a href="./material-icons.php" class="lh-page-link">
+							<i class="mdi mdi-material-ui"></i><span class="condense"><span
+									class="hover-title">Material icons</span></span></a>
+					</li>
+					<li class="lh-sb-item">
+						<a href="./alert-popup.php" class="lh-page-link">
+							<i class="ri-file-warning-line"></i><span class="condense"><span
+									class="hover-title">Alert Popup</span></span></a>
+					</li>
+					<li class="lh-sb-item-separator"></li>
+					<li class="lh-sb-title condense">Settings</li>
+					<li class="lh-sb-item">
+						<a href="./role.php" class="lh-page-link">
+							<i class="ri-magic-line"></i><span class="condense"><span
+									class="hover-title">Role</span></span></a>
+					</li>
+				</ul>
+			</div>
+		</div>
 		</div>
 		<!-- Notify sidebar -->
 		<div class="lh-notify-bar-overlay"></div>
@@ -492,412 +504,197 @@ session_start();
 				<!-- Page title & breadcrumb -->
 				<div class="lh-page-title">
 					<div class="lh-breadcrumb">
-						<h5>Rooms</h5>
+						<h5>Quản Lý Khuyến Mãi</h5>
 						<ul>
 							<li><a href="./index.php">Home</a></li>
-							<li>Rooms</li>
+							<li>Khuyến Mãi</li>
 						</ul>
 					</div>
 					<div class="lh-tools">
-						<a href="javascript:void(0)" title="Refresh" class="refresh"><i class="fa-solid fa-arrows-rotate"></i></a>
+						<a href="javascript:void(0)" title="Refresh" id="refreshBtn" class="refresh">
+							<i class="fa-solid fa-arrows-rotate"></i>
+						</a>
 						<div id="pagedate">
 							<div class="lh-date-range" title="Date">
 								<span></span>
 							</div>
 						</div>
-						<div class="filter">
-							<div class="dropdown" title="Filter">
-								<button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
-									data-bs-toggle="dropdown" aria-expanded="false">
-									<i class="fa-solid fa-arrow-down-short-wide"></i>
-								</button>
-								<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-									<li><a class="dropdown-item" href="#">Booking</a></li>
-									<li><a class="dropdown-item" href="#">Revenue</a></li>
-									<li><a class="dropdown-item" href="#">Expence</a></li>
-								</ul>
-							</div>
-						</div>
 					</div>
 				</div>
-				<div class="section-title">
-					<h4>Junior Suites</h4>
-				</div>
-				<div class="row">
-					<div class="col-xl-3 col-md-6">
-						<div class="lh-card booked room-card" id="bookingtbl">
-							<div class="lh-card-header">
-								<h4 class="lh-card-title">101</h4>
-								<div class="header-tools">
-									<div class="dropdown" data-bs-toggle="tooltip" data-bs-original-title="Settings">
-										<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-											<i class="mdi mdi-dots-vertical"></i>
-										</button>
-										<ul class="dropdown-menu">
-											<li><a class="dropdown-item" href="bookings.html">Book room</a></li>
-											<li><a class="dropdown-item" href="#">History</a></li>
-											<li><a class="dropdown-item" href="#">Details</a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="lh-card-content card-default">
-								<div class="lh-room-details">
-									<ul class="list">
-										<li>Check in : 15/05/23</li>
-										<li>Check out : 20/05/23</li>
-										<li>Name : John Doe</li>
-										<li>Member : 6</li>
-										<li>Other room : 102</li>
-									</ul>
-								</div>
-							</div>
-						</div>
+
+				<?php if (isset($_SESSION['error'])): ?>
+					<div class="alert alert-danger">
+						<?php
+						echo $_SESSION['error'];
+						unset($_SESSION['error']);
+						?>
 					</div>
-					<div class="col-xl-3 col-md-6">
-						<div class="lh-card room-card" id="bookingtbl">
-							<div class="lh-card-header">
-								<h4 class="lh-card-title">103</h4>
-								<div class="header-tools">
-									<div class="dropdown" data-bs-toggle="tooltip" data-bs-original-title="Settings">
-										<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-											<i class="mdi mdi-dots-vertical"></i>
-										</button>
-										<ul class="dropdown-menu">
-											<li><a class="dropdown-item" href="bookings.html">Book room</a></li>
-											<li><a class="dropdown-item" href="#">History</a></li>
-											<li><a class="dropdown-item" href="#">Details</a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="lh-card-content card-default">
-								<div class="lh-room-details">
-									<ul class="list">
-										<li>Check in :</li>
-										<li>Check out :</li>
-										<li>Name :</li>
-										<li>Member :</li>
-										<li>Other room :</li>
-									</ul>
-								</div>
-							</div>
-						</div>
+				<?php endif; ?>
+
+				<?php if (isset($_SESSION['success'])): ?>
+					<div class="alert alert-success">
+						<?php
+						echo $_SESSION['success'];
+						unset($_SESSION['success']);
+						?>
 					</div>
-					<div class="col-xl-3 col-md-6">
-						<div class="lh-card room-card" id="bookingtbl">
-							<div class="lh-card-header">
-								<h4 class="lh-card-title">104</h4>
-								<div class="header-tools">
-									<div class="dropdown" data-bs-toggle="tooltip" data-bs-original-title="Settings">
-										<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-											<i class="mdi mdi-dots-vertical"></i>
-										</button>
-										<ul class="dropdown-menu">
-											<li><a class="dropdown-item" href="bookings.html">Book room</a></li>
-											<li><a class="dropdown-item" href="#">History</a></li>
-											<li><a class="dropdown-item" href="#">Details</a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="lh-card-content card-default">
-								<div class="lh-room-details">
-									<ul class="list">
-										<li>Check in :</li>
-										<li>Check out :</li>
-										<li>Name :</li>
-										<li>Member :</li>
-										<li>Other room :</li>
-									</ul>
-								</div>
-							</div>
-						</div>
+				<?php endif; ?>
+
+				<!-- DataTales Example -->
+				<div class="card shadow mb-4">
+					<div class="card-header py-3 d-flex justify-content-between align-items-center">
+						<h6 class="m-0 font-weight-bold text-primary">Danh Sách Khuyến Mãi</h6>
+						<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addKhuyenMaiModal">
+							<i class="fas fa-plus"></i> Thêm Khuyến Mãi
+						</button>
 					</div>
-					<div class="col-xl-3 col-md-6">
-						<div class="lh-card booked room-card" id="bookingtbl">
-							<div class="lh-card-header">
-								<h4 class="lh-card-title">105</h4>
-								<div class="header-tools">
-									<div class="dropdown" data-bs-toggle="tooltip" data-bs-original-title="Settings">
-										<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-											<i class="mdi mdi-dots-vertical"></i>
-										</button>
-										<ul class="dropdown-menu">
-											<li><a class="dropdown-item" href="bookings.html">Book room</a></li>
-											<li><a class="dropdown-item" href="#">History</a></li>
-											<li><a class="dropdown-item" href="#">Details</a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="lh-card-content card-default">
-								<div class="lh-room-details">
-									<ul class="list">
-										<li>Check in : 22/03/24</li>
-										<li>Check out : 25/03/24</li>
-										<li>Name : Mariya Johns</li>
-										<li>Member : 7</li>
-										<li>Other room : 106</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="section-title">
-					<h4>Deluxe Suites</h4>
-				</div>
-				<div class="row">
-					<div class="col-xl-3 col-md-6">
-						<div class="lh-card booked room-card" id="bookingtbl">
-							<div class="lh-card-header">
-								<h4 class="lh-card-title">204</h4>
-								<div class="header-tools">
-									<div class="dropdown" data-bs-toggle="tooltip" data-bs-original-title="Settings">
-										<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-											<i class="mdi mdi-dots-vertical"></i>
-										</button>
-										<ul class="dropdown-menu">
-											<li><a class="dropdown-item" href="bookings.html">Book room</a></li>
-											<li><a class="dropdown-item" href="#">History</a></li>
-											<li><a class="dropdown-item" href="#">Details</a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="lh-card-content card-default">
-								<div class="lh-room-details">
-									<ul class="list">
-										<li>Check in : 15/05/23</li>
-										<li>Check out : 20/05/23</li>
-										<li>Name : John Doe</li>
-										<li>Member : 6</li>
-										<li>Other room : 205</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-3 col-md-6">
-						<div class="lh-card room-card booked" id="bookingtbl">
-							<div class="lh-card-header">
-								<h4 class="lh-card-title">206</h4>
-								<div class="header-tools">
-									<div class="dropdown" data-bs-toggle="tooltip" data-bs-original-title="Settings">
-										<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-											<i class="mdi mdi-dots-vertical"></i>
-										</button>
-										<ul class="dropdown-menu">
-											<li><a class="dropdown-item" href="bookings.html">Book room</a></li>
-											<li><a class="dropdown-item" href="#">History</a></li>
-											<li><a class="dropdown-item" href="#">Details</a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="lh-card-content card-default">
-								<div class="lh-room-details">
-									<ul class="list">
-										<li>Check in : 09/07/23</li>
-										<li>Check out : 10/07/23</li>
-										<li>Name : Vascod Gama</li>
-										<li>Member : 2</li>
-										<li>Other room : No</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-3 col-md-6">
-						<div class="lh-card room-card" id="bookingtbl">
-							<div class="lh-card-header">
-								<h4 class="lh-card-title">207</h4>
-								<div class="header-tools">
-									<div class="dropdown" data-bs-toggle="tooltip" data-bs-original-title="Settings">
-										<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-											<i class="mdi mdi-dots-vertical"></i>
-										</button>
-										<ul class="dropdown-menu">
-											<li><a class="dropdown-item" href="bookings.html">Book room</a></li>
-											<li><a class="dropdown-item" href="#">History</a></li>
-											<li><a class="dropdown-item" href="#">Details</a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="lh-card-content card-default">
-								<div class="lh-room-details">
-									<ul class="list">
-										<li>Check in :</li>
-										<li>Check out :</li>
-										<li>Name :</li>
-										<li>Member :</li>
-										<li>Other room :</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-3 col-md-6">
-						<div class="lh-card booked room-card" id="bookingtbl">
-							<div class="lh-card-header">
-								<h4 class="lh-card-title">208</h4>
-								<div class="header-tools">
-									<div class="dropdown" data-bs-toggle="tooltip" data-bs-original-title="Settings">
-										<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-											<i class="mdi mdi-dots-vertical"></i>
-										</button>
-										<ul class="dropdown-menu">
-											<li><a class="dropdown-item" href="bookings.html">Book room</a></li>
-											<li><a class="dropdown-item" href="#">History</a></li>
-											<li><a class="dropdown-item" href="#">Details</a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="lh-card-content card-default">
-								<div class="lh-room-details">
-									<ul class="list">
-										<li>Check in : 22/03/24</li>
-										<li>Check out : 25/03/24</li>
-										<li>Name : Mariya Johns</li>
-										<li>Member : 7</li>
-										<li>Other room : 209</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="section-title">
-					<h4>Vip Suites</h4>
-				</div>
-				<div class="row">
-					<div class="col-xl-3 col-md-6">
-						<div class="lh-card booked room-card" id="bookingtbl">
-							<div class="lh-card-header">
-								<h4 class="lh-card-title">502</h4>
-								<div class="header-tools">
-									<div class="dropdown" data-bs-toggle="tooltip" data-bs-original-title="Settings">
-										<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-											<i class="mdi mdi-dots-vertical"></i>
-										</button>
-										<ul class="dropdown-menu">
-											<li><a class="dropdown-item" href="bookings.html">Book room</a></li>
-											<li><a class="dropdown-item" href="#">History</a></li>
-											<li><a class="dropdown-item" href="#">Details</a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="lh-card-content card-default">
-								<div class="lh-room-details">
-									<ul class="list">
-										<li>Check in : 06/01/24</li>
-										<li>Check out : 06/01/24</li>
-										<li>Name : Merri Vocs</li>
-										<li>Member : 4</li>
-										<li>Other room : 503</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-3 col-md-6">
-						<div class="lh-card room-card booked" id="bookingtbl">
-							<div class="lh-card-header">
-								<h4 class="lh-card-title">504</h4>
-								<div class="header-tools">
-									<div class="dropdown" data-bs-toggle="tooltip" data-bs-original-title="Settings">
-										<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-											<i class="mdi mdi-dots-vertical"></i>
-										</button>
-										<ul class="dropdown-menu">
-											<li><a class="dropdown-item" href="bookings.html">Book room</a></li>
-											<li><a class="dropdown-item" href="#">History</a></li>
-											<li><a class="dropdown-item" href="#">Details</a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="lh-card-content card-default">
-								<div class="lh-room-details">
-									<ul class="list">
-										<li>Check in : 19/02/23</li>
-										<li>Check out : 20/02/23</li>
-										<li>Name : Lora Desoza</li>
-										<li>Member : 1</li>
-										<li>Other room : No</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-3 col-md-6">
-						<div class="lh-card booked room-card" id="bookingtbl">
-							<div class="lh-card-header">
-								<h4 class="lh-card-title">505</h4>
-								<div class="header-tools">
-									<div class="dropdown" data-bs-toggle="tooltip" data-bs-original-title="Settings">
-										<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-											<i class="mdi mdi-dots-vertical"></i>
-										</button>
-										<ul class="dropdown-menu">
-											<li><a class="dropdown-item" href="bookings.html">Book room</a></li>
-											<li><a class="dropdown-item" href="#">History</a></li>
-											<li><a class="dropdown-item" href="#">Details</a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="lh-card-content card-default">
-								<div class="lh-room-details">
-									<ul class="list">
-										<li>Check in : 22/03/24</li>
-										<li>Check out : 25/03/24</li>
-										<li>Name : Mariya Johns</li>
-										<li>Member : 7</li>
-										<li>Other room : 507</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-3 col-md-6">
-						<div class="lh-card room-card" id="bookingtbl">
-							<div class="lh-card-header">
-								<h4 class="lh-card-title">506</h4>
-								<div class="header-tools">
-									<div class="dropdown" data-bs-toggle="tooltip" data-bs-original-title="Settings">
-										<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-											<i class="mdi mdi-dots-vertical"></i>
-										</button>
-										<ul class="dropdown-menu">
-											<li><a class="dropdown-item" href="bookings.html">Book room</a></li>
-											<li><a class="dropdown-item" href="#">History</a></li>
-											<li><a class="dropdown-item" href="#">Details</a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="lh-card-content card-default">
-								<div class="lh-room-details">
-									<ul class="list">
-										<li>Check in :</li>
-										<li>Check out :</li>
-										<li>Name :</li>
-										<li>Member :</li>
-										<li>Other room :</li>
-									</ul>
-								</div>
-							</div>
+					<div class="card-body">
+						<div class="table-responsive">
+							<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+								<thead>
+									<tr>
+										<th>ID</th>
+										<th>Tên Khuyến Mãi</th>
+										<th>Giảm Giá (%)</th>
+										<th>Ngày Bắt Đầu</th>
+										<th>Ngày Kết Thúc</th>
+										<th>Thao Tác</th>
+									</tr>
+								</thead>
+								<tbody>
+									<?php
+									$danhSachKM = $khuyenMaiController->getAllKhuyenMai();
+									while ($km = mysqli_fetch_assoc($danhSachKM)):
+									?>
+										<tr>
+											<td><?php echo $km['ID_KhuyenMai']; ?></td>
+											<td><?php echo $km['TenKhuyenMai']; ?></td>
+											<td><?php echo $km['GiamGia']; ?></td>
+											<td><?php echo date('d/m/Y', strtotime($km['NgayBatDau'])); ?></td>
+											<td><?php echo date('d/m/Y', strtotime($km['NgayKetThuc'])); ?></td>
+											<td>
+												<button type="button" class="btn btn-primary btn-sm"
+													data-bs-toggle="modal"
+													data-bs-target="#editKhuyenMaiModal<?php echo $km['ID_KhuyenMai']; ?>">
+													<i class="fas fa-edit"></i>
+												</button>
+												<button type="button" class="btn btn-danger btn-sm"
+													data-bs-toggle="modal"
+													data-bs-target="#deleteKhuyenMaiModal<?php echo $km['ID_KhuyenMai']; ?>">
+													<i class="fas fa-trash"></i>
+												</button>
+											</td>
+										</tr>
+
+										<!-- Edit Modal -->
+										<div class="modal fade" id="editKhuyenMaiModal<?php echo $km['ID_KhuyenMai']; ?>" tabindex="-1">
+											<div class="modal-dialog">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h5 class="modal-title">Sửa Khuyến Mãi</h5>
+														<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+													</div>
+													<form action="rooms.php" method="POST">
+														<div class="modal-body">
+															<input type="hidden" name="action" value="edit">
+															<input type="hidden" name="id" value="<?php echo $km['ID_KhuyenMai']; ?>">
+															<div class="form-group mb-3">
+																<label>Tên Khuyến Mãi:</label>
+																<input type="text" class="form-control" name="tenKM"
+																	value="<?php echo $km['TenKhuyenMai']; ?>" required>
+															</div>
+															<div class="form-group mb-3">
+																<label>Giảm Giá (%):</label>
+																<input type="number" class="form-control" name="giamGia"
+																	value="<?php echo $km['GiamGia']; ?>" required>
+															</div>
+															<div class="form-group mb-3">
+																<label>Ngày Bắt Đầu:</label>
+																<input type="date" class="form-control" name="ngayBD"
+																	value="<?php echo date('Y-m-d', strtotime($km['NgayBatDau'])); ?>" required>
+															</div>
+															<div class="form-group mb-3">
+																<label>Ngày Kết Thúc:</label>
+																<input type="date" class="form-control" name="ngayKT"
+																	value="<?php echo date('Y-m-d', strtotime($km['NgayKetThuc'])); ?>" required>
+															</div>
+														</div>
+														<div class="modal-footer">
+															<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+															<button type="submit" class="btn btn-primary">Lưu Thay Đổi</button>
+														</div>
+													</form>
+												</div>
+											</div>
+										</div>
+
+										<!-- Delete Modal -->
+										<div class="modal fade" id="deleteKhuyenMaiModal<?php echo $km['ID_KhuyenMai']; ?>" tabindex="-1">
+											<div class="modal-dialog">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h5 class="modal-title">Xác Nhận Xóa</h5>
+														<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+													</div>
+													<div class="modal-body">
+														<p>Bạn có chắc chắn muốn xóa khuyến mãi "<?php echo $km['TenKhuyenMai']; ?>"?</p>
+													</div>
+													<div class="modal-footer">
+														<form action="rooms.php" method="POST">
+															<input type="hidden" name="action" value="delete">
+															<input type="hidden" name="id" value="<?php echo $km['ID_KhuyenMai']; ?>">
+															<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+															<button type="submit" class="btn btn-danger">Xóa</button>
+														</form>
+													</div>
+												</div>
+											</div>
+										</div>
+									<?php endwhile; ?>
+								</tbody>
+							</table>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 
+		<!-- Add Khuyến Mãi Modal -->
+		<div class="modal fade" id="addKhuyenMaiModal" tabindex="-1">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Thêm Khuyến Mãi Mới</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+					</div>
+					<form action="rooms.php" method="POST">
+						<div class="modal-body">
+							<input type="hidden" name="action" value="add">
+							<div class="form-group mb-3">
+								<label>Tên Khuyến Mãi:</label>
+								<input type="text" class="form-control" name="tenKM" required>
+							</div>
+							<div class="form-group mb-3">
+								<label>Giảm Giá (%):</label>
+								<input type="number" class="form-control" name="giamGia" required>
+							</div>
+							<div class="form-group mb-3">
+								<label>Ngày Bắt Đầu:</label>
+								<input type="date" class="form-control" name="ngayBD" required>
+							</div>
+							<div class="form-group mb-3">
+								<label>Ngày Kết Thúc:</label>
+								<input type="date" class="form-control" name="ngayKT" required>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+							<button type="submit" class="btn btn-primary">Thêm Mới</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
 		<!-- Footer -->
 		<footer>
 			<div class="container-fluid">
@@ -913,10 +710,10 @@ session_start();
 		<!-- Feature tools -->
 		<div class="lh-tools-sidebar-overlay"></div>
 		<div class="lh-tools-sidebar">
-			 <a href="javascript:void(0)" class="lh-tools-sidebar-toggle in-out">
-        <i class="fa-solid fa-gear"></i>
+			<a href="javascript:void(0)" class="lh-tools-sidebar-toggle in-out">
+				<i class="fa-solid fa-gear"></i>
 
-      </a>
+			</a>
 			<div class="lh-bar-title">
 				<h6>Tools</h6>
 				<a href="javascript:void(0)" class="close-tools"><i class="ri-close-line"></i></a>
@@ -1035,6 +832,26 @@ session_start();
 	include('../customer/chatbot.php');
 	include('./footer-scripts-ad.php');
 	?>
+
+	<!-- refresh  -->
+	<script>
+		document.getElementById("refreshBtn").addEventListener("click", function() {
+			location.reload(); // Câu lệnh reload toàn trang
+		});
+	</script>
+
+<style>
+		#user-img {
+			width: 40px;
+			/* Kích thước nhỏ lại */
+			height: 40px;
+			border-radius: 50%;
+			/* Bo tròn thành hình tròn */
+			object-fit: cover;
+			/* Cắt ảnh để vừa khung */
+			border: 2px solid #fff;
+		}
+	</style>
 </body>
 
 

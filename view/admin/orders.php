@@ -1,6 +1,52 @@
 <?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 session_start();
+include_once(__DIR__ . '/../../controller/cDatBan.php');
+$controller = new DatBanController();
+
+// Xử lý thêm/sửa
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $thoiGianDat = $_POST['ThoiGianDat'] ?? null;
+    $idUser = $_POST['ID_User'] ?? null;
+    $soLuong = $_POST['soLuong'] ?? 1;
+    $id = $_POST['id'] ?? null;
+
+    if ($id) {
+        $idBan = $_POST['ID_Ban'] ?? null;
+        
+        // Kiểm tra xem ID_Ban có tồn tại không
+        if ($idBan !== null) {
+            $controller->update($id, $idBan, $thoiGianDat, $idUser, $soLuong);
+        } else {
+            echo "<script>alert('❌ Thiếu thông tin bàn! Không thể cập nhật.');</script>";
+        }
+    } else {
+        $controller->add($thoiGianDat, $idUser, $soLuong);
+    }
+
+    header("Location: orders.php");
+    exit;
+}
+
+// Xử lý xoá
+if (isset($_GET['delete'])) {
+    $controller->delete($_GET['delete']);
+    header("Location: orders.php");
+    exit;
+}
+
+// Lấy danh sách đặt bàn
+$dsDatBan = $controller->getAll();
+
+// Lấy 1 đặt bàn để sửa
+$editDatBan = null;
+if (isset($_GET['edit'])) {
+    $editDatBan = $controller->getById($_GET['edit']);
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -54,22 +100,22 @@ session_start();
 						</div>
 					</div>
 					<div class="right-header">
-
-
 						<div class="lh-right-tool display-screen">
-							<a class="lh-screen full" href="javascript:void(0)"><i class="ri-fullscreen-line"></i></a>
-							<a class="lh-screen reset" href="javascript:void(0)"><i
-									class="ri-fullscreen-exit-line"></i></a>
+							<a class="lh-screen full" href="javascript:void(0)"><i class="fa-solid fa-expand"></i></a>
+							<a class="lh-screen reset" href="javascript:void(0)">
+								<!-- <i class="ri-fullscreen-exit-line"></i> -->
+								<i class="fa-solid fa-expand"></i>
+							</a>
 						</div>
 						<div class="lh-right-tool">
 							<a class="lh-notify" href="javascript:void(0)">
-								<i class="ri-notification-2-line"></i>
+								<i class="fa-regular fa-bell"></i>
 								<span class="label"></span>
 							</a>
 						</div>
 						<div class="lh-right-tool display-dark">
-							<a class="lh-mode dark" href="javascript:void(0)"><i class="ri-moon-clear-line"></i></a>
-							<a class="lh-mode light" href="javascript:void(0)"><i class="ri-sun-line"></i></a>
+							<a class="lh-mode dark" href="javascript:void(0)"><i class="fa-regular fa-moon"></i></a>
+							<a class="lh-mode light" href="javascript:void(0)"><i class="fa-regular fa-sun"></i></a>
 						</div>
 						<div class="lh-right-tool lh-user-drop">
 							<div class="lh-hover-drop">
@@ -115,198 +161,9 @@ session_start();
 						</li>
 						<li class="lh-sb-item-separator"></li>
 						<?php
-						if ($_SESSION['role_id'] == 1) {
-							echo '
-						<li class="lh-sb-title condense">Apps</li>
-						<li class="lh-sb-item sb-drop-item">
-							<a href="javascript:void(0)" class="lh-drop-toggle">
-								<i class="fa-regular fa-address-card"></i><span class="condense">Nhân Viên
-									<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
-							<ul class="lh-sb-drop condense">
-								<li><a href="./team-profile.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Thông tin </a></li>
-								<li><a href="./team-add.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Thêm nhân viên</a></li>
-								<li><a href="./team-list.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Danh sách nhân viên</a></li>
-										
-							</ul>
-						</li>
-						<li class="lh-sb-item-separator"></li>
-						<li class="lh-sb-title condense">Customer</li>
-						<li class="lh-sb-item">
-							<a href="./list-customer.php" class="lh-page-link">
-								<i class="fa-solid fa-user-group"></i><span class="condense"><span
-										class="hover-title">Khách hàng</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./customer-details.php" class="lh-page-link">
-								<i class="fa-solid fa-user-pen"></i><span class="condense">
-									<span class="hover-title">Khách hàng Chi tiết
-									</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./rooms.php" class="lh-page-link">
-								<i class="fa-solid fa-gift"></i><span class="condense"><span
-										class="hover-title">Khuyến mãi </span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./bookings.php" class="lh-page-link">
-								<i class="fa-solid fa-file"></i><span class="condense"><span
-										class="hover-title">Đặt chỗ</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./invoice.php" class="lh-page-link">
-								<i class="fa-regular fa-money-bill-1"></i><span class="condense"><span
-										class="hover-title">Hoá đơn</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item-separator"></li>
-						<li class="lh-sb-title condense">Foods</li>
-						<li class="lh-sb-item">
-							<a href="./menu.php" class="lh-page-link">
-								<i class="fa-solid fa-utensils"></i><span class="condense"><span
-										class="hover-title">Thực đơn</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./menu-add.php" class="lh-page-link">
-								<i class="fa-solid fa-utensils"></i><span class="condense"><span
-										class="hover-title">Thêm thực đơn</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./orders.php" class="lh-page-link">
-								<i class="fa-regular fa-bookmark"></i><span class="condense"><span
-										class="hover-title">Đặt chỗ</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item-separator"></li>
-						<li class="lh-sb-title condense">Login</li>
-						<li class="lh-sb-item sb-drop-item">
-							<a href="javascript:void(0)" class="lh-drop-toggle">
-								<i class="ri-pages-line"></i><span class="condense">Kho
-									<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
-							<ul class="lh-sb-drop condense">
-								<li><a href="./material.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Nguyên liệu</a></li>
-								<li><a href="./material-add.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Thêm Nguyên liệu</a></li>
-								<li><a href="./material-update.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Cập nhật nguyên liệu</a></li>
-								
-							</ul>
-						</li>';
-						} else if ($_SESSION['role_id'] == 2) {
-							echo '<li class="lh-sb-item-separator"></li>
-							<li class="lh-sb-title condense">Customer</li>
-							<li class="lh-sb-item">
-								<a href="./list-customer.php" class="lh-page-link">
-									<i class="fa-solid fa-user-group"></i><span class="condense"><span
-											class="hover-title">Khách hàng</span> </span>
-								</a>
-							</li>
-							<li class="lh-sb-item">
-							<a href="./customer-details.php" class="lh-page-link">
-								<i class="fa-solid fa-user-pen"></i><span class="condense">
-									<span class="hover-title">Khách hàng Chi tiết
-									</span> </span>
-							</a>
-						</li>
-							<li class="lh-sb-item">
-								<a href="./rooms.php" class="lh-page-link">
-									<i class="fa-solid fa-gift"></i><span class="condense"><span
-											class="hover-title">Khuyến mãi </span> </span>
-								</a>
-							</li>
-							<li class="lh-sb-item">
-								<a href="./bookings.php" class="lh-page-link">
-									<i class="fa-solid fa-file"></i><span class="condense"><span
-											class="hover-title">Đặt chỗ</span> </span>
-								</a>
-							</li>
-							<li class="lh-sb-item">
-								<a href="./invoice.php" class="lh-page-link">
-									<i class="fa-regular fa-money-bill-1"></i><span class="condense"><span
-											class="hover-title">Hoá đơn</span> </span>
-								</a>
-							</li>
-							<li class="lh-sb-item-separator"></li>
-							<li class="lh-sb-title condense">Foods</li>
-							<li class="lh-sb-item">
-								<a href="./menu.php" class="lh-page-link">
-									<i class="fa-solid fa-utensils"></i><span class="condense"><span
-											class="hover-title">Thực đơn</span> </span>
-								</a>
-							</li>
-							<li class="lh-sb-item">
-								<a href="./menu-add.php" class="lh-page-link">
-									<i class="fa-solid fa-utensils"></i><span class="condense"><span
-											class="hover-title">Thêm thực đơn</span> </span>
-								</a>
-							</li>
-							<li class="lh-sb-item">
-								<a href="./orders.php" class="lh-page-link">
-									<i class="fa-regular fa-bookmark"></i><span class="condense"><span
-											class="hover-title">Đặt chỗ</span> </span>
-								</a>
-							</li>
-							<li class="lh-sb-item sb-drop-item">
-							<a href="javascript:void(0)" class="lh-drop-toggle">
-								<i class="ri-pages-line"></i><span class="condense">Kho
-									<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
-							<ul class="lh-sb-drop condense">
-								<li><a href="./material.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Nguyên liệu</a></li>
-								<li><a href="./material-add.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Thêm Nguyên liệu</a></li>
-								<li><a href="./material-update.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Cập nhật nguyên liệu</a></li>
-								
-							</ul>
-						</li>';
-						}
-
+						include('./setRole.php');
 						?>
-						<!-- // <li class="lh-sb-item sb-drop-item">
-						// 	<a href="javascript:void(0)" class="lh-drop-toggle">
-						// 		<i class="ri-service-line"></i><span class="condense">Service pages
-						// 			<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
-						// 	<ul class="lh-sb-drop condense">
-						// 		<li><a href="./404-error-page.php" class="lh-page-link drop">
-						// 				<i class="fa-solid fa-code-commit"></i>404 error</a></li>
-						// 		<li><a href="./maintenance.php" class="lh-page-link drop">
-						// 				<i class="fa-solid fa-code-commit"></i>Maintenance</a></li>
-						// 	</ul>
-						// </li>
-						// <li class="lh-sb-item-separator"></li>
-						// <li class="lh-sb-title condense">Elements</li>
-						// <li class="lh-sb-item">
-						// 	<a href="./remix-icons.php" class="lh-page-link">
-						// 		<i class="ri-remixicon-line"></i><span class="condense"><span class="hover-title">remix
-						// 				icons</span></span></a>
-						// </li>
-						// <li class="lh-sb-item">
-						// 	<a href="./material-icons.php" class="lh-page-link">
-						// 		<i class="mdi mdi-material-ui"></i><span class="condense"><span
-						// 				class="hover-title">Material icons</span></span></a>
-						// </li>
-						// <li class="lh-sb-item">
-						// 	<a href="./alert-popup.php" class="lh-page-link">
-						// 		<i class="ri-file-warning-line"></i><span class="condense"><span
-						// 				class="hover-title">Alert Popup</span></span></a>
-						// </li>
-						// <li class="lh-sb-item-separator"></li>
-						// <li class="lh-sb-title condense">Settings</li>
-						// <li class="lh-sb-item">
-						// 	<a href="./role.php" class="lh-page-link">
-						// 		<i class="ri-magic-line"></i><span class="condense"><span
-						// 				class="hover-title">Role</span></span></a>
-						// </li> -->
+
 					</ul>
 				</div>
 			</div>
@@ -449,487 +306,81 @@ session_start();
 		</div>
 		<!-- Notify sidebar -->
 		<div class="lh-notify-bar-overlay"></div>
-		<div class="lh-notify-bar">
-			<div class="lh-bar-title">
-				<h6>Notifications<span class="label">12</span></h6>
-				<a href="javascript:void(0)" class="close-notify"><i class="ri-close-line"></i></a>
-			</div>
-			<div class="lh-bar-content">
-				<ul class="nav nav-tabs" id="myTab" role="tablist">
-					<li class="nav-item" role="presentation">
-						<button class="nav-link active" id="alert-tab" data-bs-toggle="tab" data-bs-target="#alert"
-							type="button" role="tab" aria-controls="alert" aria-selected="true">Alert</button>
-					</li>
-					<li class="nav-item" role="presentation">
-						<button class="nav-link" id="messages-tab" data-bs-toggle="tab" data-bs-target="#messages"
-							type="button" role="tab" aria-controls="messages" aria-selected="false">Messages</button>
-					</li>
-				</ul>
-				<div class="tab-content" id="myTabContent">
-					<div class="tab-pane fade show active" id="alert" role="tabpanel" aria-labelledby="alert-tab">
-						<div class="lh-alert-list">
-							<ul>
-								<li>
-									<div class="icon lh-alert">
-										<i class="ri-alarm-warning-line"></i>
-									</div>
-									<div class="detail">
-										<div class="title">Your final report is overdue</div>
-										<p class="time">Just now</p>
-										<p class="message">Please submit your quarterly report before - June 15.</p>
-									</div>
-								</li>
-								<li>
-									<div class="icon lh-warn">
-										<i class="ri-error-warning-line"></i>
-									</div>
-									<div class="detail">
-										<div class="title">Your Booking campaign is stop!</div>
-										<p class="time">5:45AM - 25/05/2024</p>
-										<p class="message">Please submit your quarterly report before Jun 15.</p>
-									</div>
-								</li>
-								<li>
-									<div class="icon lh-success">
-										<i class="ri-check-double-line"></i>
-									</div>
-									<div class="detail">
-										<div class="title">Your payment is successfully processed</div>
-										<p class="time">9:20PM - 19/06/2024</p>
-										<p class="message">Check your account wallet. if there is any issue, create
-											support ticket.</p>
-									</div>
-								</li>
-								<li>
-									<div class="icon lh-warn">
-										<i class="ri-error-warning-line"></i>
-									</div>
-									<div class="detail">
-										<div class="title">Budget threshold exceeded!</div>
-										<p class="time">4:15AM - 01/04/2024</p>
-										<p class="message">Budget threshold was exceeded for project "Luxurious" B612
-											elements.</p>
-									</div>
-								</li>
-								<li>
-									<div class="icon lh-warn">
-										<i class="ri-close-line"></i>
-									</div>
-									<div class="detail">
-										<div class="title">Booking was decline!</div>
-										<p class="time">4:15AM - 01/04/2024</p>
-										<p class="message">Your booking "B126" is declined by Theresa Mayeras.</p>
-									</div>
-								</li>
-								<li>
-									<div class="icon lh-success">
-										<i class="ri-check-double-line"></i>
-									</div>
-									<div class="detail">
-										<div class="title">Your payment is successfully processed</div>
-										<p class="time">9:20PM - 19/06/2024</p>
-										<p class="message">Check your account wallet. if there is any issue, create
-											support ticket.</p>
-									</div>
-								</li>
-								<li class="check"><a class="lh-primary-btn" href="#">View all</a></li>
-							</ul>
-						</div>
-					</div>
-					<div class="tab-pane fade" id="messages" role="tabpanel" aria-labelledby="messages-tab">
-						<div class="lh-message-list">
-							<ul>
-								<li>
-									<a href="#" class="reply">Reply</a>
-									<div class="user">
-										<img src="../../assets_admin/img/user/9.jpg" alt="user">
-										<span class="label online"></span>
-									</div>
-									<div class="detail">
-										<a href="#" class="name">Boris Whisli</a>
-										<p class="time">5:30AM, Today</p>
-										<p class="message">Hello, Room 204 need to be clean.</p>
-										<span class="download-files">
-											<span class="download">
-												<img src="../../assets_admin/img/room/1.png" alt="image">
-												<a href="javascript:void(0)"><i class="ri-download-2-line"></i></a>
-											</span>
-											<span class="download">
-												<img src="../../assets_admin/img/room/2.png" alt="image">
-												<a href="javascript:void(0)"><i class="ri-download-2-line"></i></a>
-											</span>
-											<span class="download">
-												<img src="../../assets_admin/img/room/3.png" alt="image">
-												<a href="javascript:void(0)"><i class="ri-download-2-line"></i></a>
-											</span>
-										</span>
-									</div>
-								</li>
-								<li>
-									<a href="#" class="reply">Reply</a>
-									<div class="user">
-										<img src="../../assets_admin/img/user/8.jpg" alt="user">
-										<span class="label offline"></span>
-									</div>
-									<div class="detail">
-										<a href="#" class="name">Frank N. Stein</a>
-										<p class="time">8:30PM, 05/12/2024</p>
-										<p class="message">Please take a look and get order from table 06.</p>
-									</div>
-								</li>
-								<li>
-									<a href="#" class="reply">Reply</a>
-									<div class="user">
-										<img src="../../assets_admin/img/user/7.jpg" alt="user">
-										<span class="label busy"></span>
-									</div>
-									<div class="detail">
-										<a href="#" class="name">Frank N. Stein</a>
-										<p class="time">8:30PM, 05/12/2024</p>
-										<p class="message">Room 65 AC repair service is done.</p>
-										<span class="download-files">
-											<span class="download">
-												<img src="../../assets_admin/img/facilities/1.png" alt="image">
-												<a href="javascript:void(0)"><i class="ri-download-2-line"></i></a>
-											</span>
-										</span>
-									</div>
-								</li>
-								<li>
-									<a href="#" class="reply">Reply</a>
-									<div class="user">
-										<img src="../../assets_admin/img/user/6.jpg" alt="user">
-										<span class="label busy"></span>
-									</div>
-									<div class="detail">
-										<a href="#" class="name">Paige Turner</a>
-										<p class="time">4:30PM, 12/12/2024</p>
-										<p class="message">Take a Spa trainer interview.</p>
-									</div>
-								</li>
-								<li>
-									<a href="#" class="reply">Reply</a>
-									<div class="user">
-										<img src="../../assets_admin/img/user/5.jpg" alt="user">
-										<span class="label busy"></span>
-									</div>
-									<div class="detail">
-										<a href="#" class="name">Allie Grater</a>
-										<p class="time">8:30PM, 05/12/2024</p>
-										<p class="message">Take marketing module task.</p>
-									</div>
-								</li>
-								<li class="check"><a class="lh-primary-btn" href="#">View all</a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+
 
 		<!-- main content -->
 		<div class="lh-main-content">
 			<div class="container-fluid">
-				<!-- Page title & breadcrumb -->
-				<div class="lh-page-title">
-					<div class="lh-breadcrumb">
-						<h5>Restaurant Orders</h5>
-						<ul>
-							<li><a href="./index.php">Home</a></li>
-							<li>Restaurant Orders</li>
-						</ul>
-					</div>
-					<div class="lh-tools">
-						<a href="javascript:void(0)" title="Refresh" class="refresh"><i class="fa-solid fa-arrows-rotate"></i></a>
-						<div id="pagedate">
-							<div class="lh-date-range" title="Date">
-								<span></span>
-							</div>
-						</div>
-						<div class="filter">
-							<div class="dropdown" title="Filter">
-								<button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
-									data-bs-toggle="dropdown" aria-expanded="false">
-									<i class="fa-solid fa-arrow-down-short-wide"></i>
-								</button>
-								<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-									<li><a class="dropdown-item" href="#">Booking</a></li>
-									<li><a class="dropdown-item" href="#">Revenue</a></li>
-									<li><a class="dropdown-item" href="#">Expence</a></li>
-								</ul>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="section-title">
-					<h4>Junior Suites Hall</h4>
-				</div>
-				<div class="row">
-					<div class="col-xl-3 col-md-6">
-						<div class="lh-card booked room-card" id="bookingtbl">
-							<div class="lh-card-header">
-								<h4 class="lh-card-title">Table : 01</h4>
-								<div class="header-tools">
-									<div class="dropdown" data-bs-toggle="tooltip" data-bs-original-title="Settings">
-										<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-											<i class="mdi mdi-dots-vertical"></i>
-										</button>
-										<ul class="dropdown-menu">
-											<li><a class="dropdown-item" href="bookings.html">Book Table</a></li>
-											<li><a class="dropdown-item" href="#">History</a></li>
-											<li><a class="dropdown-item" href="#">Details</a></li>
-										</ul>
-									</div>
+				<div class="container mt-4">
+					<div class="row">
+						<div class="col-md-5">
+							<div class="card shadow-sm">
+								<div class="card-header bg-success text-white">
+									<h5><?= $editDatBan ? "Sửa Đặt Bàn" : "Thêm Đặt Bàn" ?></h5>
 								</div>
-							</div>
-							<div class="lh-card-content card-default">
-								<div class="lh-room-details">
-									<ul class="list">
-										<li>Date : 15/05/23</li>
-										<li>Time : 9:30pm</li>
-										<li>Person : 4</li>
-										<li>Recipe 1 : Stuffed Bell Peppers</li>
-										<li>Recipe 2 :</li>
-										<li>Recipe 3 :</li>
-										<li>Recipe 4 :</li>
-										<li>Drinks : Fruit Beer</li>
-									</ul>
+								<div class="card-body">
+									<form method="post">
+										<?php if ($editDatBan): ?>
+											<input type="hidden" name="id" value="<?= $editDatBan['ID_DatBan'] ?>">
+										<?php endif; ?>
+										
+										<div class="mb-3">
+											<label>Thời gian đặt</label>
+											<input type="datetime-local" name="ThoiGianDat" class="form-control" value="<?= isset($editDatBan['ThoiGianDat']) ? date('Y-m-d\TH:i', strtotime($editDatBan['ThoiGianDat'])) : '' ?>" required>
+										</div>
+										<div class="mb-3">
+											<label>ID Người dùng</label>
+											<input type="number" name="ID_User" class="form-control" value="<?= $editDatBan['ID_User'] ?? '' ?>" required>
+										</div>
+										<div class="mb-3">
+											<label>Số lượng</label>
+											<input type="number" name="soLuong" class="form-control" value="<?= $editDatBan['soLuong'] ?? '' ?>" required>
+										</div>
+										<div class="d-flex justify-content-between">
+											<button type="submit" class="btn btn-success"><?= $editDatBan ? "Cập nhật" : "Thêm mới" ?></button>
+											<?php if ($editDatBan): ?>
+												<a href="orders.php" class="btn btn-secondary">Hủy</a>
+											<?php endif; ?>
+										</div>
+									</form>
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="col-xl-3 col-md-6">
-						<div class="lh-card room-card" id="bookingtbl">
-							<div class="lh-card-header">
-								<h4 class="lh-card-title">Table : 02</h4>
-								<div class="header-tools">
-									<div class="dropdown" data-bs-toggle="tooltip" data-bs-original-title="Settings">
-										<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-											<i class="mdi mdi-dots-vertical"></i>
-										</button>
-										<ul class="dropdown-menu">
-											<li><a class="dropdown-item" href="bookings.html">Book Table</a></li>
-											<li><a class="dropdown-item" href="#">History</a></li>
-											<li><a class="dropdown-item" href="#">Details</a></li>
-										</ul>
-									</div>
+						<div class="col-md-7">
+							<div class="card shadow-sm">
+								<div class="card-header bg-dark text-white">
+									<h5>Danh sách Đặt Bàn</h5>
 								</div>
-							</div>
-							<div class="lh-card-content card-default">
-								<div class="lh-room-details">
-									<ul class="list">
-										<li>Date : 16/05/23</li>
-										<li>Time : 8:00pm</li>
-										<li>Person : 4</li>
-										<li>Recipe 1 : Roasted Vegetables</li>
-										<li>Recipe 2 : Grilled panini</li>
-										<li>Recipe 3 :</li>
-										<li>Recipe 4 :</li>
-										<li>Drinks : Softdrink</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-3 col-md-6">
-						<div class="lh-card room-card" id="bookingtbl">
-							<div class="lh-card-header">
-								<h4 class="lh-card-title">Table : 03</h4>
-								<div class="header-tools">
-									<div class="dropdown" data-bs-toggle="tooltip" data-bs-original-title="Settings">
-										<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-											<i class="mdi mdi-dots-vertical"></i>
-										</button>
-										<ul class="dropdown-menu">
-											<li><a class="dropdown-item" href="bookings.html">Book Table</a></li>
-											<li><a class="dropdown-item" href="#">History</a></li>
-											<li><a class="dropdown-item" href="#">Details</a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="lh-card-content card-default">
-								<div class="lh-room-details">
-									<ul class="list">
-										<li>Date : 16/05/23</li>
-										<li>Time : 7:30pm</li>
-										<li>Person : 2</li>
-										<li>Recipe 1 : Grilled panini</li>
-										<li>Recipe 2 : Roasted Vegetables</li>
-										<li>Recipe 3 :</li>
-										<li>Recipe 4 :</li>
-										<li>Drinks : Softdrink</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-3 col-md-6">
-						<div class="lh-card booked room-card" id="bookingtbl">
-							<div class="lh-card-header">
-								<h4 class="lh-card-title">Table : 04</h4>
-								<div class="header-tools">
-									<div class="dropdown" data-bs-toggle="tooltip" data-bs-original-title="Settings">
-										<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-											<i class="mdi mdi-dots-vertical"></i>
-										</button>
-										<ul class="dropdown-menu">
-											<li><a class="dropdown-item" href="bookings.html">Book Table</a></li>
-											<li><a class="dropdown-item" href="#">History</a></li>
-											<li><a class="dropdown-item" href="#">Details</a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="lh-card-content card-default">
-								<div class="lh-room-details">
-									<ul class="list">
-										<li>Date : 17/05/23</li>
-										<li>Time : 8:30pm</li>
-										<li>Person : 4</li>
-										<li>Recipe 1 : Grilled panini</li>
-										<li>Recipe 2 : Roasted Vegetables</li>
-										<li>Recipe 3 : Stuffed Bell Peppers</li>
-										<li>Recipe 4 : </li>
-										<li>Drinks : Softdrink</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="section-title">
-					<h4>AC Deluxe Suites Hall</h4>
-				</div>
-				<div class="row">
-					<div class="col-xl-3 col-md-6">
-						<div class="lh-card booked room-card" id="bookingtbl">
-							<div class="lh-card-header">
-								<h4 class="lh-card-title">Table : 05</h4>
-								<div class="header-tools">
-									<div class="dropdown" data-bs-toggle="tooltip" data-bs-original-title="Settings">
-										<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-											<i class="mdi mdi-dots-vertical"></i>
-										</button>
-										<ul class="dropdown-menu">
-											<li><a class="dropdown-item" href="bookings.html">Book Table</a></li>
-											<li><a class="dropdown-item" href="#">History</a></li>
-											<li><a class="dropdown-item" href="#">Details</a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="lh-card-content card-default">
-								<div class="lh-room-details">
-									<ul class="list">
-										<li>Date : 16/05/23</li>
-										<li>Time : 8:30pm</li>
-										<li>Person : 4</li>
-										<li>Recipe 1 : Stuffed Bell Peppers</li>
-										<li>Recipe 2 : Waffles</li>
-										<li>Recipe 3 :</li>
-										<li>Recipe 4 :</li>
-										<li>Drinks : Softdrink</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-3 col-md-6">
-						<div class="lh-card booked room-card" id="bookingtbl">
-							<div class="lh-card-header">
-								<h4 class="lh-card-title">Table : 06</h4>
-								<div class="header-tools">
-									<div class="dropdown" data-bs-toggle="tooltip" data-bs-original-title="Settings">
-										<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-											<i class="mdi mdi-dots-vertical"></i>
-										</button>
-										<ul class="dropdown-menu">
-											<li><a class="dropdown-item" href="bookings.html">Book Table</a></li>
-											<li><a class="dropdown-item" href="#">History</a></li>
-											<li><a class="dropdown-item" href="#">Details</a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="lh-card-content card-default">
-								<div class="lh-room-details">
-									<ul class="list">
-										<li>Date : 17/05/23</li>
-										<li>Time : 7:30pm</li>
-										<li>Person : 1</li>
-										<li>Recipe 1 : Bell Peppers</li>
-										<li>Recipe 2 :</li>
-										<li>Recipe 3 :</li>
-										<li>Recipe 4 :</li>
-										<li>Drinks : Fruit Beer</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-3 col-md-6">
-						<div class="lh-card room-card" id="bookingtbl">
-							<div class="lh-card-header">
-								<h4 class="lh-card-title">Table : 07</h4>
-								<div class="header-tools">
-									<div class="dropdown" data-bs-toggle="tooltip" data-bs-original-title="Settings">
-										<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-											<i class="mdi mdi-dots-vertical"></i>
-										</button>
-										<ul class="dropdown-menu">
-											<li><a class="dropdown-item" href="bookings.html">Book Table</a></li>
-											<li><a class="dropdown-item" href="#">History</a></li>
-											<li><a class="dropdown-item" href="#">Details</a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="lh-card-content card-default">
-								<div class="lh-room-details">
-									<ul class="list">
-										<li>Date : 17/05/23</li>
-										<li>Time : 9:30pm</li>
-										<li>Person : 3</li>
-										<li>Recipe 1 : Grilled panini</li>
-										<li>Recipe 2 : Roasted Vegetables</li>
-										<li>Recipe 3 :</li>
-										<li>Recipe 4 :</li>
-										<li>Drinks : Fruit Beer</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-3 col-md-6">
-						<div class="lh-card booked room-card" id="bookingtbl">
-							<div class="lh-card-header">
-								<h4 class="lh-card-title">Table : 08</h4>
-								<div class="header-tools">
-									<div class="dropdown" data-bs-toggle="tooltip" data-bs-original-title="Settings">
-										<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-											<i class="mdi mdi-dots-vertical"></i>
-										</button>
-										<ul class="dropdown-menu">
-											<li><a class="dropdown-item" href="bookings.html">Book Table</a></li>
-											<li><a class="dropdown-item" href="#">History</a></li>
-											<li><a class="dropdown-item" href="#">Details</a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="lh-card-content card-default">
-								<div class="lh-room-details">
-									<ul class="list">
-										<li>Date : 18/05/23</li>
-										<li>Time : 8:30pm</li>
-										<li>Person : 1</li>
-										<li>Recipe 1 : Grilled panini</li>
-										<li>Recipe 2 : Roasted Vegetables</li>
-										<li>Recipe 3 : Stuffed Bell Peppers</li>
-										<li>Recipe 4 : </li>
-										<li>Drinks : Softdrink</li>
-									</ul>
+								<div class="card-body p-0">
+									<table class="table table-striped mb-0">
+										<thead>
+											<tr>
+												<th>ID</th>
+												<th>ID Bàn</th>
+												<th>Thời gian</th>
+												<th>ID User</th>
+												<th>Số lượng</th>
+												
+												<th>Hành động</th>
+											</tr>
+										</thead>
+										<tbody>
+											<?php foreach ($dsDatBan as $item): ?>
+												<tr>
+													<td><?= $item['ID_DatBan'] ?></td>
+													<td><?= $item['ID_Ban'] ?></td>
+													<td><?= date('d/m/Y H:i', strtotime($item['ThoiGianDat'])) ?></td>
+													<td><?= $item['ID_User'] ?></td>
+													<td><?= $item['soLuong'] ?></td>
+													
+													<td>
+														<a href="orders.php?edit=<?= $item['ID_DatBan'] ?>" class="btn btn-warning btn-sm">Sửa</a>
+														<a href="orders.php?delete=<?= $item['ID_DatBan'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Xóa đặt bàn này?')">Xóa</a>
+													</td>
+												</tr>
+											<?php endforeach; ?>
+										</tbody>
+									</table>
 								</div>
 							</div>
 						</div>
@@ -953,10 +404,10 @@ session_start();
 		<!-- Feature tools -->
 		<div class="lh-tools-sidebar-overlay"></div>
 		<div class="lh-tools-sidebar">
-			 <a href="javascript:void(0)" class="lh-tools-sidebar-toggle in-out">
-        <i class="fa-solid fa-gear"></i>
+			<a href="javascript:void(0)" class="lh-tools-sidebar-toggle in-out">
+				<i class="fa-solid fa-gear"></i>
 
-      </a>
+			</a>
 			<div class="lh-bar-title">
 				<h6>Tools</h6>
 				<a href="javascript:void(0)" class="close-tools"><i class="ri-close-line"></i></a>

@@ -59,11 +59,16 @@ error_reporting(E_ALL);
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="book.php">Đặt bàn</a>
                                 </li>
+                                
 
                                 <li class="nav-item dropdown">
                                     <a class="nav-link" href="menu.php">
                                         Thực đơn
                                     </a>
+                                </li>
+
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="Message.php">Liên hệ </a>
                                 </li>
 
                                 <li class="nav-item dropdown">

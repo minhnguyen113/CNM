@@ -1,5 +1,73 @@
 <?php
 session_start();
+include_once('../../controller/cDonHang.php');
+$donHang = new DonHangController();
+include_once("../../controller/cThanhToan.php");
+$ttController = new cThanhToan();
+// Xử lý đổi trạng thái đơn hàng
+if (isset($_GET['xacnhan'])) {
+	$donHang->updateTrangThai($_GET['xacnhan'], 'Đã xác nhận');
+	header('Location: invoice.php');
+	exit;
+}
+if (isset($_GET['chebien'])) {
+	$donHang->updateTrangThai($_GET['chebien'], 'Đang chế biến');
+	header('Location: invoice.php');
+	exit;
+}
+if (isset($_GET['giaohang'])) {
+	$donHang->updateTrangThai($_GET['giaohang'], 'Đang giao hàng');
+	header('Location: invoice.php');
+	exit;
+}
+if (isset($_GET['thanhtoan'])) {
+	$donHang->updateTrangThai($_GET['thanhtoan'], 'Đã thanh toán');
+	header('Location: invoice.php');
+	exit;
+}
+if (isset($_GET['hoanthanh'])) {
+	$donHang->updateTrangThai($_GET['hoanthanh'], 'Đã hoàn thành');
+	header('Location: invoice.php');
+	exit;
+}
+if (isset($_GET['huy'])) {
+	$donHang->updateTrangThai($_GET['huy'], 'Đã hủy');
+	header('Location: invoice.php');
+	exit;
+}
+if (isset($_GET['xoa'])) {
+	$donHang->deleteDonHang($_GET['xoa']);
+	header('Location: invoice.php');
+	exit;
+}
+
+$ds = $donHang->getAll();
+$ct = [];
+$donHangDetail = null;
+$user = null;
+if (isset($_GET['id'])) {
+	$ct = $donHang->getChiTiet($_GET['id']);
+	$donHangDetail = $donHang->getById($_GET['id']);
+	if ($donHangDetail && !empty($donHangDetail['ID_User'])) {
+		include_once("../../controller/cUser.php");
+		$userController = new UserController();
+		// Thử lấy theo khách hàng
+		$userResult = $userController->StaffGetCustomerById($donHangDetail['ID_User']);
+		if (!$userResult || mysqli_num_rows($userResult) == 0) {
+			// Nếu không phải khách hàng, thử lấy theo nhân viên
+			$userResult = $userController->StaffGetUserById($donHangDetail['ID_User']);
+		}
+		if ($userResult && mysqli_num_rows($userResult) > 0) {
+			$user = mysqli_fetch_assoc($userResult);
+		}
+	}
+}
+
+
+$phuongThuc = '';
+if ($donHangDetail && !empty($donHangDetail['ID_DonHang'])) {
+	$phuongThuc = $ttController->getPhuongThucByDonHang($donHangDetail['ID_DonHang']);
+}
 ?>
 
 
@@ -8,20 +76,21 @@ session_start();
 
 
 <!-- Mirrored from maraviyainfotech.com/projects/luxurious-html-v22/admin/invoice.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 21 Jan 2025 15:13:54 GMT -->
+
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="Best Luxurious Hotel Booking Template.">
-    <meta name="keywords"
-        content="hotel, booking, business, restaurant, spa, resort, landing, agency, corporate, start up, site design, new business site, business template, professional template, classic, modern">
-    <meta name="author" content="ashishmaraviya">
+	<meta name="keywords"
+		content="hotel, booking, business, restaurant, spa, resort, landing, agency, corporate, start up, site design, new business site, business template, professional template, classic, modern">
+	<meta name="author" content="ashishmaraviya">
 
 	<title>Chef Restaurent</title>
 
 	<!-- App favicon -->
-		<?php
-		include('./head-resource-ad.php');
+	<?php
+	include('./head-resource-ad.php');
 	?>
 
 </head>
@@ -37,7 +106,7 @@ session_start();
 				<div></div>
 			</div>
 		</div>
-		
+
 		<!-- Header -->
 		<header class="lh-header">
 			<div class="container-fluid">
@@ -59,7 +128,7 @@ session_start();
 							</div>
 						</div>
 					</div>
-						<div class="right-header">
+					<div class="right-header">
 						<div class="lh-right-tool display-screen">
 							<a class="lh-screen full" href="javascript:void(0)"><i class="fa-solid fa-expand"></i></a>
 							<a class="lh-screen reset" href="javascript:void(0)">
@@ -80,33 +149,33 @@ session_start();
 						<div class="lh-right-tool lh-user-drop">
 							<div class="lh-hover-drop">
 								<div class="lh-hover-tool">
-								<img class="user" id="user-img" src="<?php echo !empty($data['HinhAnh']) ? '../../assets_admin/img/user/' . htmlspecialchars($data['HinhAnh']) : '../../assets_admin/img/user/minh.jpg'; ?>" alt="user">
+									<img class="user" id="user-img" src="<?php echo !empty($data['HinhAnh']) ? '../../assets_admin/img/user/' . htmlspecialchars($data['HinhAnh']) : '../../assets_admin/img/user/minh.jpg'; ?>" alt="user">
 								</div>
 								<div class="lh-hover-drop-panel right">
 									<div class="details">
-									<ul class="border-top" style="margin-top:-20px;">
-										<li><a href="./team-profile.php">Thông tin</a></li>
+										<ul class="border-top" style="margin-top:-20px;">
+											<li><a href="./team-profile.php">Thông tin</a></li>
 
-									</ul>
-									<ul class="border-top">
-										<li><a href="../customer/login.php"><i class="ri-logout-circle-r-line"></i>Đăng xuất</a></li>
-									</ul>
+										</ul>
+										<ul class="border-top">
+											<li><a href="../customer/login.php"><i class="ri-logout-circle-r-line"></i>Đăng xuất</a></li>
+										</ul>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
 		</header>
 
 		<!-- sidebar -->
-	<div class="lh-sidebar-overlay"></div>
-<div class="lh-sidebar" data-mode="light">
+		<div class="lh-sidebar-overlay"></div>
+		<div class="lh-sidebar" data-mode="light">
 			<div class="lh-sb-logo">
 				<a href="./index.php" class="sb-full"><img src="../../assets_admin/img/logo/logo2.png" alt="logo" style="width:326px;text-align:center;margin-left:-60px"></a>
 				<a href="./index.php" class="sb-collapse"><img src="../../assets_admin/img/logo/collapse-logo.png" alt="logo"></a>
 			</div>
-<div class="lh-sb-wrapper">
+			<div class="lh-sb-wrapper">
 				<div class="lh-sb-content">
 					<ul class="lh-sb-list">
 						<li class="lh-sb-item sb-drop-item">
@@ -120,182 +189,149 @@ session_start();
 							</ul>
 						</li>
 						<li class="lh-sb-item-separator"></li>
-<?php
-								include('./setRole.php');
-							?>
-						<!-- // <li class="lh-sb-item sb-drop-item">
-						// 	<a href="javascript:void(0)" class="lh-drop-toggle">
-						// 		<i class="ri-service-line"></i><span class="condense">Service pages
-						// 			<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
-						// 	<ul class="lh-sb-drop condense">
-						// 		<li><a href="./404-error-page.php" class="lh-page-link drop">
-						// 				<i class="fa-solid fa-code-commit"></i>404 error</a></li>
-						// 		<li><a href="./maintenance.php" class="lh-page-link drop">
-						// 				<i class="fa-solid fa-code-commit"></i>Maintenance</a></li>
-						// 	</ul>
-						// </li>
-						// <li class="lh-sb-item-separator"></li>
-						// <li class="lh-sb-title condense">Elements</li>
-						// <li class="lh-sb-item">
-						// 	<a href="./remix-icons.php" class="lh-page-link">
-						// 		<i class="ri-remixicon-line"></i><span class="condense"><span class="hover-title">remix
-						// 				icons</span></span></a>
-						// </li>
-						// <li class="lh-sb-item">
-						// 	<a href="./material-icons.php" class="lh-page-link">
-						// 		<i class="mdi mdi-material-ui"></i><span class="condense"><span
-						// 				class="hover-title">Material icons</span></span></a>
-						// </li>
-						// <li class="lh-sb-item">
-						// 	<a href="./alert-popup.php" class="lh-page-link">
-						// 		<i class="ri-file-warning-line"></i><span class="condense"><span
-						// 				class="hover-title">Alert Popup</span></span></a>
-						// </li>
-						// <li class="lh-sb-item-separator"></li>
-						// <li class="lh-sb-title condense">Settings</li>
-						// <li class="lh-sb-item">
-						// 	<a href="./role.php" class="lh-page-link">
-						// 		<i class="ri-magic-line"></i><span class="condense"><span
-						// 				class="hover-title">Role</span></span></a>
-						// </li> -->
-					</ul>
-				</div>
-			</div>				<div class="lh-sb-content">
-					<ul class="lh-sb-list">
-						<li class="lh-sb-item sb-drop-item">
-							<a href="javascript:void(0)" class="lh-drop-toggle">
-								<i class="fa-regular fa-clock"></i>
-								<span class="condense">Bảng Điều Khiển<i class="drop-arrow fa-regular fa-circle-left"></i></span>
-							</a>
-							<ul class="lh-sb-drop condense">
-								<li class="list"><a href="./index.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Report</a></li>
-							</ul>
-						</li>
-						<li class="lh-sb-item-separator"></li>
-						<li class="lh-sb-title condense">Apps</li>
-						<li class="lh-sb-item sb-drop-item">
-							<a href="javascript:void(0)" class="lh-drop-toggle">
-								<i class="fa-regular fa-address-card"></i><span class="condense">Nhân Viên
-									<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
-							<ul class="lh-sb-drop condense">
-								<li><a href="./team-profile.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Thông tin </a></li>
-								<li><a href="./team-add.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Thêm nhân viên</a></li>
-							
-								<li><a href="./team-list.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Xoá nhân viên</a></li>
-							</ul>
-						</li>
-						<li class="lh-sb-item-separator"></li>
-						<li class="lh-sb-title condense">Customer</li>
-						<li class="lh-sb-item">
-							<a href="./list-customer.php" class="lh-page-link">
-								<i class="fa-solid fa-user-group"></i><span class="condense"><span
-										class="hover-title">Khách hàng</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./customer-details.php" class="lh-page-link">
-								<i class="fa-solid fa-user-pen"></i><span class="condense">
-									<span class="hover-title">Khách hàng Chi tiết
-									</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./rooms.php" class="lh-page-link">
-								<i class="fa-solid fa-gift"></i><span class="condense"><span
-										class="hover-title">Khuyến mãi </span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./bookings.php" class="lh-page-link">
-								<i class="fa-solid fa-file"></i><span class="condense"><span
-										class="hover-title">Đặt chỗ</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./invoice.php" class="lh-page-link">
-								<i class="fa-regular fa-money-bill-1"></i><span class="condense"><span
-										class="hover-title">Hoá đơn</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item-separator"></li>
-						<li class="lh-sb-title condense">Foods</li>
-						<li class="lh-sb-item">
-							<a href="./menu.php" class="lh-page-link">
-								<i class="fa-solid fa-utensils"></i><span class="condense"><span
-										class="hover-title">Thực đơn</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./menu-add.php" class="lh-page-link">
-								<i class="fa-solid fa-utensils"></i><span class="condense"><span
-										class="hover-title">Thêm thực đơn</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./orders.php" class="lh-page-link">
-								<i class="fa-regular fa-bookmark"></i><span class="condense"><span
-										class="hover-title">Đặt chỗ</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item-separator"></li>
-						<li class="lh-sb-title condense">Login</li>
-						<li class="lh-sb-item sb-drop-item">
-							<a href="javascript:void(0)" class="lh-drop-toggle">
-								<i class="ri-pages-line"></i><span class="condense">Authentication
-									<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
-							<ul class="lh-sb-drop condense">
-								<li><a href="./signin.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Đăng nhập</a></li>
-								<li><a href="./signup.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Đăng ký</a></li>
-								<li><a href="./forgot.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Quên Mật Khẩu</a></li>
-								<li><a href="./reset-password.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Đặt lại mật khẩu</a></li>
-							</ul>
-						</li>
-						<li class="lh-sb-item sb-drop-item">
-							<a href="javascript:void(0)" class="lh-drop-toggle">
-								<i class="ri-service-line"></i><span class="condense">Service pages
-									<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
-							<ul class="lh-sb-drop condense">
-								<li><a href="./404-error-page.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>404 error</a></li>
-								<li><a href="./maintenance.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Maintenance</a></li>
-							</ul>
-						</li>
-						<li class="lh-sb-item-separator"></li>
-						<li class="lh-sb-title condense">Elements</li>
-						<li class="lh-sb-item">
-							<a href="./remix-icons.php" class="lh-page-link">
-								<i class="ri-remixicon-line"></i><span class="condense"><span class="hover-title">remix
-										icons</span></span></a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./material-icons.php" class="lh-page-link">
-								<i class="mdi mdi-material-ui"></i><span class="condense"><span
-										class="hover-title">Material icons</span></span></a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./alert-popup.php" class="lh-page-link">
-								<i class="ri-file-warning-line"></i><span class="condense"><span
-										class="hover-title">Alert Popup</span></span></a>
-						</li>
-						<li class="lh-sb-item-separator"></li>
-						<li class="lh-sb-title condense">Settings</li>
-						<li class="lh-sb-item">
-							<a href="./role.php" class="lh-page-link">
-								<i class="ri-magic-line"></i><span class="condense"><span
-										class="hover-title">Role</span></span></a>
-						</li>
+						<?php
+						include('./setRole.php');
+						?>
+
 					</ul>
 				</div>
 			</div>
+			<div class="lh-sb-content">
+				<ul class="lh-sb-list">
+					<li class="lh-sb-item sb-drop-item">
+						<a href="javascript:void(0)" class="lh-drop-toggle">
+							<i class="fa-regular fa-clock"></i>
+							<span class="condense">Bảng Điều Khiển<i class="drop-arrow fa-regular fa-circle-left"></i></span>
+						</a>
+						<ul class="lh-sb-drop condense">
+							<li class="list"><a href="./index.php" class="lh-page-link drop">
+									<i class="fa-solid fa-code-commit"></i>Report</a></li>
+						</ul>
+					</li>
+					<li class="lh-sb-item-separator"></li>
+					<li class="lh-sb-title condense">Apps</li>
+					<li class="lh-sb-item sb-drop-item">
+						<a href="javascript:void(0)" class="lh-drop-toggle">
+							<i class="fa-regular fa-address-card"></i><span class="condense">Nhân Viên
+								<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
+						<ul class="lh-sb-drop condense">
+							<li><a href="./team-profile.php" class="lh-page-link drop">
+									<i class="fa-solid fa-code-commit"></i>Thông tin </a></li>
+							<li><a href="./team-add.php" class="lh-page-link drop">
+									<i class="fa-solid fa-code-commit"></i>Thêm nhân viên</a></li>
+
+							<li><a href="./team-list.php" class="lh-page-link drop">
+									<i class="fa-solid fa-code-commit"></i>Xoá nhân viên</a></li>
+						</ul>
+					</li>
+					<li class="lh-sb-item-separator"></li>
+					<li class="lh-sb-title condense">Customer</li>
+					<li class="lh-sb-item">
+						<a href="./list-customer.php" class="lh-page-link">
+							<i class="fa-solid fa-user-group"></i><span class="condense"><span
+									class="hover-title">Khách hàng</span> </span>
+						</a>
+					</li>
+					<li class="lh-sb-item">
+						<a href="./customer-details.php" class="lh-page-link">
+							<i class="fa-solid fa-user-pen"></i><span class="condense">
+								<span class="hover-title">Khách hàng Chi tiết
+								</span> </span>
+						</a>
+					</li>
+					<li class="lh-sb-item">
+						<a href="./rooms.php" class="lh-page-link">
+							<i class="fa-solid fa-gift"></i><span class="condense"><span
+									class="hover-title">Khuyến mãi </span> </span>
+						</a>
+					</li>
+					<li class="lh-sb-item">
+						<a href="./bookings.php" class="lh-page-link">
+							<i class="fa-solid fa-file"></i><span class="condense"><span
+									class="hover-title">Đặt chỗ</span> </span>
+						</a>
+					</li>
+					<li class="lh-sb-item">
+						<a href="./invoice.php" class="lh-page-link">
+							<i class="fa-regular fa-money-bill-1"></i><span class="condense"><span
+									class="hover-title">Hoá đơn</span> </span>
+						</a>
+					</li>
+					<li class="lh-sb-item-separator"></li>
+					<li class="lh-sb-title condense">Foods</li>
+					<li class="lh-sb-item">
+						<a href="./menu.php" class="lh-page-link">
+							<i class="fa-solid fa-utensils"></i><span class="condense"><span
+									class="hover-title">Thực đơn</span> </span>
+						</a>
+					</li>
+					<li class="lh-sb-item">
+						<a href="./menu-add.php" class="lh-page-link">
+							<i class="fa-solid fa-utensils"></i><span class="condense"><span
+									class="hover-title">Thêm thực đơn</span> </span>
+						</a>
+					</li>
+					<li class="lh-sb-item">
+						<a href="./orders.php" class="lh-page-link">
+							<i class="fa-regular fa-bookmark"></i><span class="condense"><span
+									class="hover-title">Đặt chỗ</span> </span>
+						</a>
+					</li>
+					<li class="lh-sb-item-separator"></li>
+					<li class="lh-sb-title condense">Login</li>
+					<li class="lh-sb-item sb-drop-item">
+						<a href="javascript:void(0)" class="lh-drop-toggle">
+							<i class="ri-pages-line"></i><span class="condense">Authentication
+								<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
+						<ul class="lh-sb-drop condense">
+							<li><a href="./signin.php" class="lh-page-link drop">
+									<i class="fa-solid fa-code-commit"></i>Đăng nhập</a></li>
+							<li><a href="./signup.php" class="lh-page-link drop">
+									<i class="fa-solid fa-code-commit"></i>Đăng ký</a></li>
+							<li><a href="./forgot.php" class="lh-page-link drop">
+									<i class="fa-solid fa-code-commit"></i>Quên Mật Khẩu</a></li>
+							<li><a href="./reset-password.php" class="lh-page-link drop">
+									<i class="fa-solid fa-code-commit"></i>Đặt lại mật khẩu</a></li>
+						</ul>
+					</li>
+					<li class="lh-sb-item sb-drop-item">
+						<a href="javascript:void(0)" class="lh-drop-toggle">
+							<i class="ri-service-line"></i><span class="condense">Service pages
+								<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
+						<ul class="lh-sb-drop condense">
+							<li><a href="./404-error-page.php" class="lh-page-link drop">
+									<i class="fa-solid fa-code-commit"></i>404 error</a></li>
+							<li><a href="./maintenance.php" class="lh-page-link drop">
+									<i class="fa-solid fa-code-commit"></i>Maintenance</a></li>
+						</ul>
+					</li>
+					<li class="lh-sb-item-separator"></li>
+					<li class="lh-sb-title condense">Elements</li>
+					<li class="lh-sb-item">
+						<a href="./remix-icons.php" class="lh-page-link">
+							<i class="ri-remixicon-line"></i><span class="condense"><span class="hover-title">remix
+									icons</span></span></a>
+					</li>
+					<li class="lh-sb-item">
+						<a href="./material-icons.php" class="lh-page-link">
+							<i class="mdi mdi-material-ui"></i><span class="condense"><span
+									class="hover-title">Material icons</span></span></a>
+					</li>
+					<li class="lh-sb-item">
+						<a href="./alert-popup.php" class="lh-page-link">
+							<i class="ri-file-warning-line"></i><span class="condense"><span
+									class="hover-title">Alert Popup</span></span></a>
+					</li>
+					<li class="lh-sb-item-separator"></li>
+					<li class="lh-sb-title condense">Settings</li>
+					<li class="lh-sb-item">
+						<a href="./role.php" class="lh-page-link">
+							<i class="ri-magic-line"></i><span class="condense"><span
+									class="hover-title">Role</span></span></a>
+					</li>
+				</ul>
+			</div>
+		</div>
 		</div>
 		<!-- Notify sidebar -->
 		<div class="lh-notify-bar-overlay"></div>
@@ -400,7 +436,7 @@ session_start();
 										<p class="time">5:30AM, Today</p>
 										<p class="message">Hello, Room 204 need to be clean.</p>
 										<span class="download-files">
-												<span class="download">
+											<span class="download">
 												<img src="../../assets_admin/img/room/1.png" alt="image">
 												<a href="javascript:void(0)"><i class="ri-download-2-line"></i></a>
 											</span>
@@ -480,171 +516,194 @@ session_start();
 		<!-- main content -->
 		<div class="lh-main-content">
 			<div class="container-fluid">
-				<div class="row">
-					<div class="col-md-12">
-						<div class="lh-card lh-invoice max-width-1170">
-							<div class="lh-card-header">
-								<h4 class="lh-card-title">Invoice</h4>
-								<div class="header-tools">
-									<button class="lh-btn-primary m-r-5">Save</button>
-									<button class="lh-btn-secondary">Print</button>
-								</div>
-							</div>
-							<div class="lh-card-content card-default">
-
-								<div class="invoice-wrapper">
-
-									<div class="row">
-										<div class="col-md-6 col-lg-3 col-sm-6">
-											<img class="i-logo" src="../../assets_admin/img/logo/full-logo.png" alt="logo">
-
-											<address>
-												<br> 321, Porigo alto, new st george church, Nr. Jogas garden, USA.
-											</address>
-										</div>
-										<div class="col-md-6 col-lg-3 col-sm-6">
-											<p class="text-dark mb-2">From</p>
-
-											<address>
-												<span>Luxurious</span>
-												<br> 47 Elita Squre, VIP Chowk,
-												<br> <span>Email:</span> example@gmail.com
-												<br> <span>Phone:</span> +91 5264 251 325
-											</address>
-										</div>
-										<div class="col-md-6 col-lg-3 col-sm-6">
-											<p class="text-dark mb-2">To</p>
-
-											<address>
-												<span>John Marle</span>
-												<br> 58 Jamie Ways, North Faye, Q5 5ZP
-												<br> <span>Email</span>: example@gmail.com
-												<br> <span>Phone:</span> +91 5264 521 943
-											</address>
-										</div>
-										<div class="col-md-6 col-lg-3 col-sm-6">
-											<p class="text-dark mb-2">Details</p>
-
-											<address>
-												<span>Invoice ID:</span>
-												<span class="text-dark">#FX6874</span>
-												<br><span>TAX :</span> 5835FA5****5S
-												<br><span>Bank :</span> Lotus bank
-												<br><span>IFCS :</span> LOT125****US
-												<br> <span>VAT:</span> PL6541215450
-											</address>
-										</div>
-									</div>
-									<div class="lh-chart-header">
-										<div class="block">
-											<h6>Invoice</h6>
-											<h5>#FX6874</h5>
-										</div>
-										<div class="block">
-											<h6>Amount</h6>
-											<h5>$8954.00</h5>
-										</div>
-										<div class="block">
-											<h6>CheckIn</h6>
-											<h5>25/05/2024</h5>
-										</div>
-										<div class="block">
-											<h6>CheckOut</h6>
-											<h5>30/05/2024</h5>
-										</div>
-									</div>
-									<div class="table-responsive tbl-800">
-										<div>
-											<table class="table-invoice table-striped" style="width:100%">
-												<thead>
-													<tr>
-														<th>#</th>
-														<th>Image</th>
-														<th>Item</th>
-														<th>Description</th>
-														<th>Quantity</th>
-														<th>Unit_Cost</th>
-														<th>Total</th>
-													</tr>
-												</thead>
-
-												<tbody>
-													<tr>
-														<td>1</td>
-														<td><img class="invoice-item-img" src="assets/img/room/1.png"
-																alt="product-image"></td>
-														<td>Super Deluxe Room</td>
-														<td>Best deluxe suite with extra facilities free.</td>
-														<td>2</td>
-														<td>$250.00</td>
-														<td>$500.00</td>
-													</tr>
-
-													<tr>
-														<td>2</td>
-														<td><img class="invoice-item-img" src="assets/img/restaurant/1.png"
-																alt="product-image"></td>
-														<td>Toast with butter-jam</td>
-														<td>Breakfast Toast with butter and jam.</td>
-														<td>1</td>
-														<td>$50.00</td>
-														<td>$50.00</td>
-													</tr>
-
-													<tr>
-														<td>3</td>
-														<td><img class="invoice-item-img" src="assets/img/restaurant/2.png"
-																alt="product-image"></td>
-														<td>Hummus and vegetable wrap</td>
-														<td>Lunch Hummus and vegetable wrap.</td>
-														<td>1</td>
-														<td>$20.00</td>
-														<td>$20.00</td>
-													</tr>
-
-													<tr>
-														<td>4</td>
-														<td><img class="invoice-item-img" src="assets/img/restaurant/3.png"
-																alt="product-image"></td>
-														<td>Chickpea and Veg Stir-Fry</td>
-														<td>Dinner Chickpea and Veg Stir-Fry.</td>
-														<td>1</td>
-														<td>$50.00</td>
-														<td>$50.00</td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-									</div>
-
-									<div class="row justify-content-end inc-total">
-										<div class="col-lg-9 order-lg-1 order-md-2 order-sm-2">
-											<div class="note">
-												<label>Note</label>
-												<p>Your country territory tax has been apply.</p>
-												<p>Your voucher cannot be applied, because you enter wrong code.</p>
-											</div>
-										</div>
-										<div class="col-lg-3 order-lg-2 order-md-1 order-sm-1">
-											<ul class="list-unstyled">
-												<li class="mid pb-3 text-dark"> Subtotal
-													<span
-														class="d-inline-block float-right text-default">$620.00</span>
-												</li>
-
-												<li class="mid pb-3 text-dark">Vat(10%)
-													<span class="d-inline-block float-right text-default">$100.00</span>
-												</li>
-
-												<li class="text-dark">Total
-													<span class="d-inline-block float-right">$720.00</span>
-												</li>
-											</ul>
-										</div>
-									</div>
-								</div>
+				<div class="lh-page-title">
+					<div class="lh-breadcrumb">
+						<h5>Danh sách hoá đơn</h5>
+						<ul>
+							<li><a href="./index.php">Trang chủ</a></li>
+							<li>Danh sách</li>
+						</ul>
+					</div>
+					<div class="lh-tools">
+						<a href="javascript:void(0)" title="Refresh" id="refreshBtn" class="refresh">
+							<i class="fa-solid fa-arrows-rotate"></i>
+						</a>
+						<div id="pagedate">
+							<div class="lh-date-range" title="Date">
+								<span></span>
 							</div>
 						</div>
+						<div class="filter">
+							<div class="dropdown" title="Filter">
+								<button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
+									data-bs-toggle="dropdown" aria-expanded="false">
+									<i class="fa-solid fa-arrow-down-short-wide"></i>
+								</button>
+								<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+									<li><a class="dropdown-item" href="#">Booking</a></li>
+									<li><a class="dropdown-item" href="#">Revenue</a></li>
+									<li><a class="dropdown-item" href="#">Expence</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-12">
+						<table border="1" style="width:100%; text-align:center;">
+							<tr>
+								<th>ID</th>
+								<th>Tổng tiền</th>
+								<th>ID User</th>
+								<th>Trạng thái</th>
+								<th>Thời gian</th>
+								<th>Thao tác</th>
+							</tr>
+							<?php foreach ($ds as $row): ?>
+								<tr>
+									<td><?= $row['ID_DonHang'] ?></td>
+									<td><?= number_format($row['TongTien']) ?> VND</td>
+									<td><?= $row['ID_User'] ?></td>
+									<td>
+										<?php
+										$color = 'gray';
+										switch ($row['TrangThai']) {
+											case 'Chờ xử lý':
+												$color = 'orange';
+												break;
+											case 'Đã xác nhận':
+												$color = 'dodgerblue';
+												break;
+											case 'Đang chế biến':
+												$color = 'purple';
+												break;
+											case 'Đang giao hàng':
+												$color = 'yellow';
+												break;
+											case 'Đã thanh toán':
+												$color = 'green';
+												break;
+											case 'Đã hoàn thành':
+												$color = 'gray';
+												break;
+											case 'Đã hủy':
+												$color = 'red';
+												break;
+										}
+										?>
+										<span style="color: white; background: <?= $color ?>; padding: 3px 10px; border-radius: 8px;">
+											<?= $row['TrangThai'] ?>
+										</span>
+									</td>
+									<td><?= $row['ThoiGianDat'] ?></td>
+									<td>
+										<a href="?id=<?= $row['ID_DonHang'] ?>">Xem</a>
+										<?php if ($row['TrangThai'] == 'Chờ xử lý'): ?>
+											| <a href="?xacnhan=<?= $row['ID_DonHang'] ?>">Xác nhận</a>
+											| <a href="?huy=<?= $row['ID_DonHang'] ?>" onclick="return confirm('Hủy đơn hàng này?')">Hủy</a>
+										<?php elseif ($row['TrangThai'] == 'Đã xác nhận'): ?>
+											| <a href="?chebien=<?= $row['ID_DonHang'] ?>">Chế biến</a>
+										<?php elseif ($row['TrangThai'] == 'Đang chế biến'): ?>
+											| <a href="?giaohang=<?= $row['ID_DonHang'] ?>">Đang giao hàng</a>
+										<?php elseif ($row['TrangThai'] == 'Đang giao hàng'): ?>
+											| <a href="?thanhtoan=<?= $row['ID_DonHang'] ?>">Đã thanh toán</a>
+										<?php elseif ($row['TrangThai'] == 'Đã thanh toán'): ?>
+											| <a href="?hoanthanh=<?= $row['ID_DonHang'] ?>">Hoàn thành</a>
+										<?php endif; ?>
+										<?php if ($row['TrangThai'] == 'Đã hoàn thành' || $row['TrangThai'] == 'Đã hủy'): ?>
+											| <a href="?xoa=<?= $row['ID_DonHang'] ?>" onclick="return confirm('Bạn có chắc muốn xóa đơn hàng này?');">Xóa</a>
+										<?php endif; ?>
+									</td>
+								</tr>
+							<?php endforeach; ?>
+						</table>
+
+						<?php if ($ct): ?>
+							<?php
+							// Lấy thông tin khuyến mãi nếu có
+							$tenKhuyenMai = '';
+							$giamGia = 0;
+							$tong = 0;
+							$soTienGiam = 0;
+							$tongTienSauKM = 0;
+							if (!empty($ct)) {
+								// Lấy ID_KhuyenMai từ đơn hàng
+								$idDonHang = $_GET['id'];
+								foreach ($ds as $d) {
+									if ($d['ID_DonHang'] == $idDonHang) {
+										$donHangDetail = $d;
+										break;
+									}
+								}
+								if ($donHangDetail && !empty($donHangDetail['ID_KhuyenMai'])) {
+									include_once("../../controller/cKhuyenMai.php");
+									$kmController = new KhuyenMaiController();
+									$km = $kmController->getKhuyenMaiById($donHangDetail['ID_KhuyenMai']);
+									if ($km) {
+										$tenKhuyenMai = $km['TenKhuyenMai'];
+										$giamGia = $km['GiamGia'];
+									}
+								}
+							}
+							?>
+							<div class="invoice-center">
+								<div class="detail-box">
+									<span class="detail-title">Chi tiết đơn hàng #<?= htmlspecialchars($_GET['id']) ?></span>
+									<span class="detail-close" onclick="window.location='invoice.php'">[Đóng]</span>
+									<div style="margin-bottom:12px;"><span class="detail-label">Ngày đặt:</span> <span class="detail-value"><?= date('d/m/Y H:i', strtotime($donHangDetail['ThoiGianDat'])) ?></span></div>
+									<div style="margin-bottom:12px;"><span class="detail-label">Trạng thái:</span> <span class="detail-status" style="background: <?= ($donHangDetail['TrangThai'] === 'Đã thanh toán' ? '#16a34a' : ($donHangDetail['TrangThai'] === 'Đã hoàn thành' ? '#6b7280' : ($donHangDetail['TrangThai'] === 'Đã hủy' ? '#dc2626' : '#2563eb'))) ?>;">
+											<?= htmlspecialchars($donHangDetail['TrangThai']) ?></span></div>
+									<?php if ($user && isset($user['ID_User'])): ?>
+										<div style="margin-bottom:10px;"><span class="detail-label">Mã khách:</span> <span class="detail-value"><?= htmlspecialchars($user['ID_User']) ?></span></div>
+										<div style="margin-bottom:10px;"><span class="detail-label">Họ tên:</span> <span class="detail-value"><?= htmlspecialchars($user['TenUser']) ?></span></div>
+										<div style="margin-bottom:10px;"><span class="detail-label">Số điện thoại:</span> <span class="detail-value"><?= htmlspecialchars($user['SoDienThoai']) ?></span></div>
+										<div style="margin-bottom:10px;"><span class="detail-label">Email:</span> <span class="detail-value"><?= htmlspecialchars($user['Email']) ?></span></div>
+										<div style="margin-bottom:10px;"><span class="detail-label">Địa chỉ:</span> <span class="detail-value"><?= htmlspecialchars($user['DiaChi']) ?></span></div>
+									<?php else: ?>
+										<div style="margin-bottom:10px; color:#e11d48; font-weight:bold;">Đơn hàng này không có thông tin khách hàng.</div>
+									<?php endif; ?>
+									<div style="margin-bottom:10px;"><span class="detail-label">Phương thức thanh toán:</span> <span class="detail-value"><?= $phuongThuc ? htmlspecialchars($phuongThuc) : 'Chưa cập nhật' ?></span></div>
+									<table class="detail-table">
+										<tr>
+											<th>Tên món</th>
+											<th>Số lượng</th>
+											<th>Đơn giá</th>
+											<th>Thành tiền</th>
+										</tr>
+										<?php foreach ($ct as $c): $thanhTien = $c['SoLuongMon'] * $c['Gia'];
+											$tong += $thanhTien; ?>
+											<tr>
+												<td><?= htmlspecialchars($c['TenMon']) ?></td>
+												<td><?= $c['SoLuongMon'] ?></td>
+												<td><?= number_format($c['Gia']) ?> VND</td>
+												<td><?= number_format($thanhTien) ?> VND</td>
+											</tr>
+										<?php endforeach; ?>
+										<tr class="tr-promo">
+											<td colspan="2" align="right"><b>Chương trình khuyến mãi:</b></td>
+											<td colspan="2">
+												<?php if ($tenKhuyenMai): ?>
+													<?= htmlspecialchars($tenKhuyenMai) ?> (-<?= $giamGia ?>%)
+												<?php else: ?>
+													Không áp dụng
+												<?php endif; ?>
+											</td>
+										</tr>
+										<?php $soTienGiam = $giamGia > 0 ? $tong * $giamGia / 100 : 0;
+										$tongTienSauKM = $tong - $soTienGiam; ?>
+										<tr class="tr-highlight">
+											<td colspan="2" align="right"><b>Thành tiền sau khuyến mãi:</b></td>
+											<td colspan="2"><b><?= number_format($tongTienSauKM) ?> VND</b></td>
+										</tr>
+										<tr class="tr-total">
+											<td colspan="2" align="right"><b>Tổng tiền:</b></td>
+											<td colspan="2"><b><?= number_format($tong) ?> VND</b></td>
+										</tr>
+									</table>
+								</div>
+							</div>
+						<?php endif; ?>
 					</div>
 				</div>
 			</div>
@@ -652,23 +711,23 @@ session_start();
 
 		<!-- Footer -->
 		<footer>
-        <div class="container-fluid">
-          <div class="copyright">
-            <p>
-              <span id="copyright_year"></span>
-              <span style="margin-left: 22px"> Nhóm 24</span>
-            </p>
-          </div>
-        </div>
-      </footer>
+			<div class="container-fluid">
+				<div class="copyright">
+					<p>
+						<span id="copyright_year"></span>
+						<span style="margin-left: 22px"> Nhóm 24</span>
+					</p>
+				</div>
+			</div>
+		</footer>
 
 		<!-- Feature tools -->
 		<div class="lh-tools-sidebar-overlay"></div>
 		<div class="lh-tools-sidebar">
-			 <a href="javascript:void(0)" class="lh-tools-sidebar-toggle in-out">
-        <i class="fa-solid fa-gear"></i>
+			<a href="javascript:void(0)" class="lh-tools-sidebar-toggle in-out">
+				<i class="fa-solid fa-gear"></i>
 
-      </a>
+			</a>
 			<div class="lh-bar-title">
 				<h6>Tools</h6>
 				<a href="javascript:void(0)" class="close-tools"><i class="ri-close-line"></i></a>
@@ -731,7 +790,7 @@ session_start();
 				</div>
 				<div class="lh-tools-block">
 					<h3>Backgrounds</h3>
-				<div class="lh-tools-info">
+					<div class="lh-tools-info">
 						<div class="lh-tools-item bg active" data-bg-mode="default">
 							<img src="../../assets_admin/img/tools/bg-0.png" alt="default">
 							<p>Default</p>
@@ -784,12 +843,205 @@ session_start();
 	</main>
 
 	<!-- Vendor Custom -->
-		<?php
+	<?php
 	include('../customer/chatbot.php');
 	include('./footer-scripts-ad.php');
 	?>
 </body>
+<style>
 
+#user-img {
+			width: 40px;
+			/* Kích thước nhỏ lại */
+			height: 40px;
+			border-radius: 50%;
+			/* Bo tròn thành hình tròn */
+			object-fit: cover;
+			/* Cắt ảnh để vừa khung */
+			border: 2px solid #fff;
+		}
+	.table-invoice {
+		width: 100%;
+		border-collapse: collapse;
+		margin: 18px 0 30px 0;
+		background: #fff;
+		border-radius: 12px;
+		overflow: hidden;
+		box-shadow: 0 2px 12px #b6d0ff33;
+	}
+
+	.table-invoice th,
+	.table-invoice td {
+		text-align: center;
+		border: 1px solid #e2e8f0;
+		padding: 10px 6px;
+		font-size: 1rem;
+	}
+
+	.table-invoice th {
+		background: #f1f5f9;
+		color: #2563eb;
+		font-weight: 600;
+	}
+
+	.table-invoice tr:last-child td {
+		border-bottom: none;
+	}
+
+	.tr-highlight {
+		background: #e0f7fa;
+		font-weight: bold;
+		color: #e11d48;
+		font-size: 1.1em;
+	}
+
+	.tr-discount {
+		background: #fef9c3;
+		color: #b45309;
+	}
+
+	.tr-promo {
+		background: #f0f9ff;
+		color: #2563eb;
+	}
+
+	.invoice-center {
+		display: flex;
+		justify-content: center;
+		align-items: flex-start;
+		min-height: 100vh;
+		background: #f8fafc;
+	}
+
+	.detail-box {
+		background: #fff;
+		border-radius: 16px;
+		box-shadow: 0 4px 24px #b6d0ff33;
+		max-width: 650px;
+		margin: 40px auto;
+		padding: 32px 36px 24px 36px;
+		position: relative;
+		font-family: 'Segoe UI', Arial, sans-serif;
+		width: 100%;
+	}
+
+	.detail-title {
+		color: #e11d48;
+		text-align: center;
+		font-size: 1.5em;
+		font-weight: bold;
+		margin-bottom: 20px;
+	}
+
+	.detail-close {
+		position: absolute;
+		top: 22px;
+		right: 36px;
+		color: #e11d48;
+		font-weight: bold;
+		cursor: pointer;
+		font-size: 1.1em;
+		text-decoration: underline;
+	}
+
+	.detail-label {
+		font-weight: bold;
+		color: #222;
+	}
+
+	.detail-value {
+		color: #222;
+	}
+
+	.detail-status {
+		display: inline-block;
+		padding: 4px 16px;
+		border-radius: 8px;
+		color: #fff;
+		font-weight: bold;
+		background: #16a34a;
+		margin-left: 8px;
+		font-size: 1em;
+		box-shadow: 0 1px 4px #b6d0ff33;
+	}
+
+	.detail-table {
+		width: 100%;
+		border-collapse: collapse;
+		margin-top: 22px;
+		background: #f8fafc;
+		border-radius: 12px;
+		overflow: hidden;
+		box-shadow: 0 2px 8px #b6d0ff22;
+	}
+
+	.detail-table th,
+	.detail-table td {
+		text-align: center;
+		border: 1px solid #e2e8f0;
+		padding: 12px 8px;
+		font-size: 1rem;
+	}
+
+	.detail-table th {
+		background: #f1f5f9;
+		color: #2563eb;
+		font-weight: 700;
+		font-size: 1.05em;
+	}
+
+	.detail-table tr:last-child td {
+		border-bottom: none;
+	}
+
+	.tr-promo {
+		background: #f0f9ff;
+		color: #2563eb;
+		font-weight: 600;
+	}
+
+	.tr-highlight {
+		background: #e0f7fa;
+		font-weight: bold;
+		color: #e11d48;
+		font-size: 1.1em;
+	}
+
+	.tr-total {
+		background: #f1f5f9;
+		color: #2563eb;
+		font-weight: bold;
+	}
+
+	@media (max-width: 800px) {
+		.detail-box {
+			max-width: 99vw;
+			padding: 10px;
+		}
+
+		.detail-table th,
+		.detail-table td {
+			font-size: 0.97rem;
+			padding: 7px 2px;
+		}
+
+		.detail-title {
+			font-size: 1.1em;
+		}
+
+		
+	}	
+</style>
+
+
+
+<!-- refresh  -->
+<script>
+	document.getElementById("refreshBtn").addEventListener("click", function() {
+		location.reload(); // Câu lệnh reload toàn trang
+	});
+</script>
 
 <!-- Mirrored from maraviyainfotech.com/projects/luxurious-html-v22/admin/invoice.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 21 Jan 2025 15:13:55 GMT -->
+
 </html>

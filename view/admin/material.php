@@ -1,6 +1,56 @@
 <?php
 session_start();
+include_once('../../controller/cNguyenLieu.php');
+
+$controller = new NguyenLieuController();
+$mode = isset($_GET['mode']) ? $_GET['mode'] : 'list';
+$dsNguyenLieu = $controller->getAllNguyenLieu();
+
+// Xử lý thêm nguyên liệu
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['them_nguyenlieu'])) {
+	$tenNguyenLieu = $_POST['TenNguyenLieu'];
+	$donViTinh = $_POST['DonViTinh'];
+	$soLuongTon = $_POST['SoLuongTon'];
+	$ghiChu = $_POST['GhiChu'];
+
+	$controller->addNguyenLieu($tenNguyenLieu, $donViTinh, $soLuongTon, $ghiChu);
+	header("Location: material.php");
+	exit;
+}
+
+// Xử lý xóa nguyên liệu
+if (isset($_GET['xoa_nguyenlieu'])) {
+	$id = $_GET['xoa_nguyenlieu'];
+	$controller->deleteNguyenLieu($id);
+	header("Location: material.php");
+	exit;
+}
+
+// Lấy thông tin nguyên liệu cần sửa
+if ($mode === 'edit' && isset($_GET['id'])) {
+	$id = $_GET['id'];
+	$nguyenLieu = $controller->getNguyenLieuById($id);
+
+	if (!$nguyenLieu) {
+		header("Location: material.php");
+		exit;
+	}
+}
+
+// Xử lý cập nhật nguyên liệu
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['sua_nguyenlieu'])) {
+	$id = $_POST['ID_NguyenLieu'];
+	$tenNguyenLieu = $_POST['TenNguyenLieu'];
+	$donViTinh = $_POST['DonViTinh'];
+	$soLuongTon = $_POST['SoLuongTon'];
+	$ghiChu = $_POST['GhiChu'];
+
+	$controller->updateNguyenLieu($id, $tenNguyenLieu, $donViTinh, $soLuongTon, $ghiChu);
+	header("Location: material.php");
+	exit;
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -101,7 +151,7 @@ session_start();
 				<a href="./index.php" class="sb-collapse"><img src="../../assets_admin/img/logo/collapse-logo.png" alt="logo"></a>
 			</div>
 			<div class="lh-sb-wrapper">
-				<div class="lh-sb-content">
+			<div class="lh-sb-content">
 					<ul class="lh-sb-list">
 						<li class="lh-sb-item sb-drop-item">
 							<a href="javascript:void(0)" class="lh-drop-toggle">
@@ -115,337 +165,13 @@ session_start();
 						</li>
 						<li class="lh-sb-item-separator"></li>
 						<?php
-						if ($_SESSION['role_id'] == 1) {
-							echo '
-						<li class="lh-sb-title condense">Apps</li>
-						<li class="lh-sb-item sb-drop-item">
-							<a href="javascript:void(0)" class="lh-drop-toggle">
-								<i class="fa-regular fa-address-card"></i><span class="condense">Nhân Viên
-									<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
-							<ul class="lh-sb-drop condense">
-								<li><a href="./team-profile.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Thông tin </a></li>
-								<li><a href="./team-add.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Thêm nhân viên</a></li>
-								<li><a href="./team-list.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Danh sách nhân viên</a></li>
-										
-							</ul>
-						</li>
-						<li class="lh-sb-item-separator"></li>
-						<li class="lh-sb-title condense">Customer</li>
-						<li class="lh-sb-item">
-							<a href="./list-customer.php" class="lh-page-link">
-								<i class="fa-solid fa-user-group"></i><span class="condense"><span
-										class="hover-title">Khách hàng</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./customer-details.php" class="lh-page-link">
-								<i class="fa-solid fa-user-pen"></i><span class="condense">
-									<span class="hover-title">Khách hàng Chi tiết
-									</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./rooms.php" class="lh-page-link">
-								<i class="fa-solid fa-gift"></i><span class="condense"><span
-										class="hover-title">Khuyến mãi </span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./bookings.php" class="lh-page-link">
-								<i class="fa-solid fa-file"></i><span class="condense"><span
-										class="hover-title">Đặt chỗ</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./invoice.php" class="lh-page-link">
-								<i class="fa-regular fa-money-bill-1"></i><span class="condense"><span
-										class="hover-title">Hoá đơn</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item-separator"></li>
-						<li class="lh-sb-title condense">Foods</li>
-						<li class="lh-sb-item">
-							<a href="./menu.php" class="lh-page-link">
-								<i class="fa-solid fa-utensils"></i><span class="condense"><span
-										class="hover-title">Thực đơn</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./menu-add.php" class="lh-page-link">
-								<i class="fa-solid fa-utensils"></i><span class="condense"><span
-										class="hover-title">Thêm thực đơn</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./orders.php" class="lh-page-link">
-								<i class="fa-regular fa-bookmark"></i><span class="condense"><span
-										class="hover-title">Đặt chỗ</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item-separator"></li>
-						<li class="lh-sb-title condense">Login</li>
-						<li class="lh-sb-item sb-drop-item">
-							<a href="javascript:void(0)" class="lh-drop-toggle">
-								<i class="ri-pages-line"></i><span class="condense">Kho
-									<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
-							<ul class="lh-sb-drop condense">
-								<li><a href="./material.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Nguyên liệu</a></li>
-								<li><a href="./material-add.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Thêm Nguyên liệu</a></li>
-								<li><a href="./material-update.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Cập nhật nguyên liệu</a></li>
-								
-							</ul>
-						</li>';
-						} else if ($_SESSION['role_id'] == 2) {
-							echo '<li class="lh-sb-item-separator"></li>
-							<li class="lh-sb-title condense">Customer</li>
-							<li class="lh-sb-item">
-								<a href="./list-customer.php" class="lh-page-link">
-									<i class="fa-solid fa-user-group"></i><span class="condense"><span
-											class="hover-title">Khách hàng</span> </span>
-								</a>
-							</li>
-							<li class="lh-sb-item">
-							<a href="./customer-details.php" class="lh-page-link">
-								<i class="fa-solid fa-user-pen"></i><span class="condense">
-									<span class="hover-title">Khách hàng Chi tiết
-									</span> </span>
-							</a>
-						</li>
-							<li class="lh-sb-item">
-								<a href="./rooms.php" class="lh-page-link">
-									<i class="fa-solid fa-gift"></i><span class="condense"><span
-											class="hover-title">Khuyến mãi </span> </span>
-								</a>
-							</li>
-							<li class="lh-sb-item">
-								<a href="./bookings.php" class="lh-page-link">
-									<i class="fa-solid fa-file"></i><span class="condense"><span
-											class="hover-title">Đặt chỗ</span> </span>
-								</a>
-							</li>
-							<li class="lh-sb-item">
-								<a href="./invoice.php" class="lh-page-link">
-									<i class="fa-regular fa-money-bill-1"></i><span class="condense"><span
-											class="hover-title">Hoá đơn</span> </span>
-								</a>
-							</li>
-							<li class="lh-sb-item-separator"></li>
-							<li class="lh-sb-title condense">Foods</li>
-							<li class="lh-sb-item">
-								<a href="./menu.php" class="lh-page-link">
-									<i class="fa-solid fa-utensils"></i><span class="condense"><span
-											class="hover-title">Thực đơn</span> </span>
-								</a>
-							</li>
-							<li class="lh-sb-item">
-								<a href="./menu-add.php" class="lh-page-link">
-									<i class="fa-solid fa-utensils"></i><span class="condense"><span
-											class="hover-title">Thêm thực đơn</span> </span>
-								</a>
-							</li>
-							<li class="lh-sb-item">
-								<a href="./orders.php" class="lh-page-link">
-									<i class="fa-regular fa-bookmark"></i><span class="condense"><span
-											class="hover-title">Đặt chỗ</span> </span>
-								</a>
-							</li>
-							<li class="lh-sb-item sb-drop-item">
-							<a href="javascript:void(0)" class="lh-drop-toggle">
-								<i class="ri-pages-line"></i><span class="condense">Kho
-									<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
-							<ul class="lh-sb-drop condense">
-								<li><a href="./material.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Nguyên liệu</a></li>
-								<li><a href="./signup.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Thêm Nguyên liệu</a></li>
-								<li><a href="./material-update.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Cập nhật nguyên liệu</a></li>
-								
-							</ul>
-						</li>';
-						}
-
+						include('./setRole.php');
 						?>
 
-						<!-- // <li class="lh-sb-item sb-drop-item">
-						// 	<a href="javascript:void(0)" class="lh-drop-toggle">
-						// 		<i class="ri-service-line"></i><span class="condense">Service pages
-						// 			<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
-						// 	<ul class="lh-sb-drop condense">
-						// 		<li><a href="./404-error-page.php" class="lh-page-link drop">
-						// 				<i class="fa-solid fa-code-commit"></i>404 error</a></li>
-						// 		<li><a href="./maintenance.php" class="lh-page-link drop">
-						// 				<i class="fa-solid fa-code-commit"></i>Maintenance</a></li>
-						// 	</ul>
-						// </li>
-						// <li class="lh-sb-item-separator"></li>
-						// <li class="lh-sb-title condense">Elements</li>
-						// <li class="lh-sb-item">
-						// 	<a href="./remix-icons.php" class="lh-page-link">
-						// 		<i class="ri-remixicon-line"></i><span class="condense"><span class="hover-title">remix
-						// 				icons</span></span></a>
-						// </li>
-						// <li class="lh-sb-item">
-						// 	<a href="./material-icons.php" class="lh-page-link">
-						// 		<i class="mdi mdi-material-ui"></i><span class="condense"><span
-						// 				class="hover-title">Material icons</span></span></a>
-						// </li>
-						// <li class="lh-sb-item">
-						// 	<a href="./alert-popup.php" class="lh-page-link">
-						// 		<i class="ri-file-warning-line"></i><span class="condense"><span
-						// 				class="hover-title">Alert Popup</span></span></a>
-						// </li>
-						// <li class="lh-sb-item-separator"></li>
-						// <li class="lh-sb-title condense">Settings</li>
-						// <li class="lh-sb-item">
-						// 	<a href="./role.php" class="lh-page-link">
-						// 		<i class="ri-magic-line"></i><span class="condense"><span
-						// 				class="hover-title">Role</span></span></a>
-						// </li> -->
 					</ul>
 				</div>
 			</div>
-			<div class="lh-sb-content">
-				<ul class="lh-sb-list">
-					<li class="lh-sb-item sb-drop-item">
-						<a href="javascript:void(0)" class="lh-drop-toggle">
-							<i class="fa-regular fa-clock"></i>
-							<span class="condense">Bảng Điều Khiển<i class="drop-arrow fa-regular fa-circle-left"></i></span>
-						</a>
-						<ul class="lh-sb-drop condense">
-							<li class="list"><a href="./index.php" class="lh-page-link drop">
-									<i class="fa-solid fa-code-commit"></i>Report</a></li>
-						</ul>
-					</li>
-					<li class="lh-sb-item-separator"></li>
-					<li class="lh-sb-title condense">Apps</li>
-					<li class="lh-sb-item sb-drop-item">
-						<a href="javascript:void(0)" class="lh-drop-toggle">
-							<i class="fa-regular fa-address-card"></i><span class="condense">Nhân Viên
-								<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
-						<ul class="lh-sb-drop condense">
-							<li><a href="./team-profile.php" class="lh-page-link drop">
-									<i class="fa-solid fa-code-commit"></i>Thông tin </a></li>
-							<li><a href="./team-add.php" class="lh-page-link drop">
-									<i class="fa-solid fa-code-commit"></i>Thêm nhân viên</a></li>
-
-							<li><a href="./team-list.php" class="lh-page-link drop">
-									<i class="fa-solid fa-code-commit"></i>Xoá nhân viên</a></li>
-						</ul>
-					</li>
-					<li class="lh-sb-item-separator"></li>
-					<li class="lh-sb-title condense">Customer</li>
-					<li class="lh-sb-item">
-						<a href="./guest.php" class="lh-page-link">
-							<i class="fa-solid fa-user-group"></i><span class="condense"><span
-									class="hover-title">Khách hàng</span> </span>
-						</a>
-					</li>
-					<li class="lh-sb-item">
-						<a href="./guest-details.php" class="lh-page-link">
-							<i class="fa-solid fa-user-pen"></i><span class="condense">
-								<span class="hover-title">Khách hàng Chi tiết
-								</span> </span>
-						</a>
-					</li>
-					<li class="lh-sb-item">
-						<a href="./rooms.php" class="lh-page-link">
-							<i class="fa-solid fa-gift"></i><span class="condense"><span
-									class="hover-title">Khuyến mãi </span> </span>
-						</a>
-					</li>
-					<li class="lh-sb-item">
-						<a href="./bookings.php" class="lh-page-link">
-							<i class="fa-solid fa-file"></i><span class="condense"><span
-									class="hover-title">Đặt chỗ</span> </span>
-						</a>
-					</li>
-					<li class="lh-sb-item">
-						<a href="./invoice.php" class="lh-page-link">
-							<i class="fa-regular fa-money-bill-1"></i><span class="condense"><span
-									class="hover-title">Hoá đơn</span> </span>
-						</a>
-					</li>
-					<li class="lh-sb-item-separator"></li>
-					<li class="lh-sb-title condense">Foods</li>
-					<li class="lh-sb-item">
-						<a href="./menu.php" class="lh-page-link">
-							<i class="fa-solid fa-utensils"></i><span class="condense"><span
-									class="hover-title">Thực đơn</span> </span>
-						</a>
-					</li>
-					<li class="lh-sb-item">
-						<a href="./menu-add.php" class="lh-page-link">
-							<i class="fa-solid fa-utensils"></i><span class="condense"><span
-									class="hover-title">Thêm thực đơn</span> </span>
-						</a>
-					</li>
-					<li class="lh-sb-item">
-						<a href="./orders.php" class="lh-page-link">
-							<i class="fa-regular fa-bookmark"></i><span class="condense"><span
-									class="hover-title">Đặt chỗ</span> </span>
-						</a>
-					</li>
-					<li class="lh-sb-item-separator"></li>
-					<li class="lh-sb-title condense">Login</li>
-					<li class="lh-sb-item sb-drop-item">
-						<a href="javascript:void(0)" class="lh-drop-toggle">
-							<i class="ri-pages-line"></i><span class="condense">Authentication
-								<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
-						<ul class="lh-sb-drop condense">
-							<li><a href="./signin.php" class="lh-page-link drop">
-									<i class="fa-solid fa-code-commit"></i>Đăng nhập</a></li>
-							<li><a href="./signup.php" class="lh-page-link drop">
-									<i class="fa-solid fa-code-commit"></i>Đăng ký</a></li>
-							<li><a href="./forgot.php" class="lh-page-link drop">
-									<i class="fa-solid fa-code-commit"></i>Quên Mật Khẩu</a></li>
-							<li><a href="./reset-password.php" class="lh-page-link drop">
-									<i class="fa-solid fa-code-commit"></i>Đặt lại mật khẩu</a></li>
-						</ul>
-					</li>
-					<li class="lh-sb-item sb-drop-item">
-						<a href="javascript:void(0)" class="lh-drop-toggle">
-							<i class="ri-service-line"></i><span class="condense">Service pages
-								<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
-						<ul class="lh-sb-drop condense">
-							<li><a href="./404-error-page.php" class="lh-page-link drop">
-									<i class="fa-solid fa-code-commit"></i>404 error</a></li>
-							<li><a href="./maintenance.php" class="lh-page-link drop">
-									<i class="fa-solid fa-code-commit"></i>Maintenance</a></li>
-						</ul>
-					</li>
-					<li class="lh-sb-item-separator"></li>
-					<li class="lh-sb-title condense">Elements</li>
-					<li class="lh-sb-item">
-						<a href="./remix-icons.php" class="lh-page-link">
-							<i class="ri-remixicon-line"></i><span class="condense"><span class="hover-title">remix
-									icons</span></span></a>
-					</li>
-					<li class="lh-sb-item">
-						<a href="./material-icons.php" class="lh-page-link">
-							<i class="mdi mdi-material-ui"></i><span class="condense"><span
-									class="hover-title">Material icons</span></span></a>
-					</li>
-					<li class="lh-sb-item">
-						<a href="./alert-popup.php" class="lh-page-link">
-							<i class="ri-file-warning-line"></i><span class="condense"><span
-									class="hover-title">Alert Popup</span></span></a>
-					</li>
-					<li class="lh-sb-item-separator"></li>
-					<li class="lh-sb-title condense">Settings</li>
-					<li class="lh-sb-item">
-						<a href="./role.php" class="lh-page-link">
-							<i class="ri-magic-line"></i><span class="condense"><span
-									class="hover-title">Role</span></span></a>
-					</li>
-				</ul>
-			</div>
+		
 		</div>
 		</div>
 		<!-- Notify sidebar -->
@@ -631,406 +357,101 @@ session_start();
 		<!-- main content -->
 		<div class="lh-main-content">
 			<div class="container-fluid">
-				<!-- Page title & breadcrumb -->
-				<div class="lh-page-title">
-					<div class="lh-breadcrumb">
-						<h5>Guest</h5>
-						<ul>
-							<li><a href="./index.php">Home</a></li>
-							<li>Guest</li>
-						</ul>
+				<?php if ($mode === 'edit'): ?>
+					<!-- Form sửa nguyên liệu -->
+					<div class="form-sua-nguyenlieu">
+						<h2 class="text-center mb-4">Sửa nguyên liệu</h2>
+						<form method="post">
+							<input type="hidden" name="ID_NguyenLieu" value="<?= $nguyenLieu['ID_NguyenLieu'] ?>">
+
+							<div class="mb-3">
+								<label class="form-label">Tên nguyên liệu</label>
+								<input type="text" class="form-control" name="TenNguyenLieu"
+									value="<?= $nguyenLieu['TenNguyenLieu'] ?>" required>
+							</div>
+
+							<div class="mb-3">
+								<label class="form-label">Đơn vị tính</label>
+								<input type="text" class="form-control" name="DonViTinh"
+									value="<?= $nguyenLieu['DonViTinh'] ?>" required>
+							</div>
+
+							<div class="mb-3">
+								<label class="form-label">Số lượng tồn</label>
+								<input type="number" class="form-control" name="SoLuongTon"
+									value="<?= $nguyenLieu['SoLuongTon'] ?>" required>
+							</div>
+
+							<div class="mb-3">
+								<label class="form-label">Ghi chú</label>
+								<input type="text" class="form-control" name="GhiChu"
+									value="<?= $nguyenLieu['GhiChu'] ?>">
+							</div>
+
+							<div class="d-grid gap-2">
+								<button type="submit" name="sua_nguyenlieu" class="btn btn-primary">Cập nhật</button>
+								<a href="NguyenLieu.php" class="btn btn-secondary">Quay lại</a>
+							</div>
+						</form>
 					</div>
-					<div class="lh-tools">
-						<a href="javascript:void(0)" title="Refresh" class="refresh"><i class="fa-solid fa-arrows-rotate"></i></a>
-						<div id="pagedate">
-							<div class="lh-date-range" title="Date">
-								<span></span>
+				<?php else: ?>
+					<h2 class="text-center my-4">Quản lý nguyên liệu</h2>
+
+					<!-- Form thêm nguyên liệu -->
+					<div class="form-them-nguyenlieu">
+						<h4>Thêm nguyên liệu mới</h4>
+						<form method="post" class="row g-3">
+							<div class="col-md-3">
+								<input type="text" class="form-control" name="TenNguyenLieu" placeholder="Tên nguyên liệu" required>
 							</div>
-						</div>
-						<div class="filter">
-							<div class="dropdown" title="Filter">
-								<button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
-									data-bs-toggle="dropdown" aria-expanded="false">
-									<i class="fa-solid fa-arrow-down-short-wide"></i>
-								</button>
-								<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-									<li><a class="dropdown-item" href="#">Booking</a></li>
-									<li><a class="dropdown-item" href="#">Revenue</a></li>
-									<li><a class="dropdown-item" href="#">Expence</a></li>
-								</ul>
+							<div class="col-md-2">
+								<input type="text" class="form-control" name="DonViTinh" placeholder="Đơn vị tính" required>
 							</div>
-						</div>
+							<div class="col-md-2">
+								<input type="number" class="form-control" name="SoLuongTon" placeholder="Số lượng tồn" required>
+							</div>
+							<div class="col-md-3">
+								<input type="text" class="form-control" name="GhiChu" placeholder="Ghi chú">
+							</div>
+							<div class="col-md-2">
+								<button type="submit" name="them_nguyenlieu" class="btn btn-success w-100">Thêm</button>
+							</div>
+						</form>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col-xl-12 col-md-12">
-						<div class="lh-card" id="bookingtbl">
-							<div class="lh-card-header">
-								<h4 class="lh-card-title">Bookings</h4>
-								<div class="header-tools">
-									<a href="javascript:void(0)" class="m-r-10 lh-full-card">
-										<i class="fa-solid fa-expand" title="Full Screen"></i></a>
-									<div class="lh-date-range dots">
-										<i class="fa-solid fa-sliders"></i>
-										<span></span>
-									</div>
-								</div>
-							</div>
-							<div class="lh-card-content card-default">
-								<div class="booking-table">
-									<div class="table-responsive">
-										<table id="guest_table" class="table">
-											<thead>
-												<tr>
-													<th>ID</th>
-													<th>Name</th>
-													<th>CheckIn</th>
-													<th>CheckOut</th>
-													<th>Proof</th>
-													<th>Payment</th>
-													<th>Amount</th>
-													<th>RoomNo</th>
-													<th>Rooms</th>
-													<th>Action</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td class="token">2650</td>
-													<td><img class="cat-thumb" src="../../assets_admin/img/user/1.jpg"
-															alt="clients Image"><span class="name">Zara nails</span>
-													</td>
-													<td>15/01/2024</td>
-													<td>20/01/2024</td>
-													<td>Passport</td>
-													<td class="active">Cash</td>
-													<td>$550</td>
-													<td class="type"><span>VIP : </span>101, 102</td>
-													<td class="rooms">
-														<span class="mem">6 Member</span> /
-														<span class="room">2 Room</span>
-													</td>
-													<td>
-														<div class="d-flex justify-content-center">
-															<button type="button" class="btn btn-outline-success"><i
-																	class="ri-information-line"></i></button>
-															<button type="button"
-																class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
-																data-bs-toggle="dropdown" aria-haspopup="true"
-																aria-expanded="false" data-display="static">
-																<span class="sr-only"><i
-																		class="ri-settings-3-line"></i></span>
-															</button>
-															<div class="dropdown-menu">
-																<a class="dropdown-item" href="#">Edit</a>
-																<a class="dropdown-item" href="#">Delete</a>
-															</div>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td class="token">2650</td>
-													<td><img class="cat-thumb" src="../../assets_admin/img/user/2.jpg"
-															alt="clients Image"><span class="name">Zara nails
-															Pvt.</span></td>
-													<td>19/04/2024</td>
-													<td>29/04/2024</td>
-													<td>Pan Card</td>
-													<td class="close">Cheque</td>
-													<td>$200</td>
-													<td class="type"><span>Junior : </span>105</td>
-													<td class="rooms">
-														<span class="mem">4 Member</span> /
-														<span class="room">1 Room</span>
-													</td>
-													<td>
-														<div class="d-flex justify-content-center">
-															<button type="button" class="btn btn-outline-success"><i
-																	class="ri-information-line"></i></button>
-															<button type="button"
-																class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
-																data-bs-toggle="dropdown" aria-haspopup="true"
-																aria-expanded="false" data-display="static">
-																<span class="sr-only"><i
-																		class="ri-settings-3-line"></i></span>
-															</button>
-															<div class="dropdown-menu">
-																<a class="dropdown-item" href="#">Edit</a>
-																<a class="dropdown-item" href="#">Delete</a>
-															</div>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td class="token">2365</td>
-													<td><img class="cat-thumb" src="../../assets_admin/img/user/3.jpg"
-															alt="clients Image"><span class="name">Olive Yew</span></td>
-													<td>01/07/2024</td>
-													<td>02/07/2024</td>
-													<td>Pan Card</td>
-													<td class="pending">Pending</td>
-													<td>$400</td>
-													<td class="type"><span>VVIP : </span>107</td>
-													<td class="rooms">
-														<span class="mem">2 Member</span> /
-														<span class="room">1 Room</span>
-													</td>
-													<td>
-														<div class="d-flex justify-content-center">
-															<button type="button" class="btn btn-outline-success"><i
-																	class="ri-information-line"></i></button>
-															<button type="button"
-																class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
-																data-bs-toggle="dropdown" aria-haspopup="true"
-																aria-expanded="false" data-display="static">
-																<span class="sr-only"><i
-																		class="ri-settings-3-line"></i></span>
-															</button>
-															<div class="dropdown-menu">
-																<a class="dropdown-item" href="#">Edit</a>
-																<a class="dropdown-item" href="#">Delete</a>
-															</div>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td class="token">2205</td>
-													<td><img class="cat-thumb" src="../../assets_admin/img/user/4.jpg"
-															alt="clients Image"><span class="name">Allie Grater</span></td>
-													<td>01/07/2024</td>
-													<td>02/07/2024</td>
-													<td>Adhar Card</td>
-													<td class="success">Gpay</td>
-													<td>$1200</td>
-													<td class="type"><span>Premium :</span> 103, 104, <span>Delux : </span>106</td>
-													<td class="rooms">
-														<span class="mem">12 Member</span> /
-														<span class="room">3 Room</span>
-													</td>
-													<td>
-														<div class="d-flex justify-content-center">
-															<button type="button" class="btn btn-outline-success"><i
-																	class="ri-information-line"></i></button>
-															<button type="button"
-																class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
-																data-bs-toggle="dropdown" aria-haspopup="true"
-																aria-expanded="false" data-display="static">
-																<span class="sr-only"><i
-																		class="ri-settings-3-line"></i></span>
-															</button>
-															<div class="dropdown-menu">
-																<a class="dropdown-item" href="#">Edit</a>
-																<a class="dropdown-item" href="#">Delete</a>
-															</div>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td class="token">2187</td>
-													<td><img class="cat-thumb" src="../../assets_admin/img/user/5.jpg"
-															alt="clients Image"><span class="name">Stanley Knife</span>
-													</td>
-													<td>22/03/2024</td>
-													<td>05/04/2024</td>
-													<td>Passport</td>
-													<td class="active">Cash</td>
-													<td>$1200</td>
-													<td class="type"><span>Delux : </span>108</td>
-													<td class="rooms">
-														<span class="mem">1 Member</span> /
-														<span class="room">1 Room</span>
-													</td>
-													<td>
-														<div class="d-flex justify-content-center">
-															<button type="button" class="btn btn-outline-success"><i
-																	class="ri-information-line"></i></button>
-															<button type="button"
-																class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
-																data-bs-toggle="dropdown" aria-haspopup="true"
-																aria-expanded="false" data-display="static">
-																<span class="sr-only"><i
-																		class="ri-settings-3-line"></i></span>
-															</button>
-															<div class="dropdown-menu">
-																<a class="dropdown-item" href="#">Edit</a>
-																<a class="dropdown-item" href="#">Delete</a>
-															</div>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td class="token">2050</td>
-													<td><img class="cat-thumb" src="../../assets_admin/img/user/6.jpg"
-															alt="clients Image"><span class="name">Zara nails</span>
-													</td>
-													<td>09/09/2022</td>
-													<td>15/09/2022</td>
-													<td>Adhar Card</td>
-													<td class="close">Cheque</td>
-													<td>$1560</td>
-													<td class="type"><span>VIP : </span>203</td>
-													<td class="rooms">
-														<span class="mem">2 Member</span> /
-														<span class="room">1 Room</span>
-													</td>
-													<td>
-														<div class="d-flex justify-content-center">
-															<button type="button" class="btn btn-outline-success"><i
-																	class="ri-information-line"></i></button>
-															<button type="button"
-																class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
-																data-bs-toggle="dropdown" aria-haspopup="true"
-																aria-expanded="false" data-display="static">
-																<span class="sr-only"><i
-																		class="ri-settings-3-line"></i></span>
-															</button>
-															<div class="dropdown-menu">
-																<a class="dropdown-item" href="#">Edit</a>
-																<a class="dropdown-item" href="#">Delete</a>
-															</div>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td class="token">1995</td>
-													<td><img class="cat-thumb" src="../../assets_admin/img/user/7.jpg"
-															alt="clients Image"><span class="name">Ivan Itchinos</span>
-													</td>
-													<td>16/08/2024</td>
-													<td>20/08/2024</td>
-													<td>Pan Card</td>
-													<td class="success">Gpay</td>
-													<td>$1560</td>
-													<td class="type"><span>VIP : </span>204, <span>Junior : </span>401, 402</td>
-													<td class="rooms">
-														<span class="mem">6 Member</span> /
-														<span class="room">3 Room</span>
-													</td>
-													<td>
-														<div class="d-flex justify-content-center">
-															<button type="button" class="btn btn-outline-success"><i
-																	class="ri-information-line"></i></button>
-															<button type="button"
-																class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
-																data-bs-toggle="dropdown" aria-haspopup="true"
-																aria-expanded="false" data-display="static">
-																<span class="sr-only"><i
-																		class="ri-settings-3-line"></i></span>
-															</button>
-															<div class="dropdown-menu">
-																<a class="dropdown-item" href="#">Edit</a>
-																<a class="dropdown-item" href="#">Delete</a>
-															</div>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td class="token">1985</td>
-													<td><img class="cat-thumb" src="../../assets_admin/img/user/8.jpg"
-															alt="clients Image"><span class="name">Wiley Waites</span>
-													</td>
-													<td>19/12/2021</td>
-													<td>25/12/2021</td>
-													<td>Pan Card</td>
-													<td class="success">Gpay</td>
-													<td>$1560</td>
-													<td class="type"><span>Deluxe : </span>104, <span>Junior : </span>401, 402</td>
-													<td class="rooms">
-														<span class="mem">10 Member</span> /
-														<span class="room">4 Room</span>
-													</td>
-													<td>
-														<div class="d-flex justify-content-center">
-															<button type="button" class="btn btn-outline-success"><i
-																	class="ri-information-line"></i></button>
-															<button type="button"
-																class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
-																data-bs-toggle="dropdown" aria-haspopup="true"
-																aria-expanded="false" data-display="static">
-																<span class="sr-only"><i
-																		class="ri-settings-3-line"></i></span>
-															</button>
-															<div class="dropdown-menu">
-																<a class="dropdown-item" href="#">Edit</a>
-																<a class="dropdown-item" href="#">Delete</a>
-															</div>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td class="token">1945</td>
-													<td><img class="cat-thumb" src="../../assets_admin/img/user/9.jpg"
-															alt="clients Image"><span class="name">Sarah Moanees</span>
-													</td>
-													<td>25/02/2024</td>
-													<td>25/02/2024</td>
-													<td>Pan Card</td>
-													<td class="pending">pending</td>
-													<td>$400</td>
-													<td class="type"><span>VIP : </span>104</td>
-													<td class="rooms">
-														<span class="mem">1 Member</span> /
-														<span class="room">1 Room</span>
-													</td>
-													<td>
-														<div class="d-flex justify-content-center">
-															<button type="button" class="btn btn-outline-success"><i
-																	class="ri-information-line"></i></button>
-															<button type="button"
-																class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
-																data-bs-toggle="dropdown" aria-haspopup="true"
-																aria-expanded="false" data-display="static">
-																<span class="sr-only"><i
-																		class="ri-settings-3-line"></i></span>
-															</button>
-															<div class="dropdown-menu">
-																<a class="dropdown-item" href="#">Edit</a>
-																<a class="dropdown-item" href="#">Delete</a>
-															</div>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td class="token">1865</td>
-													<td><img class="cat-thumb" src="../../assets_admin/img/user/10.jpg"
-															alt="clients Image"><span class="name">Anne Ortha</span>
-													</td>
-													<td>28/02/2024</td>
-													<td>05/03/2024</td>
-													<td>Passport</td>
-													<td class="active">Cash</td>
-													<td>$800</td>
-													<td class="type"><span>Deluxe : </span>304, 305</td>
-													<td class="rooms">
-														<span class="mem">7 Member</span> /
-														<span class="room">2 Room</span>
-													</td>
-													<td>
-														<div class="d-flex justify-content-center">
-															<button type="button" class="btn btn-outline-success"><i
-																	class="ri-information-line"></i></button>
-															<button type="button"
-																class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
-																data-bs-toggle="dropdown" aria-haspopup="true"
-																aria-expanded="false" data-display="static">
-																<span class="sr-only"><i
-																		class="ri-settings-3-line"></i></span>
-															</button>
-															<div class="dropdown-menu">
-																<a class="dropdown-item" href="#">Edit</a>
-																<a class="dropdown-item" href="#">Delete</a>
-															</div>
-														</div>
-													</td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-								</div>
-							</div>
-						</div>
+
+					<!-- Bảng danh sách nguyên liệu -->
+					<div class="table-responsive nguyenlieu-table">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>Tên nguyên liệu</th>
+									<th>Đơn vị tính</th>
+									<th>Số lượng tồn</th>
+									<th>Ghi chú</th>
+									<th>Thao tác</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php foreach ($dsNguyenLieu as $nl): ?>
+									<tr>
+										<td><?= $nl['ID_NguyenLieu'] ?></td>
+										<td><?= $nl['TenNguyenLieu'] ?></td>
+										<td><?= $nl['DonViTinh'] ?></td>
+										<td><?= $nl['SoLuongTon'] ?></td>
+										<td><?= $nl['GhiChu'] ?></td>
+										<td>
+											<a href="?mode=edit&id=<?= $nl['ID_NguyenLieu'] ?>" class="btn btn-warning btn-sm">Sửa</a>
+											<a href="?xoa_nguyenlieu=<?= $nl['ID_NguyenLieu'] ?>"
+												onclick="return confirm('Bạn có chắc muốn xóa nguyên liệu này?')"
+												class="btn btn-danger btn-sm">Xóa</a>
+										</td>
+									</tr>
+								<?php endforeach; ?>
+							</tbody>
+						</table>
 					</div>
-				</div>
+				<?php endif; ?>
 			</div>
 		</div>
 
@@ -1183,6 +604,26 @@ session_start();
 			/* Cắt ảnh để vừa khung */
 			border: 2px solid #fff;
 		}
+	
+		.nguyenlieu-table {
+			margin-top: 20px;
+		}
+
+		.form-them-nguyenlieu {
+			margin: 20px 0;
+			padding: 20px;
+			background: #f8f9fa;
+			border-radius: 5px;
+		}
+
+		.form-sua-nguyenlieu {
+			max-width: 600px;
+			margin: 20px auto;
+			padding: 20px;
+			background: #f8f9fa;
+			border-radius: 5px;
+		}
+
 	</style>
 
 </body>

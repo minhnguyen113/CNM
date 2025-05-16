@@ -448,7 +448,9 @@
 						</ul>
 					</div>
 					<div class="lh-tools">
-						<a href="javascript:void(0)" title="Refresh" class="refresh"><i class="fa-solid fa-arrows-rotate"></i></a>
+						<a href="javascript:void(0)" title="Refresh" id="refreshBtn" class="refresh">
+							<i class="fa-solid fa-arrows-rotate"></i>
+						</a>
 						<div id="pagedate">
 							<div class="lh-date-range" title="Date">
 								<span></span>

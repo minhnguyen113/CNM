@@ -58,34 +58,31 @@ $discounts = $discountController->getAllDiscounts();
                             <i class="ri-menu-2-line"></i>
                         </button>
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                                 <li class="nav-item dropdown">
-                                    <a href="javascript:void(0)" role="button" data-bs-toggle="dropdown">
-                                        <a class="nav-link dropdown-toggle" href="../index.php">Trang chủ</a>
-
-                                    </a>
-
+                                    <a class="nav-link dropdown-toggle" href="./index.php">Trang chủ</a>
                                 </li>
+
                                 <li class="nav-item dropdown">
-                                    <a href="javascript:void(0)" role="button" data-bs-toggle="dropdown">
-                                        <a class="nav-link dropdown-toggle" href="./discount.php"> Khuyến mãi</a>
-
-
-                                    </a>
-
+                                    <a class="nav-link dropdown-toggle" href="discount.php">Khuyến mãi</a>
                                 </li>
+
                                 <li class="nav-item dropdown">
-                                    <a href="javascript:void(0)" role="button" data-bs-toggle="dropdown">
-                                        <a class="nav-link dropdown-toggle" href="book.php"> Đặt bàn</a>
-                                    </a>
+                                    <a class="nav-link dropdown-toggle" href="book.php">Đặt bàn</a>
                                 </li>
+                                
 
                                 <li class="nav-item dropdown">
                                     <a class="nav-link" href="menu.php">
                                         Thực đơn
                                     </a>
                                 </li>
-                                  <li class="nav-item dropdown">
+
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="Message.php">Liên hệ </a>
+                                </li>
+
+                                <li class="nav-item dropdown">
                                     <?php if (isset($_SESSION['username'])): ?>
                                         <?php if ($_SESSION['role_id'] == 1 || $_SESSION['role_id'] == 2): ?>
                                             <a class="nav-link dropdown-toggle" href="../admin/index.php">Quản lý</a>
@@ -101,6 +98,7 @@ $discounts = $discountController->getAllDiscounts();
                                         <a class="nav-link dropdown-toggle" href="login.php">Đăng nhập</a>
                                     <?php endif; ?>
                                 </li>
+
                             </ul>
                         </div>
                     </nav>

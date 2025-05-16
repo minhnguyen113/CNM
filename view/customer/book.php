@@ -88,6 +88,12 @@ $datBan->xuLyTaoBanVaDatBan();
                                         Thực đơn
                                     </a>
                                 </li>
+
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="Message.php">Liên hệ </a>
+                                </li>
+
+                                
                                   <li class="nav-item dropdown">
                                     <?php if (isset($_SESSION['username'])): ?>
                                         <?php if ($_SESSION['role_id'] == 1 || $_SESSION['role_id'] == 2): ?>

@@ -32,9 +32,6 @@ if ($role_id == 1 || $role_id == 2) {
             <a href="./rooms.php" class="lh-page-link"><i class="fa-solid fa-gift"></i><span class="condense"><span class="hover-title">Khuyến mãi</span></span></a>
         </li>
         <li class="lh-sb-item">
-            <a href="./bookings.php" class="lh-page-link"><i class="fa-solid fa-file"></i><span class="condense"><span class="hover-title">Đặt chỗ</span></span></a>
-        </li>
-        <li class="lh-sb-item">
             <a href="./invoice.php" class="lh-page-link"><i class="fa-regular fa-money-bill-1"></i><span class="condense"><span class="hover-title">Hoá đơn</span></span></a>
         </li>
         <li class="lh-sb-item-separator"></li>
@@ -48,13 +45,19 @@ if ($role_id == 1 || $role_id == 2) {
         <li class="lh-sb-item">
             <a href="./orders.php" class="lh-page-link"><i class="fa-regular fa-bookmark"></i><span class="condense"><span class="hover-title">Đặt chỗ</span></span></a>
         </li>
+        <li class="lh-sb-item-separator"></li>  
         <li class="lh-sb-item sb-drop-item">
             <a href="javascript:void(0)" class="lh-drop-toggle"><i class="ri-pages-line"></i><span class="condense">Kho<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
             <ul class="lh-sb-drop condense">
                 <li><a href="./material.php" class="lh-page-link drop"><i class="fa-solid fa-code-commit"></i>Nguyên liệu</a></li>
-                <li><a href="./material-add.php" class="lh-page-link drop"><i class="fa-solid fa-code-commit"></i>Thêm Nguyên liệu</a></li>
-                <li><a href="./material-update.php" class="lh-page-link drop"><i class="fa-solid fa-code-commit"></i>Cập nhật nguyên liệu</a></li>
+              
+        
             </ul>
-        </li>';
+        </li>
+        <li class="lh-sb-item-separator"></li>  
+        <li class="lh-sb-item">
+             <a href="./Comment.php" class="lh-page-link drop"><i class="fa-solid fa-code-commit"></i>Đánh giá</a>
+        </li>
+        
+        ';
 }
-?>

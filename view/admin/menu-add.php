@@ -1,7 +1,41 @@
 <?php
 session_start();
-?>
+include_once(__DIR__ . "/../../controller/cThucDon.php");
+$controller = new ThucDonController();
 
+// Xử lý thêm/sửa
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+	$id = $_POST['id'] ?? '';
+	$ten = $_POST['TenThucDon'];
+	$mota = $_POST['MoTa'];
+
+	if ($id) {
+		$controller->updateThucDon($id, $ten, $mota);
+	} else {
+		$controller->addThucDon($ten, $mota);
+	}
+
+	header("Location: menu-add.php");
+	exit;
+}
+
+// Xử lý xoá
+if (isset($_GET['delete'])) {
+	$controller->deleteThucDon($_GET['delete']);
+	header("Location: menu-add.php");
+	exit;
+}
+
+// Lấy danh sách
+$thucdon = $controller->getAllThucDon();
+
+// Xử lý sửa
+$editItem = null;
+if (isset($_GET['edit'])) {
+	$editItem = $controller->getThucDonById($_GET['edit']);
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -54,22 +88,22 @@ session_start();
 						</div>
 					</div>
 					<div class="right-header">
-
-
 						<div class="lh-right-tool display-screen">
-							<a class="lh-screen full" href="javascript:void(0)"><i class="ri-fullscreen-line"></i></a>
-							<a class="lh-screen reset" href="javascript:void(0)"><i
-									class="ri-fullscreen-exit-line"></i></a>
+							<a class="lh-screen full" href="javascript:void(0)"><i class="fa-solid fa-expand"></i></a>
+							<a class="lh-screen reset" href="javascript:void(0)">
+								<!-- <i class="ri-fullscreen-exit-line"></i> -->
+								<i class="fa-solid fa-expand"></i>
+							</a>
 						</div>
 						<div class="lh-right-tool">
 							<a class="lh-notify" href="javascript:void(0)">
-								<i class="ri-notification-2-line"></i>
+								<i class="fa-regular fa-bell"></i>
 								<span class="label"></span>
 							</a>
 						</div>
 						<div class="lh-right-tool display-dark">
-							<a class="lh-mode dark" href="javascript:void(0)"><i class="ri-moon-clear-line"></i></a>
-							<a class="lh-mode light" href="javascript:void(0)"><i class="ri-sun-line"></i></a>
+							<a class="lh-mode dark" href="javascript:void(0)"><i class="fa-regular fa-moon"></i></a>
+							<a class="lh-mode light" href="javascript:void(0)"><i class="fa-regular fa-sun"></i></a>
 						</div>
 						<div class="lh-right-tool lh-user-drop">
 							<div class="lh-hover-drop">
@@ -115,164 +149,9 @@ session_start();
 						</li>
 						<li class="lh-sb-item-separator"></li>
 						<?php
-						if ($_SESSION['role_id'] == 1) {
-							echo '
-						<li class="lh-sb-title condense">Apps</li>
-						<li class="lh-sb-item sb-drop-item">
-							<a href="javascript:void(0)" class="lh-drop-toggle">
-								<i class="fa-regular fa-address-card"></i><span class="condense">Nhân Viên
-									<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
-							<ul class="lh-sb-drop condense">
-								<li><a href="./team-profile.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Thông tin </a></li>
-								<li><a href="./team-add.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Thêm nhân viên</a></li>
-								<li><a href="./team-list.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Danh sách nhân viên</a></li>
-										
-							</ul>
-						</li>
-						<li class="lh-sb-item-separator"></li>
-						<li class="lh-sb-title condense">Customer</li>
-						<li class="lh-sb-item">
-							<a href="./list-customer.php" class="lh-page-link">
-								<i class="fa-solid fa-user-group"></i><span class="condense"><span
-										class="hover-title">Khách hàng</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./customer-details.php" class="lh-page-link">
-								<i class="fa-solid fa-user-pen"></i><span class="condense">
-									<span class="hover-title">Khách hàng Chi tiết
-									</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./rooms.php" class="lh-page-link">
-								<i class="fa-solid fa-gift"></i><span class="condense"><span
-										class="hover-title">Khuyến mãi </span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./bookings.php" class="lh-page-link">
-								<i class="fa-solid fa-file"></i><span class="condense"><span
-										class="hover-title">Đặt chỗ</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./invoice.php" class="lh-page-link">
-								<i class="fa-regular fa-money-bill-1"></i><span class="condense"><span
-										class="hover-title">Hoá đơn</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item-separator"></li>
-						<li class="lh-sb-title condense">Foods</li>
-						<li class="lh-sb-item">
-							<a href="./menu.php" class="lh-page-link">
-								<i class="fa-solid fa-utensils"></i><span class="condense"><span
-										class="hover-title">Thực đơn</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./menu-add.php" class="lh-page-link">
-								<i class="fa-solid fa-utensils"></i><span class="condense"><span
-										class="hover-title">Thêm thực đơn</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item">
-							<a href="./orders.php" class="lh-page-link">
-								<i class="fa-regular fa-bookmark"></i><span class="condense"><span
-										class="hover-title">Đặt chỗ</span> </span>
-							</a>
-						</li>
-						<li class="lh-sb-item-separator"></li>
-						<li class="lh-sb-title condense">Login</li>
-						<li class="lh-sb-item sb-drop-item">
-							<a href="javascript:void(0)" class="lh-drop-toggle">
-								<i class="ri-pages-line"></i><span class="condense">Kho
-									<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
-							<ul class="lh-sb-drop condense">
-								<li><a href="./material.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Nguyên liệu</a></li>
-								<li><a href="./material-add.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Thêm Nguyên liệu</a></li>
-								<li><a href="./material-update.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Cập nhật nguyên liệu</a></li>
-								
-							</ul>
-						</li>';
-						} else if ($_SESSION['role_id'] == 2) {
-							echo '<li class="lh-sb-item-separator"></li>
-							<li class="lh-sb-title condense">Customer</li>
-							<li class="lh-sb-item">
-								<a href="./list-customer.php" class="lh-page-link">
-									<i class="fa-solid fa-user-group"></i><span class="condense"><span
-											class="hover-title">Khách hàng</span> </span>
-								</a>
-							</li>
-							<li class="lh-sb-item">
-							<a href="./customer-details.php" class="lh-page-link">
-								<i class="fa-solid fa-user-pen"></i><span class="condense">
-									<span class="hover-title">Khách hàng Chi tiết
-									</span> </span>
-							</a>
-						</li>
-							<li class="lh-sb-item">
-								<a href="./rooms.php" class="lh-page-link">
-									<i class="fa-solid fa-gift"></i><span class="condense"><span
-											class="hover-title">Khuyến mãi </span> </span>
-								</a>
-							</li>
-							<li class="lh-sb-item">
-								<a href="./bookings.php" class="lh-page-link">
-									<i class="fa-solid fa-file"></i><span class="condense"><span
-											class="hover-title">Đặt chỗ</span> </span>
-								</a>
-							</li>
-							<li class="lh-sb-item">
-								<a href="./invoice.php" class="lh-page-link">
-									<i class="fa-regular fa-money-bill-1"></i><span class="condense"><span
-											class="hover-title">Hoá đơn</span> </span>
-								</a>
-							</li>
-							<li class="lh-sb-item-separator"></li>
-							<li class="lh-sb-title condense">Foods</li>
-							<li class="lh-sb-item">
-								<a href="./menu.php" class="lh-page-link">
-									<i class="fa-solid fa-utensils"></i><span class="condense"><span
-											class="hover-title">Thực đơn</span> </span>
-								</a>
-							</li>
-							<li class="lh-sb-item">
-								<a href="./menu-add.php" class="lh-page-link">
-									<i class="fa-solid fa-utensils"></i><span class="condense"><span
-											class="hover-title">Thêm thực đơn</span> </span>
-								</a>
-							</li>
-							<li class="lh-sb-item">
-								<a href="./orders.php" class="lh-page-link">
-									<i class="fa-regular fa-bookmark"></i><span class="condense"><span
-											class="hover-title">Đặt chỗ</span> </span>
-								</a>
-							</li>
-							<li class="lh-sb-item sb-drop-item">
-							<a href="javascript:void(0)" class="lh-drop-toggle">
-								<i class="ri-pages-line"></i><span class="condense">Kho
-									<i class="drop-arrow fa-regular fa-circle-left"></i></span></a>
-							<ul class="lh-sb-drop condense">
-								<li><a href="./material.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Nguyên liệu</a></li>
-								<li><a href="./material-add.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Thêm Nguyên liệu</a></li>
-								<li><a href="./material-update.php" class="lh-page-link drop">
-										<i class="fa-solid fa-code-commit"></i>Cập nhật nguyên liệu</a></li>
-								
-							</ul>
-						</li>';
-						}
-
+						include('./setRole.php');
 						?>
-						
+
 					</ul>
 				</div>
 			</div>
@@ -595,495 +474,93 @@ session_start();
 
 		<!-- main content -->
 		<div class="lh-main-content">
+		<div class="lh-page-title">
+				<div class="lh-breadcrumb">
+					<h5>Thêm thực đơn</h5>
+					<ul>
+						<li><a href="./index.php">Home</a></li>
+						<li>Thêm thực dơn</li>
+					</ul>
+				</div>
+				<div class="lh-tools">
+					<a href="javascript:void(0)" title="Refresh" id="refreshBtn" class="refresh">
+						<i class="fa-solid fa-arrows-rotate"></i>
+					</a>
+					<div id="pagedate">
+						<div class="lh-date-range" title="Date">
+							<span></span>
+						</div>
+					</div>
+				</div>
+			</div>
 			<div class="container-fluid">
-				<!-- Page title & breadcrumb -->
-				<div class="lh-page-title">
-					<div class="lh-breadcrumb">
-						<h5>Menu Add</h5>
-						<ul>
-							<li><a href="./index.php">Home</a></li>
-							<li>Menu Add</li>
-						</ul>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-xxl-3 col-xl-4 col-md-12">
-						<div class="lh-card-sticky guest-card">
-							<div class="lh-card">
-								<div class="lh-card-content card-default">
-									<div class="guest-profile">
-										<div class="lh-team-block-detail lh-profile-add">
-											<div class="profile-img">
-												<div class="avatar-preview">
-													<div class="t-img" id="imagePreview"
-														style="background-image: url(assets/img/user/thumb.jpg);">
-													</div>
-												</div>
-												<div class="avatar-edit">
-													<input type='file' id="imageUpload"
-														accept=".png, .jpg, .jpeg">
-													<label for="imageUpload"></label>
-												</div>
-											</div>
-											<div class="form-group p-b-15">
-												<input type="text" class="form-control"
-													placeholder="Enter Chef name">
-											</div>
-											<div class="form-group p-b-15">
-												<input type="text" class="form-control"
-													placeholder="Enter Chef Phone No">
-											</div>
-											<div class="form-group p-b-15">
-												<input type="text" class="form-control"
-													placeholder="Enter Chef Email">
-											</div>
-											<div class="form-group">
-												<textarea type="text" class="form-control"
-													placeholder="Enter Chef Address" rows="6"></textarea>
-											</div>
+				<!-- Giao diện đẹp bằng Bootstrap -->
+				<div class="container mt-5">
+					<div class="row">
+						<div class="col-md-5">
+							<div class="card shadow-sm">
+								<div class="card-header bg-dark text-white">
+									<h6 class="mb-0"><?= $editItem ? "Sửa Thực Đơn" : "Thêm Thực Đơn" ?></h6>
+								</div>
+								<div class="card-body">
+									<form method="post">
+										<?php if ($editItem): ?>
+											<input type="hidden" name="id" value="<?= $editItem['ID_ThucDon'] ?>">
+										<?php endif; ?>
+										<div class="mb-3">
+											<label class="form-label">Tên thực đơn</label>
+											<input type="text" name="TenThucDon" class="form-control" value="<?= $editItem['TenThucDon'] ?? '' ?>" required>
 										</div>
-									</div>
+										<div class="mb-3">
+											<label class="form-label">Mô tả</label>
+											<textarea name="MoTa" class="form-control" rows="4"><?= $editItem['Mota'] ?? '' ?></textarea>
+										</div>
+										<div class="d-flex justify-content-between align-items-center">
+											<button type="submit" class="btn btn-success"><?= $editItem ? "Cập nhật" : "Thêm mới" ?></button>
+											<?php if ($editItem): ?>
+												<a href="menu-add.php" class="btn btn-secondary">❌ Hủy sửa</a>
+											<?php endif; ?>
+										</div>
+									</form>
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="col-xxl-9 col-xl-8 col-md-12">
-						<div class="lh-card" id="bookingtbl">
-							<div class="lh-card-header">
-								<h4 class="lh-card-title">Menu Details</h4>
-								<div class="header-tools">
-									<a href="javascript:void(0)" class="lh-full-card"><i class="ri-fullscreen-line"
-											title="Full Screen"></i></a>
+						<div class="col-md-7">
+							<div class="card shadow-sm">
+								<div class="card-header bg-dark text-white">
+									<h6 class="mb-0">Danh sách thực đơn</h6>
 								</div>
-							</div>
-							<div class="lh-card-content card-booking">
-								<div class="row mtb-m-12">
-									<div class="col-md-6 col-sm-12">
-										<div class="lh-user-detail">
-											<ul>
-												<li><strong>Start Time : </strong>
-													<div class="form-group">
-														<input type="time" name="dateofbirth" id="dateofbirth">
-													</div>
-												</li>
-												<li><strong>End Time : </strong>
-													<div class="form-group">
-														<input type="time" name="dateofbirth" id="dateofbirth">
-													</div>
-												</li>
-												<li><strong>Recipe name : </strong>
-													<div class="form-group">
-														<input type="text" class="form-control" placeholder="Enter Recipe">
-													</div>
-												</li>
-											</ul>
-										</div>
-									</div>
-									<div class="col-md-6 col-sm-12">
-										<div class="lh-user-detail">
-											<ul>
-												<li><strong>Junior Price : </strong>
-													<div class="form-group">
-														<select name="select">
-															<option value="option-1">$100</option>
-															<option value="option-2">Free</option>
-														</select>
-													</div>
-												</li>
-												<li><strong>Delux Price : </strong>
-													<div class="form-group">
-														<select name="select">
-															<option value="option-1">$100</option>
-															<option value="option-2">Free</option>
-														</select>
-													</div>
-												</li>
-												<li><strong>Vip Price : </strong>
-													<div class="form-group">
-														<select name="select">
-															<option value="option-1">$100</option>
-															<option value="option-2">Free</option>
-														</select>
-													</div>
-												</li>
-											</ul>
-										</div>
-									</div>
-									<div class="col-md-6 col-sm-12">
-										<div class="lh-user-detail">
-											<ul>
-												<li><strong>Recipe type : </strong>
-													<div class="form-group">
-														<select name="select">
-															<option value="option-1">Breakfast</option>
-															<option value="option-2">Lunch</option>
-															<option value="option-2">Dinner</option>
-														</select>
-													</div>
-												</li>
-											</ul>
-										</div>
-									</div>
-									<div class="col-md-6 col-sm-12">
-										<div class="lh-user-detail">
-											<ul>
-												<li><strong>Image Upload : </strong>
-													<div class="form-group">
-														<input type="file">
-													</div>
-												</li>
-											</ul>
-										</div>
-									</div>
-									<div class="col-md-6 col-sm-12">
-										<div class="lh-user-detail">
-											<ul>
-												<li>
-													<div class="form-group">
-														<textarea type="file" rows="2" placeholder="Enter Recipe Details..."></textarea>
-													</div>
-												</li>
-											</ul>
-										</div>
-									</div>
-									<div class="col-md-6 col-sm-12">
-										<div class="lh-user-detail">
-											<ul>
-												<li>
-													<button type="submit" class="lh-btn-primary">Submit</button>
-												</li>
-											</ul>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-xl-12 col-md-12">
-						<div class="lh-card" id="bookingtbl">
-							<div class="lh-card-header">
-								<h4 class="lh-card-title">Latest Recipe</h4>
-								<div class="header-tools">
-									<a href="javascript:void(0)" class="m-r-10 lh-full-card"><i
-											class="ri-fullscreen-line" title="Full Screen"></i></a>
-									<div class="lh-date-range dots">
-										<span></span>
-									</div>
-								</div>
-							</div>
-							<div class="lh-card-content card-default">
-								<div class="booking-table">
-									<div class="table-responsive">
-										<table id="booking_table" class="table">
-											<thead>
+								<div class="card-body p-0">
+									<table class="table table-striped mb-0">
+										<thead class="table-light">
+											<tr>
+												<th scope="col"><b>ID</b></th>
+												<th scope="col"><b>Tên</b></th>
+												<th scope="col"><b>Mô tả</b></th>
+												<th scope="col"><b>Hành động</b></th>
+											</tr>
+										</thead>
+										<tbody>
+											<?php if (!empty($thucdon)): ?>
+												<?php foreach ($thucdon as $item): ?>
+													<tr>
+														<td><?= $item['ID_ThucDon'] ?></td>
+														<td><?= $item['TenThucDon'] ?></td>
+														<td><?= $item['Mota'] ?></td>
+														<td>
+															<a href="menu-add.php?edit=<?= $item['ID_ThucDon'] ?>" class="btn mt-3  btn-sm btn-warning">✏️ Sửa</a>
+															<span class ="mt-3 w-100"></span>
+															<a href="menu-add.php?delete=<?= $item['ID_ThucDon'] ?>" class="btn mt-3 btn-sm btn-danger" onclick="return confirm('Xóa thực đơn này?')">🗑️ Xóa</a>
+														</td>
+													</tr>
+												<?php endforeach; ?>
+											<?php else: ?>
 												<tr>
-													<th>ID</th>
-													<th>Recipe_Name</th>
-													<th>Time</th>
-													<th>Type</th>
-													<th>Junior</th>
-													<th>Deluxe</th>
-													<th>VIP</th>
-													<th>Status</th>
-													<th>Action</th>
+													<td colspan="4" class="text-center">Không có dữ liệu.</td>
 												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td class="token">2650</td>
-													<td><img class="cat-thumb" src="assets/img/restaurant/1.png"
-															alt="clients Image"><span class="name">Toast with butter-jam</span>
-													</td>
-													<td>6am - 9am</td>
-													<td>Breakfast</td>
-													<td>$100</td>
-													<td>Free</td>
-													<td>Free</td>
-													<td class="close">Unavailable</td>
-													<td>
-														<div class="d-flex justify-content-center">
-															<button type="button" class="btn btn-outline-success"><i
-																	class="ri-information-line"></i></button>
-															<button type="button"
-																class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
-																data-bs-toggle="dropdown" aria-haspopup="true"
-																aria-expanded="false" data-display="static">
-																<span class="sr-only"><i
-																		class="ri-settings-3-line"></i></span>
-															</button>
-															<div class="dropdown-menu">
-																<a class="dropdown-item" href="#">Edit</a>
-																<a class="dropdown-item" href="#">Delete</a>
-															</div>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td class="token">2650</td>
-													<td><img class="cat-thumb" src="assets/img/restaurant/2.png"
-															alt="clients Image"><span class="name">Hummus and vegetable wrap</span>
-													</td>
-													<td>12pm - 2pm</td>
-													<td>Lunch</td>
-													<td>$150</td>
-													<td>$150</td>
-													<td>Free</td>
-													<td class="success">Available</td>
-													<td>
-														<div class="d-flex justify-content-center">
-															<button type="button" class="btn btn-outline-success"><i
-																	class="ri-information-line"></i></button>
-															<button type="button"
-																class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
-																data-bs-toggle="dropdown" aria-haspopup="true"
-																aria-expanded="false" data-display="static">
-																<span class="sr-only"><i
-																		class="ri-settings-3-line"></i></span>
-															</button>
-															<div class="dropdown-menu">
-																<a class="dropdown-item" href="#">Edit</a>
-																<a class="dropdown-item" href="#">Delete</a>
-															</div>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td class="token">2650</td>
-													<td><img class="cat-thumb" src="assets/img/restaurant/3.png"
-															alt="clients Image"><span class="name">Chickpea and Veg Stir-Fry</span>
-													</td>
-													<td>7pm - 9pm</td>
-													<td>Dinner</td>
-													<td>$120</td>
-													<td>Free</td>
-													<td>Free</td>
-													<td class="success">Available</td>
-													<td>
-														<div class="d-flex justify-content-center">
-															<button type="button" class="btn btn-outline-success"><i
-																	class="ri-information-line"></i></button>
-															<button type="button"
-																class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
-																data-bs-toggle="dropdown" aria-haspopup="true"
-																aria-expanded="false" data-display="static">
-																<span class="sr-only"><i
-																		class="ri-settings-3-line"></i></span>
-															</button>
-															<div class="dropdown-menu">
-																<a class="dropdown-item" href="#">Edit</a>
-																<a class="dropdown-item" href="#">Delete</a>
-															</div>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td class="token">2650</td>
-													<td><img class="cat-thumb" src="assets/img/restaurant/4.png"
-															alt="clients Image"><span class="name">Waffles</span>
-													</td>
-													<td>6am - 9am</td>
-													<td>Breakfast</td>
-													<td>$50</td>
-													<td>Free</td>
-													<td>Free</td>
-													<td class="close">Unavailable</td>
-													<td>
-														<div class="d-flex justify-content-center">
-															<button type="button" class="btn btn-outline-success"><i
-																	class="ri-information-line"></i></button>
-															<button type="button"
-																class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
-																data-bs-toggle="dropdown" aria-haspopup="true"
-																aria-expanded="false" data-display="static">
-																<span class="sr-only"><i
-																		class="ri-settings-3-line"></i></span>
-															</button>
-															<div class="dropdown-menu">
-																<a class="dropdown-item" href="#">Edit</a>
-																<a class="dropdown-item" href="#">Delete</a>
-															</div>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td class="token">2650</td>
-													<td><img class="cat-thumb" src="assets/img/restaurant/5.png"
-															alt="clients Image"><span class="name">Grilled vegetable panini</span>
-													</td>
-													<td>11am - 1pm</td>
-													<td>Lunch</td>
-													<td>$130</td>
-													<td>$130</td>
-													<td>$100</td>
-													<td class="close">Unavailable</td>
-													<td>
-														<div class="d-flex justify-content-center">
-															<button type="button" class="btn btn-outline-success"><i
-																	class="ri-information-line"></i></button>
-															<button type="button"
-																class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
-																data-bs-toggle="dropdown" aria-haspopup="true"
-																aria-expanded="false" data-display="static">
-																<span class="sr-only"><i
-																		class="ri-settings-3-line"></i></span>
-															</button>
-															<div class="dropdown-menu">
-																<a class="dropdown-item" href="#">Edit</a>
-																<a class="dropdown-item" href="#">Delete</a>
-															</div>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td class="token">2650</td>
-													<td><img class="cat-thumb" src="assets/img/restaurant/6.png"
-															alt="clients Image"><span class="name">Stuffed Bell Peppers</span>
-													</td>
-													<td>7pm - 9pm</td>
-													<td>Dinner</td>
-													<td>$90</td>
-													<td>$90</td>
-													<td>Free</td>
-													<td class="success">Available</td>
-													<td>
-														<div class="d-flex justify-content-center">
-															<button type="button" class="btn btn-outline-success"><i
-																	class="ri-information-line"></i></button>
-															<button type="button"
-																class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
-																data-bs-toggle="dropdown" aria-haspopup="true"
-																aria-expanded="false" data-display="static">
-																<span class="sr-only"><i
-																		class="ri-settings-3-line"></i></span>
-															</button>
-															<div class="dropdown-menu">
-																<a class="dropdown-item" href="#">Edit</a>
-																<a class="dropdown-item" href="#">Delete</a>
-															</div>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td class="token">2650</td>
-													<td><img class="cat-thumb" src="assets/img/restaurant/1.png"
-															alt="clients Image"><span class="name">Pancakes with syrup</span>
-													</td>
-													<td>6am - 9am</td>
-													<td>Breakfast</td>
-													<td>$80</td>
-													<td>$50</td>
-													<td>Free</td>
-													<td class="success">Available</td>
-													<td>
-														<div class="d-flex justify-content-center">
-															<button type="button" class="btn btn-outline-success"><i
-																	class="ri-information-line"></i></button>
-															<button type="button"
-																class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
-																data-bs-toggle="dropdown" aria-haspopup="true"
-																aria-expanded="false" data-display="static">
-																<span class="sr-only"><i
-																		class="ri-settings-3-line"></i></span>
-															</button>
-															<div class="dropdown-menu">
-																<a class="dropdown-item" href="#">Edit</a>
-																<a class="dropdown-item" href="#">Delete</a>
-															</div>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td class="token">2650</td>
-													<td><img class="cat-thumb" src="assets/img/restaurant/1.png"
-															alt="clients Image"><span class="name">Chickpea and avocado salad</span>
-													</td>
-													<td>11am - 12:30pm</td>
-													<td>Lunch</td>
-													<td>$110</td>
-													<td>Free</td>
-													<td>Free</td>
-													<td class="close">Unavailable</td>
-													<td>
-														<div class="d-flex justify-content-center">
-															<button type="button" class="btn btn-outline-success"><i
-																	class="ri-information-line"></i></button>
-															<button type="button"
-																class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
-																data-bs-toggle="dropdown" aria-haspopup="true"
-																aria-expanded="false" data-display="static">
-																<span class="sr-only"><i
-																		class="ri-settings-3-line"></i></span>
-															</button>
-															<div class="dropdown-menu">
-																<a class="dropdown-item" href="#">Edit</a>
-																<a class="dropdown-item" href="#">Delete</a>
-															</div>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td class="token">2650</td>
-													<td><img class="cat-thumb" src="assets/img/restaurant/2.png"
-															alt="clients Image"><span class="name">Roasted Vegetables</span>
-													</td>
-													<td>6pm - 9pm</td>
-													<td>Dinner</td>
-													<td>$40</td>
-													<td>$40</td>
-													<td>Free</td>
-													<td class="success">Available</td>
-													<td>
-														<div class="d-flex justify-content-center">
-															<button type="button" class="btn btn-outline-success"><i
-																	class="ri-information-line"></i></button>
-															<button type="button"
-																class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
-																data-bs-toggle="dropdown" aria-haspopup="true"
-																aria-expanded="false" data-display="static">
-																<span class="sr-only"><i
-																		class="ri-settings-3-line"></i></span>
-															</button>
-															<div class="dropdown-menu">
-																<a class="dropdown-item" href="#">Edit</a>
-																<a class="dropdown-item" href="#">Delete</a>
-															</div>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td class="token">2650</td>
-													<td><img class="cat-thumb" src="assets/img/restaurant/3.png"
-															alt="clients Image"><span class="name">Avocado toast</span>
-													</td>
-													<td>6am - 9am</td>
-													<td>Breakfast</td>
-													<td>$90</td>
-													<td>Free</td>
-													<td>Free</td>
-													<td class="close">Unavailable</td>
-													<td>
-														<div class="d-flex justify-content-center">
-															<button type="button" class="btn btn-outline-success"><i
-																	class="ri-information-line"></i></button>
-															<button type="button"
-																class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
-																data-bs-toggle="dropdown" aria-haspopup="true"
-																aria-expanded="false" data-display="static">
-																<span class="sr-only"><i
-																		class="ri-settings-3-line"></i></span>
-															</button>
-															<div class="dropdown-menu">
-																<a class="dropdown-item" href="#">Edit</a>
-																<a class="dropdown-item" href="#">Delete</a>
-															</div>
-														</div>
-													</td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
+											<?php endif; ?>
+										</tbody>
+									</table>
 								</div>
 							</div>
 						</div>
@@ -1107,10 +584,10 @@ session_start();
 		<!-- Feature tools -->
 		<div class="lh-tools-sidebar-overlay"></div>
 		<div class="lh-tools-sidebar">
-			 <a href="javascript:void(0)" class="lh-tools-sidebar-toggle in-out">
-        <i class="fa-solid fa-gear"></i>
+			<a href="javascript:void(0)" class="lh-tools-sidebar-toggle in-out">
+				<i class="fa-solid fa-gear"></i>
 
-      </a>
+			</a>
 			<div class="lh-bar-title">
 				<h6>Tools</h6>
 				<a href="javascript:void(0)" class="close-tools"><i class="ri-close-line"></i></a>

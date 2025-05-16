@@ -1,25 +1,63 @@
 <?php
 session_start();
 include_once("../../controller/cMenu.php");
+include_once('../../controller/cThucDon.php');
+include_once('../../controller/cDanhGia.php');
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-
+$controller = new ThucDonController();
+$dsThucDon = $controller->getAllThucDon();
+$danhGiaController = new DanhGiaController();
 $menuCtrl = new MenuController();
 
-// Ví dụ hiển thị món ăn Miền Bắc (ID_ThucDon = 1)
-$monAnMienBac = $menuCtrl->getMonAnTheoThucDon(1);
-$monAnMienNam = $menuCtrl->getMonAnTheoThucDon(3);
-$monAnMienTrung = $menuCtrl->getMonAnTheoThucDon(2);
-$monAnDuongPho = $menuCtrl->getMonAnTheoThucDon(4);
-$monAnMonChay = $menuCtrl->getMonAnTheoThucDon(6);
-$haiSanVietNam = $menuCtrl->getMonAnTheoThucDon(7);
-$monNuongTruyenThong = $menuCtrl->getMonAnTheoThucDon(9);
+// Xử lý chọn thực đơn (POST)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['chon_thuc_don'])) {
+    $_SESSION['thuc_don_id'] = $_POST['chon_thuc_don'];
+    header("Location: menu.php");
+    exit;
+}
 
+$thucDonID = $_SESSION['thuc_don_id'] ?? null;
+$monAnList = [];
+if ($thucDonID) {
+    $monAnList = $controller->getMonAnByThucDon($thucDonID);
+}
 
+// Xử lý thêm vào giỏ hàng
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
+    $item = [
+        'id' => $_POST['id'],
+        'ten' => $_POST['ten'],
+        'gia' => $_POST['gia'],
+        'soluong' => $_POST['soluong']
+    ];
+    $_SESSION['cart'][] = $item;
+    header("Location: menu.php");
+    exit;
+}
+
+// Cập nhật giỏ hàng
+if (isset($_POST['update_cart'])) {
+    foreach ($_POST['soluong'] as $index => $sl) {
+        $_SESSION['cart'][$index]['soluong'] = max(1, intval($sl));
+    }
+    header("Location: menu.php");
+    exit;
+}
+
+// Xoá món
+if (isset($_POST['remove_index'])) {
+    $removeIndex = $_POST['remove_index'];
+    unset($_SESSION['cart'][$removeIndex]);
+    $_SESSION['cart'] = array_values($_SESSION['cart']);
+    header("Location: menu.php");
+    exit;
+}
 ?>
+
 
 
 <!DOCTYPE html>
@@ -29,21 +67,19 @@ $monNuongTruyenThong = $menuCtrl->getMonAnTheoThucDon(9);
 <!-- Mirrored from maraviyainfotech.com/projects/luxurious-html-v22/luxurious-html/restaurant.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 21 Jan 2025 15:10:12 GMT -->
 
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Best Luxurious Hotel Booking Template.">
     <meta name="keywords"
         content="hotel, booking, business, restaurant, spa, resort, landing, agency, corporate, start up, site design, new business site, business template, professional template, classic, modern">
     <title>Chef Restaurent</title>
-
     <?php
     include('./head-resources.php');
     ?>
 
     <!-- Main Style -->
     <link id="mainCss" href="../../assets_customer/css/style.css" rel="stylesheet">
-
 </head>
 
 <body>
@@ -97,7 +133,12 @@ $monNuongTruyenThong = $menuCtrl->getMonAnTheoThucDon(9);
                                         Thực đơn
                                     </a>
                                 </li>
-                                  <li class="nav-item dropdown">
+
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="Message.php">Liên hệ </a>
+                                </li>
+                                
+                                <li class="nav-item dropdown">
                                     <?php if (isset($_SESSION['username'])): ?>
                                         <?php if ($_SESSION['role_id'] == 1 || $_SESSION['role_id'] == 2): ?>
                                             <a class="nav-link dropdown-toggle" href="../admin/index.php">Quản lý</a>
@@ -153,167 +194,91 @@ $monNuongTruyenThong = $menuCtrl->getMonAnTheoThucDon(9);
             <div class="banner" data-aos="fade-up" data-aos-duration="1000">
                 <h2><span>Thực đơn</span></h2>
             </div>
-            <nav class="p-0" data-aos="fade-up" data-aos-duration="1500">
-                <div class="nav nav-tabs lh-menu-restaurant" id="nav-tab" role="tablist">
-                    <button class="nav-link active lh-menu-buttons" id="nav-Breakfast-tab" data-bs-toggle="tab"
-                        data-bs-target="#nav-Breakfast" type="button" role="tab" aria-controls="nav-Breakfast"
-                        aria-selected="true">
-                        Miền Bắc
-                    </button>
-                    <button class="nav-link lh-menu-buttons" id="nav-Lunch-tab" data-bs-toggle="tab"
-                        data-bs-target="#nav-Lunch" type="button" role="tab" aria-controls="nav-Lunch"
-                        aria-selected="false">
-                        Miền Nam
-                    </button>
-                    <button class="nav-link lh-menu-buttons" id="nav-Dinner-tab" data-bs-toggle="tab"
-                        data-bs-target="#nav-Dinner" type="button" role="tab" aria-controls="nav-Dinner"
-                        aria-selected="false">
-                        Miền Trung
-                    </button>
-                    <button class="nav-link lh-menu-buttons" id="nav-Starters-tab" data-bs-toggle="tab"
-                        data-bs-target="#nav-Starters" type="button" role="tab" aria-controls="nav-Starters"
-                        aria-selected="false">
-                        Món ăn đường phố
-                    </button>
-                    <button class="nav-link lh-menu-buttons" id="nav-Beverages-tab" data-bs-toggle="tab"
-                        data-bs-target="#nav-Beverages" type="button" role="tab" aria-controls="nav-Beverages"
-                        aria-selected="false">
-                        Món chay Việt
-                    </button>
-                    <button class="nav-link lh-menu-buttons" id="nav-seaFood-tab" data-bs-toggle="tab"
-                        data-bs-target="#nav-seaFood" type="button" role="tab" aria-controls="nav-Beverages"
-                        aria-selected="false">
-                        Hải sản Việt Nam
-                    </button>
-                </div>
-            </nav>
-            <div class="tab-content ld-menu-contact border-none" id="nav-tabContent">
-                <div class="tab-pane fade active show" id="nav-Breakfast" role="tabpanel" aria-labelledby="nav-Breakfast-tab">
-                    <!-- mon an mien Bac -->
-                    <div class="row p-0 lh-Breakfast-rs">
-                        <?php foreach (array_slice($monAnMienBac, 0, 6) as $index => $mon): ?>
-                            <div class="col-lg-6" style="padding: 20px 20px;">
-                                <div class="ld-restaurant-menu" data-aos="fade-up" data-aos-duration="<?= 1500 + $index * 200 ?>">
-                                    <div class="ld-restaurant-menu-image">
-                                        <img src="../../assets_admin/img/restaurant/<?= htmlspecialchars($mon['HinhAnh']) ?>" alt="<?= htmlspecialchars($mon['TenMon']) ?>">
-                                    </div>
-                                    <div class="ld-restaurant-menu-contain">
-                                        <h4><?= htmlspecialchars($mon['TenMon']) ?> <span><?= number_format($mon['Gia'], 0, ',', '.') ?>₫</span></h4>
-                                        <p>Hương vị đặc trưng miền Bắc, đậm đà và tinh tế</p>
 
-                                    </div>
+            <!-- Tabs danh mục thực đơn để post thay GET -->
+            <div class="menu-categories d-flex flex-wrap justify-content-center gap-2 mt-4">
+                <?php foreach ($dsThucDon as $td): ?>
+                    <form method="POST" style="display:inline;">
+                        <input type="hidden" name="chon_thuc_don" value="<?= $td['ID_ThucDon'] ?>">
+                        <button type="submit" class="btn btn-outline-danger rounded-pill px-4 py-2 <?= (isset($_SESSION['thuc_don_id']) && $_SESSION['thuc_don_id'] == $td['ID_ThucDon']) ? 'active' : '' ?>">
+                            <?= $td['TenThucDon'] ?>
+                        </button>
+                    </form>
+                <?php endforeach; ?>
+            </div>
+
+            <?php
+            // Xử lý chọn thực đơn POST
+            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['chon_thuc_don'])) {
+                $_SESSION['thuc_don_id'] = $_POST['chon_thuc_don'];
+                header("Location: menu.php");
+                exit;
+            }
+
+            $thucDonID = $_SESSION['thuc_don_id'] ?? null;
+            if ($thucDonID) {
+                $monAnList = $controller->getMonAnByThucDon($thucDonID);
+            }
+            ?>
+
+            <?php if (!empty($monAnList)): ?>
+                <div class="row mt-5">
+                    <?php foreach ($monAnList as $mon): ?>
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <div class="card shadow-sm h-100">
+                                <img src="../../assets_admin/img/restaurant/<?= $mon['HinhAnh'] ?>"
+                                    alt="<?= htmlspecialchars($mon['TenMon']) ?>"
+                                    class="card-img-top" style="height: 220px; object-fit: cover;">
+                                <div class="card-body d-flex flex-column">
+                                    <h5 class="card-title text-center"><?= htmlspecialchars($mon['TenMon']) ?></h5>
+                                    <p class="text-center text-danger fw-bold fs-5">
+                                        <?= number_format($mon['Gia'], 0, ',', '.') ?> VNĐ
+                                    </p>
+                                    <form method="POST" class="d-flex justify-content-between align-items-center gap-2">
+                                        <input type="hidden" name="id" value="<?= $mon['ID_MonAn'] ?>">
+                                        <input type="hidden" name="ten" value="<?= htmlspecialchars($mon['TenMon']) ?>">
+                                        <input type="hidden" name="gia" value="<?= $mon['Gia'] ?>">
+                                        <input type="number" name="soluong" value="1" min="1" class="form-control" style="width: 60px">
+                                        <button type="submit" name="add_to_cart" class="btn btn-success">
+                                            <i class="fa-solid fa-cart-shopping"></i> Thêm vào giỏ hàng
+                                        </button>
+                                    </form>
+                                    <a href="menu-details.php?id=<?= $mon['ID_MonAn'] ?>" class="btn btn-outline-primary btn-sm mt-2">
+                                       Đánh giá <i class="fa-solid fa-star"></i>
+                                    </a>
                                 </div>
                             </div>
-                        <?php endforeach; ?>
-
-                    </div>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
-
-                <!-- mon an mien nam -->
-
-                <div class="tab-pane fade" id="nav-Lunch" role="tabpanel" aria-labelledby="nav-Lunch-tab">
-                    <div class="row p-0 lh-Breakfast-rs">
-                        <?php foreach (array_slice($monAnMienNam, 0, 6) as $index => $mon): ?>
-                            <div class="col-lg-6" style="padding: 20px 20px;">
-                                <div class="ld-restaurant-menu" data-aos="fade-up" data-aos-duration="<?= 1500 + $index * 200 ?>">
-                                    <div class="ld-restaurant-menu-image">
-                                        <img src="../../assets_admin/img/restaurant/<?= htmlspecialchars($mon['HinhAnh']) ?>" alt="<?= htmlspecialchars($mon['TenMon']) ?>">
-                                    </div>
-                                    <div class="ld-restaurant-menu-contain">
-                                        <h4><?= htmlspecialchars($mon['TenMon']) ?> <span><?= number_format($mon['Gia'], 0, ',', '.') ?>₫</span></h4>
-                                        <p>Ngọt ngào, hài hòa – đặc trưng vị miền sông nước</p>
-                                    </div>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
+            <?php else: ?>
+                <div class="text-center mt-5">
+                    <p class="fs-5 text-muted">Vui lòng chọn thực đơn để xem món ăn</p>
                 </div>
-                <!--  món ăn miền trung -->
-                <div class="tab-pane fade" id="nav-Dinner" role="tabpanel" aria-labelledby="nav-Dinner-tab">
-                    <div class="row p-0 lh-Breakfast-rs">
-                        <?php foreach (array_slice($monAnMienTrung, 0, 6) as $index => $mon): ?>
-                            <div class="col-lg-6" style="padding: 20px 20px;">
-                                <div class="ld-restaurant-menu" data-aos="fade-up" data-aos-duration="<?= 1500 + $index * 200 ?>">
-                                    <div class="ld-restaurant-menu-image">
-                                        <img src="../../assets_admin/img/restaurant/<?= htmlspecialchars($mon['HinhAnh']) ?>" alt="<?= htmlspecialchars($mon['TenMon']) ?>">
-                                    </div>
-                                    <div class="ld-restaurant-menu-contain">
-                                        <h4><?= htmlspecialchars($mon['TenMon']) ?> <span><?= number_format($mon['Gia'], 0, ',', '.') ?>₫</span></h4>
-                                        <p>Ngọt ngào, hài hòa – đặc trưng vị miền sông nước</p>
-                                    </div>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
-                <!-- món ăn đường phố-->
-                <div class="tab-pane fade" id="nav-Starters" role="tabpanel" aria-labelledby="nav-Starters-tab">
-                    <div class="row p-0 lh-Breakfast-rs">
-                        <?php foreach (array_slice($monAnDuongPho, 0, 6) as $index => $mon): ?>
-                            <div class="col-lg-6" style="padding: 20px 20px;">
-                                <div class="ld-restaurant-menu" data-aos="fade-up" data-aos-duration="<?= 1500 + $index * 200 ?>">
-                                    <div class="ld-restaurant-menu-image">
-                                        <img src="../../assets_admin/img/restaurant/<?= htmlspecialchars($mon['HinhAnh']) ?>" alt="<?= htmlspecialchars($mon['TenMon']) ?>">
-                                    </div>
-                                    <div class="ld-restaurant-menu-contain">
-                                        <h4><?= htmlspecialchars($mon['TenMon']) ?> <span><?= number_format($mon['Gia'], 0, ',', '.') ?>₫</span></h4>
-                                        <p>Ngọt ngào, hài hòa – đặc trưng vị miền sông nước</p>
-                                    </div>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
-                <!-- món chay Việt -->
-                <div class="tab-pane fade" id="nav-Beverages" role="tabpanel" aria-labelledby="nav-Beverages-tab">
-                    <div class="row p-0 lh-Breakfast-rs">
-                        <?php foreach (array_slice($monAnMonChay, 0, 6) as $index => $mon): ?>
-                            <div class="col-lg-6" style="padding: 20px 20px;">
-                                <div class="ld-restaurant-menu" data-aos="fade-up" data-aos-duration="<?= 1500 + $index * 200 ?>">
-                                    <div class="ld-restaurant-menu-image">
-                                        <img src="../../assets_admin/img/restaurant/<?= htmlspecialchars($mon['HinhAnh']) ?>" alt="<?= htmlspecialchars($mon['TenMon']) ?>">
-                                    </div>
-                                    <div class="ld-restaurant-menu-contain">
-                                        <h4><?= htmlspecialchars($mon['TenMon']) ?> <span><?= number_format($mon['Gia'], 0, ',', '.') ?>₫</span></h4>
-                                        <p>Ngọt ngào, hài hòa – đặc trưng vị miền sông nước</p>
-                                    </div>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
+            <?php endif; ?>
 
-                <!-- món chay Hải Sản -->
-                <div class="tab-pane fade" id="nav-seaFood" role="tabpanel" aria-labelledby="nav-seaFood-tab">
-                    <div class="row p-0 lh-Breakfast-rs">
-                        <?php foreach (array_slice($haiSanVietNam, 0, 6) as $index => $mon): ?>
-                            <div class="col-lg-6" style="padding: 20px 20px;">
-                                <div class="ld-restaurant-menu" data-aos="fade-up" data-aos-duration="<?= 1500 + $index * 200 ?>">
-                                    <div class="ld-restaurant-menu-image">
-                                        <img src="../../assets_admin/img/restaurant/<?= htmlspecialchars($mon['HinhAnh']) ?>" alt="<?= htmlspecialchars($mon['TenMon']) ?>">
-                                    </div>
-                                    <div class="ld-restaurant-menu-contain">
-                                        <h4><?= htmlspecialchars($mon['TenMon']) ?> <span><?= number_format($mon['Gia'], 0, ',', '.') ?>₫</span></h4>
-                                        <p>Ngọt ngào, hài hòa – đặc trưng vị miền sông nước</p>
-                                    </div>
-                                </div>
-                            </div>
-                        <?php endforeach;?>
-                    </div>
-                </div>
-
-            </div>  
-
-
-        </div>
-        </div>
+            <div class="text-center mt-4">
+                <a href="order.php" class="btn btn-primary">
+                    <i class="fas fa-shopping-cart"></i>
+                    Giỏ hàng (<?= count($_SESSION['cart'] ?? []) ?>)
+                </a>
+                <a href="don-hang-cua-toi.php" class="btn btn-outline-secondary ms-2">
+                    <i class="fas fa-receipt"></i> Đơn hàng của tôi
+                </a>
+            </div>
         </div>
     </section>
 
+
     <!-- testimonials -->
-    <section class="section-testimonials bg-gray padding-tb-100">
+    <section class="section-testimonials padding-tb-100">
         <div class="container">
             <div class="row">
+                <div class="lh-testimonials-banner d-none" data-aos="fade-up" data-aos-duration="1500">
+                    <div class="banner">
+                        <h2>What Our Client <span>Says</span></h2>
+                    </div>
+                </div>
                 <div class="col-lg-12" data-aos="fade-up" data-aos-duration="2000">
                     <div class="lh-slider">
                         <div class="lh-slide slide-1">
@@ -328,8 +293,8 @@ $monNuongTruyenThong = $menuCtrl->getMonAnTheoThucDon(9);
                                                             <img src="../../assets_customer/img/businessman/businessman-1.jpg"
                                                                 alt="businessman" class="businessman">
                                                             <div class="lh-testimonials-name-detalis">
-                                                                <h5>Jenifer Brown</h5>
-                                                                <span>Bristol, Uk</span>
+                                                                <h5>Hồng Ánh</h5>
+                                                                <span>QUận 3, TP.HCM</span>
                                                             </div>
                                                         </div>
                                                         <div class="lh-testimonials-side-image">
@@ -338,15 +303,10 @@ $monNuongTruyenThong = $menuCtrl->getMonAnTheoThucDon(9);
                                                         </div>
                                                     </div>
                                                     <p>
-                                                        "This is the dolor sit amet consectetur adipisicing elit. Cumque
-                                                        odit,
-                                                        voluptatum quibusdam fugiat ratione exercitationem, voluptates
-                                                        deserunt
-                                                        atque sint veniam sit ducimus optio! Blanditiis earum nesciunt
-                                                        exercitationem, animi alias ab!"
+                                                        "Lần đầu ăn bún chả Hà Nội đúng vị như ở phố cổ. Không gian ấm cúng, nhân viên dễ thương. Sẽ quay lại"
                                                     </p>
                                                     <div class="lh-testimonials-holiday">
-                                                        <span>"Amenities At Hotel"</span>
+                                                        <span>"Đánh giá của khách hàng"</span>
                                                         <div class="lh-star">
                                                             <i class="ri-star-fill"></i>
                                                             <i class="ri-star-fill"></i>
@@ -454,58 +414,6 @@ $monNuongTruyenThong = $menuCtrl->getMonAnTheoThucDon(9);
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Book-table -->
-    <section class="section-book-table padding-tb-100">
-        <div class="container">
-            <div class="row" data-aos="fade-up" data-aos-duration="2000">
-                <div class="banner">
-                    <h2>Book Your <span>Private Table</span></h2>
-                </div>
-                <div class="col-lg-3 col-md-6 rs-pb-24">
-                    <div class="lh-book-tale-box">
-                        <label>Name*</label>
-                        <input type="text" name="firstname" class="lh-book-form-control">
-                        <i class="ri-user-line"></i>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 rs-pb-24">
-                    <div class="lh-book-tale-box">
-                        <label>Phone No*</label>
-                        <input type="text" name="number" class="lh-book-form-control">
-                        <i class="ri-phone-line"></i>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 rs-pb-24">
-                    <div class="lh-book-tale-box">
-                        <label>No. Of Gust*</label>
-                        <input type="text" name="gust" class="lh-book-form-control">
-                        <i class="ri-user-line"></i>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="lh-book-tale-box">
-                        <label>Date & Time*</label>
-                        <div class="calendar" id="date_1">
-                            <input type="text" class="lh-book-form-control">
-                            <i class="ri-calendar-event-line"></i>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="col-lg-12">
-                    <div class="lh-book-tale-contain">
-                        <h6>No refunds will be given once you booked</h6>
-                    </div>
-                    <div class="lh-book-tale-buttons">
-                        <a class="lh-buttons result-placeholder" href="checkout.html">
-                            Book Table
-                        </a>
                     </div>
                 </div>
             </div>
@@ -702,6 +610,21 @@ $monNuongTruyenThong = $menuCtrl->getMonAnTheoThucDon(9);
     include('./footer-scripts.php');
     ?>
 
+    <script>
+        function toggleMonAn(id) {
+            const el = document.getElementById("monan-" + id);
+            el.style.display = (el.style.display === "block") ? "none" : "block";
+        }
+
+        function toggleDetail(id) {
+            var detail = document.getElementById('detail-' + id);
+            if (detail.style.display === 'none' || detail.style.display === '') {
+                detail.style.display = 'block';
+            } else {
+                detail.style.display = 'none';
+            }
+        }
+    </script>
 
 
 </body>
