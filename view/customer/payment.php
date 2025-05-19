@@ -25,17 +25,17 @@ if (!$donHang || empty($donHang['TongTien'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['thanhToan'])) {
     $phuongThuc = $_POST['phuongthuc'] ?? '';
     $soTien = floatval($donHang['TongTien']);
-    $trangThai = ($phuongThuc === 'QR') ? 'Đã thanh toán' : 'Chờ xử lý';
+    $trangThai = ($phuongThuc === 'VNPAY') ? 'Đã thanh toán' : 'Chờ xử lý';
     $maGiaoDich = null;
 
     // Kiểm tra phương thức hợp lệ
-    if (!in_array($phuongThuc, ['QR', 'Tiền mặt'])) {
+    if (!in_array($phuongThuc, ['QR', 'Tiền mặt', 'VNPAY'])) {
         echo "<script>alert('Phương thức thanh toán không hợp lệ!');</script>";
     } else {
         $cThanhToan = new cThanhToan();
         $cThanhToan->taoThanhToan($idDonHang, $phuongThuc, $soTien, $trangThai, $maGiaoDich);
         // Cập nhật trạng thái đơn hàng theo phương thức thanh toán
-        if ($phuongThuc === 'QR') {
+        if ($phuongThuc === 'VNPAY') {
             $cDonHang->updateTrangThai($idDonHang, 'Đã thanh toán');
         } else {
             $cDonHang->updateTrangThai($idDonHang, 'Chờ xử lý');
@@ -209,11 +209,12 @@ $user = mysqli_fetch_assoc($userResult);
         <div class="info-row"><b>Email:</b> <?= htmlspecialchars($user['Email']) ?></div>
         <div class="info-row"><b>Địa chỉ:</b> <?= htmlspecialchars($user['DiaChi']) ?></div>
         <hr style="margin:18px 0;">
-        <form method="POST" action="">
+        <form method="POST" id="main-payment-form" action="">
             <label><i class="fa-solid fa-credit-card"></i> Chọn phương thức thanh toán:</label><br>
             <select name="phuongthuc" id="phuongthuc" required>
                 <option value="QR" selected>QR Code</option>
                 <option value="Tiền mặt">Tiền mặt</option>
+                <option value="VNPAY">VNPAY</option>
             </select><br><br>
             <div id="qr-section">
                 <?php
@@ -223,15 +224,43 @@ $user = mysqli_fetch_assoc($userResult);
                 <img src="<?php echo $qr_url; ?>" alt="QR code" width="200"><br>
                 <small style="color:#2563eb;"><i class="fa-solid fa-qrcode"></i> Quét mã QR để thanh toán</small>
             </div>
-            <button type="submit" name="thanhToan"><i class="fa-solid fa-circle-check"></i> Xác nhận thanh toán</button>
+            <div id="vnpay-section" style="display: none;">
+                <input type="hidden" name="amount" value="<?php echo $donHang['TongTien']; ?>" />
+                <input type="hidden" name="idDonHang" value="<?php echo $idDonHang; ?>" />
+                <button type="submit" name="redirect" class="btn btn-primary" style="width: 100%; padding: 10px; background: linear-gradient(90deg, #4f8cff 0%, #38b6ff 100%); color: white; border: none; border-radius: 6px; cursor: pointer;">
+                    <i class="fa-solid fa-credit-card"></i> Thanh toán qua VNPAY
+                </button>
+            </div>
+            <button type="submit" name="thanhToan" id="normal-payment-btn"><i class="fa-solid fa-circle-check"></i> Xác nhận thanh toán</button>
         </form>
     </div>
     <script>
     document.getElementById('phuongthuc').addEventListener('change', function() {
-        document.getElementById('qr-section').style.display = (this.value === 'QR') ? 'block' : 'none';
+        const qrSection = document.getElementById('qr-section');
+        const vnpaySection = document.getElementById('vnpay-section');
+        const normalPaymentBtn = document.getElementById('normal-payment-btn');
+        const form = document.getElementById('main-payment-form');
+
+        if (this.value === 'QR') {
+            qrSection.style.display = 'block';
+            vnpaySection.style.display = 'none';
+            normalPaymentBtn.style.display = 'block';
+            form.action = "";
+        } else if (this.value === 'VNPAY') {
+            qrSection.style.display = 'none';
+            vnpaySection.style.display = 'block';
+            normalPaymentBtn.style.display = 'none';
+            form.action = "confirm_vnpay.php";
+        } else {
+            qrSection.style.display = 'none';
+            vnpaySection.style.display = 'none';
+            normalPaymentBtn.style.display = 'block';
+            form.action = "";
+        }
     });
     // Luôn hiển thị QR mặc định khi vào trang
     document.getElementById('qr-section').style.display = 'block';
+    document.getElementById('vnpay-section').style.display = 'none';
     </script>
 </body>
 </html>

@@ -11,7 +11,7 @@ class ketnoi
             echo ' loi ket noi CSDL';
             exit();
         } else {
-            mysqli_select_db($conn, "nhahang1");
+            mysqli_select_db($conn, "NhaHang");
             mysqli_query($conn, "SET NAMES UTF8");
 
             return $conn;
