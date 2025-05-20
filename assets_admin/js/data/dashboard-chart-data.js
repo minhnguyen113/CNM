@@ -1,352 +1,258 @@
-/* ====== Chart ====== */
-
 (function ($) {
     "use strict";
-    function userNumbers() {
-        var options = {
+
+    // 📥 Hàm fetch API chung
+    async function fetchChartData(url) {
+        try {
+            const res = await fetch(url);
+            return await res.json();
+        } catch (err) {
+            console.error("❌ API ERROR:", url, err);
+            return null;
+        }
+    }
+
+    // 📊 Mini Chart (dành cho mảng 12 phần tử theo tháng)
+    async function renderMiniChart(id, url, type = 'line', color = "#485568", unit = '') {
+        const data = await fetchChartData(url);
+        console.log(`📊 Data for ${id}:`, data);
+
+        if (!Array.isArray(data) || data.some(val => typeof val !== 'number')) {
+            console.warn(`⚠️ Không có dữ liệu hợp lệ cho ${id}`);
+            return;
+        }
+        updateMiniCardText(id.replace('#chart-', ''), data, unit);
+        const baseOptions = {
             chart: {
-                type: "bar",
+                type,
                 height: 50,
-                stacked: !0,
-                sparkline: {
-                    enabled: !0
-                },
+                sparkline: { enabled: true },
                 dropShadow: {
-                    enabled: true,
-                    enabledOnSeries: undefined,
-                    top: 5,
-                    left: 5,
-                    blur: 3,
-                    color: '#000',
-                    opacity: 0.1
+                    enabled: true, top: 5, left: 5, blur: 3,
+                    color: '#000', opacity: 0.1
                 }
             },
-            stroke: {
-                width: 0
+            series: [{ data }],
+            colors: [color],
+            stroke: { curve: "smooth", width: 2 },
+            xaxis: {
+                categories: Array.from({ length: 12 }, (_, i) => `T${i + 1}`),
+                labels: { show: false },
+                axisBorder: { show: false },
+                axisTicks: { show: false }
             },
-            dataLabels: {
-                enabled: !1
-            },
-            series: [{
-                name: "Organic",
-                data: [1070, 2250, 1565, 4560, 2850, 5658, 7854, 1565, 4560, 2850, 5658, 7854]
-            }, {
-                name: "Referal",
-                data: [950, 2100, 1265, 4160, 2350, 5258, 7354, 1265, 4160, 2350, 5358, 7554]
-            }],
-            plotOptions: {
+            yaxis: { labels: { show: false } },
+            dataLabels: { enabled: false },
+            tooltip: { enabled: false }
+        };
+
+        // 👉 Nếu là biểu đồ cột thì thêm plotOptions
+        if (type === 'bar') {
+            baseOptions.plotOptions = {
                 bar: {
-                    horizontal: !1,
                     columnWidth: 25,
                     borderRadius: 0
                 }
-            },
-            xaxis: {
-                categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                axisBorder: {
-                    show: !1
-                },
-                axisTicks: {
-                    show: !1
-                },
-                labels: {
-                    show: !1
-                }
-            },
-            yaxis: {
-                labels: {
-                    show: !1
-                }
-            },
-            colors: ["#485568", "#71757b"],
-        };
-        var userNumbers = new ApexCharts(document.querySelector("#userNumbers"), options);
-        userNumbers.render();
-    }
-    function bookingNumbers() {
-        var options = {
-            chart: {
-                type: "line",
-                height: 50,
-                sparkline: {
-                    enabled: !0
-                },
-                dropShadow: {
-                    enabled: true,
-                    enabledOnSeries: undefined,
-                    top: 5,
-                    left: 5,
-                    blur: 3,
-                    color: '#000',
-                    opacity: 0.1
-                }
-            },
-            series: [{
-                data: [1362, 3954, 7152, 4254, 3485, 4956, 3568, 2365, 1050, 1920, 4785, 6856]
-            }],
-            stroke: {
-                curve: "smooth",
-                width: 2
-            },
-            colors: ["#485568"],
-            xaxis: {
-                categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                axisBorder: {
-                    show: !1
-                },
-                axisTicks: {
-                    show: !1
-                }
-            },
-            tooltip: {
-                fixed: {
-                    enabled: !1
-                },
-                y: {
-                    title: {
-                        formatter: function (e) {
-                            return ""
-                        }
-                    }
-                }
-            },
-        };
+            };
+        }
 
-        var bookingNumbers = new ApexCharts(document.querySelector("#bookingNumbers"), options);
-        bookingNumbers.render();
+        const el = document.querySelector(id);
+        if (el) new ApexCharts(el, baseOptions).render();
     }
-    function revenueNumbers() {
-        var options = {
-            series: [{
-                data: [1070, 2250, 1565, 4560, 2850, 5658, 7854, 1565, 4560, 2850, 5658, 7854]
-            }],
+
+    function updateMiniCardText(idPrefix, data, unit = '') {
+        const currentMonth = new Date().getMonth();
+        const current = data[currentMonth] || 0;
+        const prev = data[currentMonth - 1] || 0;
+
+        // ✅ Tính % thay đổi
+        let percent = 0;
+        if (prev === 0) {
+            percent = current === 0 ? 0 : 100;
+        } else {
+            percent = ((current - prev) / Math.abs(prev)) * 100;
+        }
+
+        // ✅ Lấy DOM
+        const totalEl = document.querySelector(`#${idPrefix}-total`);
+        const growthEl = document.querySelector(`#${idPrefix}-growth`);
+        const arrowEl = growthEl?.previousElementSibling;
+
+        // ✅ Format tổng
+        let formattedValue = '';
+        if (unit === 'đ') {
+            formattedValue = current.toLocaleString('vi-VN') + ' đ';
+        } else {
+            formattedValue = unit ? `${current} ${unit}` : current.toString();
+        }
+
+        // ✅ Gán nội dung
+        if (totalEl) totalEl.textContent = formattedValue;
+        if (growthEl) growthEl.textContent = `${percent >= 0 ? '+' : ''}${percent.toFixed(1)}%`;
+
+        // ✅ Đổi icon và màu tăng/giảm
+        if (arrowEl) {
+            arrowEl.className = percent >= 0 ? 'ri-arrow-up-line' : 'ri-arrow-down-line';
+            const parent = growthEl.closest('.text-muted');
+            if (parent) {
+                parent.classList.remove('up', 'down');
+                parent.classList.add(percent >= 0 ? 'up' : 'down');
+            }
+        }
+    }
+
+
+    // 🍢 Mini Chart riêng cho Top Món (mảng object)
+    async function renderTopMonMiniChart() {
+        const data = await fetchChartData('../../api/dashboard-api.php?action=topmon');
+        console.log("🍢 Top món:", data);
+
+        if (!Array.isArray(data)) return;
+
+        // 🌟 Tính tổng số lượt bán và món bán chạy nhất
+        const totalTop = data.reduce((sum, item) => sum + (item.so_luong || 0), 0);
+        const topMon = data[0]?.ten_mon || '...';
+        const topThisMonth = data[0]?.so_luong || 0;
+        const topLastMonth = data[1]?.so_luong || 0;
+        const percent = topLastMonth === 0 ? 0 : ((topThisMonth - topLastMonth) / Math.abs(topLastMonth)) * 100;
+
+        // 📤 Cập nhật giao diện
+        const availableEl = document.querySelector("#rooms-available");
+        const topNameEl = document.querySelector("#rooms-topname");
+        const growthEl = document.querySelector("#rooms-growth");
+        const totalEl = document.querySelector("#rooms-total");
+
+        if (availableEl) availableEl.textContent = totalTop;
+        if (topNameEl) topNameEl.textContent = topMon;
+        if (growthEl) growthEl.textContent = `${percent >= 0 ? '+' : ''}${percent.toFixed(1)}%`;
+        if (totalEl) totalEl.textContent = 'tháng';
+
+        // 📊 Vẽ biểu đồ mini
+        const options = {
             chart: {
-                type: "bar",
+                type: 'bar',
                 height: 50,
-                sparkline: {
-                    enabled: !0
-                },
+                sparkline: { enabled: true },
                 dropShadow: {
-                    enabled: true,
-                    enabledOnSeries: undefined,
-                    top: 5,
-                    left: 5,
-                    blur: 3,
-                    color: '#000',
-                    opacity: 0.1
+                    enabled: true, top: 5, left: 5, blur: 3,
+                    color: '#000', opacity: 0.1
                 }
             },
+            series: [{
+                data: data.map(item => item.so_luong)
+            }],
+            colors: ['#485568'],
+            xaxis: {
+                categories: data.map(item => item.ten_mon),
+                labels: { show: false },
+                axisBorder: { show: false },
+                axisTicks: { show: false }
+            },
+            yaxis: { labels: { show: false } },
+            dataLabels: { enabled: false },
+            tooltip: { enabled: false },
             plotOptions: {
-                bar: {
-                    horizontal: !1,
-                    columnWidth: 25,
-                    borderRadius: 0
-                }
-            },
-
-            xaxis: {
-                categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                axisBorder: {
-                    show: !1
-                },
-                axisTicks: {
-                    show: !1
-                }
-            },
-            tooltip: {
-                fixed: {
-                    enabled: !1
-                },
-                y: {
-                    title: {
-                        formatter: function (e) {
-                            return ""
-                        }
-                    }
-                }
-            },
-            colors: ["#485568"]
-        };
-        var revenueNumbers = new ApexCharts(document.querySelector("#revenueNumbers"), options);
-        revenueNumbers.render();
-    }
-    function expensesNumbers() {
-        var options = {
-            chart: {
-                type: "line",
-                height: 50,
-                sparkline: {
-                    enabled: !0
-                },
-                dropShadow: {
-                    enabled: true,
-                    enabledOnSeries: undefined,
-                    top: 5,
-                    left: 5,
-                    blur: 3,
-                    color: '#000',
-                    opacity: 0.1
-                }
-            },
-            series: [{
-                data: [850, 1920, 1362, 3954, 2485, 4956, 7152, 1254, 3568, 2365, 4785, 6856]
-            }],
-            stroke: {
-                curve: "smooth",
-                width: 2
-            },
-            colors: ["#485568"],
-            xaxis: {
-                categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                axisBorder: {
-                    show: !1
-                },
-                axisTicks: {
-                    show: !1
-                }
-            },
-            tooltip: {
-                fixed: {
-                    enabled: !1
-                },
-                y: {
-                    title: {
-                        formatter: function (e) {
-                            return ""
-                        }
-                    }
-                }
-            },
+                bar: { columnWidth: 25, borderRadius: 2 }
+            }
         };
 
-        var expensesNumbers = new ApexCharts(document.querySelector("#expensesNumbers"), options);
-        expensesNumbers.render();
+        const el = document.querySelector("#chart-rooms");
+        if (el) new ApexCharts(el, options).render();
     }
-    function overviewChart() {
-        var options = {
-            series: [{
-                name: 'Bookings',
-                type: 'area',
-                data: [23, 12, 23, 22, 15, 42, 31, 27, 45, 28, 37]
-            }, {
-                name: 'Revenue',
-                type: 'line',
-                data: [44.64, 55.48, 20.15, 30.62, 12.57, 30.38, 41.85, 41.44, 40.56, 25.84, 43.78]
-            }, {
-                name: 'Expence',
-                type: 'line',
-                data: [30.55, 24.67, 36.85, 37.08, 42.85, 38.85, 46.64, 45.42, 49.89, 36.56, 38.49]
-            }],
+
+
+    // 📈 Biểu đồ tổng quan (Đặt bàn - Doanh thu - Món ăn)
+    async function renderOverviewChart() {
+        const data = await fetchChartData('../../api/dashboard-api.php?action=tongquan');
+        console.log("📈 Overview:", data);
+
+        if (!data || !data.dat_ban || !data.doanh_thu || !data.so_mon) return;
+
+        const options = {
+            series: [
+                { name: 'Đặt bàn', type: 'area', data: data.dat_ban },
+                { name: 'Doanh thu', type: 'line', data: data.doanh_thu },
+                { name: 'Món ăn', type: 'line', data: data.so_mon }
+            ],
             chart: {
-                height: 365,
                 type: 'line',
+                height: 350,
                 stacked: false,
-                foreColor: '#373d3f',
-                sparkline: {
-                    enabled: !1
-                },
+                toolbar: { show: false },
                 dropShadow: {
-                    enabled: true,
-                    enabledOnSeries: undefined,
-                    top: 5,
-                    left: 5,
-                    blur: 3,
-                    color: '#000',
-                    opacity: 0.1
-                },
-                toolbar: {
-                    show: !1
+                    enabled: true, top: 5, left: 5, blur: 3,
+                    color: '#000', opacity: 0.1
                 }
             },
-            stroke: {
-                width: [2, 2, 2],
-                curve: 'smooth'
-            },
-            fill: {
-                opacity: [.5, 1, 1],
-            },
+            stroke: { width: [2, 2, 2], curve: 'smooth' },
+            fill: { opacity: [.5, 1, 1] },
             colors: ['#485568', '#87909e', '#7ea0fb'],
             xaxis: {
-                categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                axisTicks: {
-                    show: !1
-                },
-                axisBorder: {
-                    show: !1
-                }
+                categories: Array.from({ length: 12 }, (_, i) => `T${i + 1}`),
+                axisTicks: { show: false },
+                axisBorder: { show: false }
             },
             legend: {
-                show: !0,
+                show: true,
                 horizontalAlign: "center",
-                offsetX: 0,
-                offsetY: -5,
-                markers: {
-                    width: 15,
-                    height: 10,
-                    radius: 6
-                },
-                itemMargin: {
-                    horizontal: 10,
-                    vertical: 0
-                }
+                offsetY: -5
             },
-            grid: {
-                show: !1,
-                xaxis: {
-                    lines: {
-                        show: !1
-                    }
-                },
-                yaxis: {
-                    lines: {
-                        show: !1
-                    }
-                },
-                padding: {
-                    top: 0,
-                    right: -2,
-                    bottom: 15,
-                    left: 0
-                },
-            },
-            tooltip: {
-                shared: !0,
-                y: [{
-                    formatter: function (e) {
-                        return void 0 !== e ? e.toFixed(0) : e
-                    }
-                }, {
-                    formatter: function (e) {
-                        return void 0 !== e ? "$" + e.toFixed(2) + "k" : e
-                    }
-                }, {
-                    formatter: function (e) {
-                        return void 0 !== e ? "$" + e.toFixed(2) + "k" : e
-                    }
-                }]
-            },
-            responsive: [{
-                breakpoint: 480,
-                options: {
-                    chart: {
-                        height: '300px',
-                    },
-                    yaxis: {
-                        show: false,
-                    },
-                }
-            }]
+            tooltip: { shared: true }
         };
-        var overviewChart = new ApexCharts(document.querySelector("#overviewChart"), options);
-        overviewChart.render();
+
+        const el = document.querySelector("#chart-overview");
+        if (el) new ApexCharts(el, options).render();
     }
 
+    // 📊 Top 5 thực đơn bán chạy nhất
+    async function renderTopMenuChart() {
+        const data = await fetchChartData('../../api/dashboard-api.php?action=topthucdon');
+        console.log("🍽️ Top thực đơn:", data);
+
+        if (!Array.isArray(data)) return;
+
+        const options = {
+            series: [{
+                name: 'Số lượng',
+                data: data.map(item => item.so_luong)
+            }],
+            chart: {
+                type: 'bar',
+                height: 350
+            },
+            plotOptions: {
+                bar: {
+                    borderRadius: 4,
+                    columnWidth: '45%',
+                    distributed: true
+                }
+            },
+            xaxis: {
+                categories: data.map(item => item.ten_thuc_don),
+                labels: {
+                    style: { fontSize: '12px' }
+                }
+            },
+            tooltip: {
+                y: {
+                    formatter: val => `${val} món`
+                }
+            }
+        };
+
+        const el = document.querySelector("#chart-top-menus");
+        if (el) new ApexCharts(el, options).render();
+    }
+
+    // 🚀 Load all on page ready
     jQuery(window).on('load', function () {
-        bookingNumbers();
-        userNumbers();
-        revenueNumbers();
-        expensesNumbers();
-        overviewChart();
+        renderMiniChart("#chart-visitor", '../../api/dashboard-api.php?action=monan', 'bar', '#485568', 'món');
+        renderMiniChart("#chart-bookings", '../../api/dashboard-api.php?action=datban', 'line', '#71757b', 'lượt');
+        renderMiniChart("#chart-revenue", '../../api/dashboard-api.php?action=doanhthu', 'bar', '#DC2626', 'đ');
+        renderTopMonMiniChart(); // đặc biệt
+
+        renderOverviewChart();    // biểu đồ tổng hợp
+        renderTopMenuChart();     // top 5 thực đơn
     });
 
 })(jQuery);

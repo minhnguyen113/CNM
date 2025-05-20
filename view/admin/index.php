@@ -40,7 +40,7 @@ if (isset($_SESSION['success'])) {
 
 	<!-- App favicon -->
 	<?php
-		include('./head-resource-ad.php');
+	include('./head-resource-ad.php');
 	?>
 </head>
 
@@ -94,20 +94,23 @@ if (isset($_SESSION['success'])) {
 						<div class="lh-right-tool lh-user-drop">
 							<div class="lh-hover-drop">
 								<div class="lh-hover-tool">
-								<img class="user" id="user-img" src="<?php echo !empty($data['HinhAnh']) ? '../../assets_admin/img/user/' . htmlspecialchars($data['HinhAnh']) : '../../assets_admin/img/user/minh.jpg'; ?>" alt="user">
+									<img class="user" id="user-img"
+										src="<?php echo !empty($data['HinhAnh']) ? '../../assets_admin/img/user/' . htmlspecialchars($data['HinhAnh']) : '../../assets_admin/img/user/minh.jpg'; ?>"
+										alt="user">
 								</div>
 								<div class="lh-hover-drop-panel right">
 									<div class="details">
-									<ul class="border-top" style="margin-top:-20px;">
-										<li><a href="./team-profile.php">Thông tin</a></li>
+										<ul class="border-top" style="margin-top:-20px;">
+											<li><a href="./team-profile.php">Thông tin</a></li>
 
-									</ul>
-									<ul class="border-top">
-										<li><a href="../customer/login.php"><i class="ri-logout-circle-r-line"></i>Đăng xuất</a></li>
-									</ul>
+										</ul>
+										<ul class="border-top">
+											<li><a href="../customer/login.php"><i
+														class="ri-logout-circle-r-line"></i>Đăng xuất</a></li>
+										</ul>
+									</div>
 								</div>
 							</div>
-						</div>
 						</div>
 					</div>
 				</div>
@@ -118,8 +121,10 @@ if (isset($_SESSION['success'])) {
 		<div class="lh-sidebar-overlay"></div>
 		<div class="lh-sidebar" data-mode="light">
 			<div class="lh-sb-logo">
-				<a href="./index.php" class="sb-full"><img src="../../assets_admin/img/logo/logo2.png" alt="logo" style="width:326px;text-align:center;margin-left:-60px"></a>
-				<a href="./index.php" class="sb-collapse"><img src="../../assets_admin/img/logo/collapse-logo.png" alt="logo"></a>
+				<a href="./index.php" class="sb-full"><img src="../../assets_admin/img/logo/logo2.png" alt="logo"
+						style="width:326px;text-align:center;margin-left:-60px"></a>
+				<a href="./index.php" class="sb-collapse"><img src="../../assets_admin/img/logo/collapse-logo.png"
+						alt="logo"></a>
 			</div>
 			<div class="lh-sb-wrapper">
 				<div class="lh-sb-content">
@@ -127,7 +132,8 @@ if (isset($_SESSION['success'])) {
 						<li class="lh-sb-item sb-drop-item">
 							<a href="javascript:void(0)" class="lh-drop-toggle">
 								<i class="fa-regular fa-clock"></i>
-								<span class="condense">Bảng Điều Khiển<i class="drop-arrow fa-regular fa-circle-left"></i></span>
+								<span class="condense">Bảng Điều Khiển<i
+										class="drop-arrow fa-regular fa-circle-left"></i></span>
 							</a>
 							<ul class="lh-sb-drop condense">
 								<li class="list"><a href="./index.php" class="lh-page-link drop">
@@ -136,11 +142,11 @@ if (isset($_SESSION['success'])) {
 						</li>
 						<li class="lh-sb-item-separator">
 							<?php
-								include('./setRole.php');
+							include('./setRole.php');
 							?>
 
 						</li>
-						
+
 
 					</ul>
 				</div>
@@ -150,7 +156,8 @@ if (isset($_SESSION['success'])) {
 					<li class="lh-sb-item sb-drop-item">
 						<a href="javascript:void(0)" class="lh-drop-toggle">
 							<i class="fa-regular fa-clock"></i>
-							<span class="condense">Bảng Điều Khiển<i class="drop-arrow fa-regular fa-circle-left"></i></span>
+							<span class="condense">Bảng Điều Khiển<i
+									class="drop-arrow fa-regular fa-circle-left"></i></span>
 						</a>
 						<ul class="lh-sb-drop condense">
 							<li class="list"><a href="./index.php" class="lh-page-link drop">
@@ -382,209 +389,131 @@ if (isset($_SESSION['success'])) {
 						</div>
 					</div>
 				</div>
+				<!-- ROW 1: 4 BIỂU ĐỒ MINI -->
 				<div class="row">
+					<!-- Món ăn -->
 					<div class="col-xl-3 col-md-6">
 						<div class="lh-card lh-card-1">
 							<div class="lh-card-content label-card">
 								<div class="title">
 									<div class="growth-numbers">
-										<h4>Visitor</h4>
-										<h5>698k</h5>
+										<h4>Tổng số món ăn</h4>
+										<h5 id="visitor-total">0</h5>
+										<p class="text-muted" style="font-size: 13px;">
+											<i class="ri-arrow-up-line"></i>
+											<span id="visitor-growth">+0%</span> so với tháng trước
+										</p>
 									</div>
-									<span class="icon"><i class="ri-shield-user-line"></i></span>
+									<span class="icon"><i class="ri-restaurant-line"></i></span>
 								</div>
-								<p class="card-groth up">
-									<i class="ri-arrow-up-line"></i>
-									25%
-									<span>Last Month</span>
-								</p>
 								<div class="mini-chart">
-									<div id="userNumbers"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-3 col-md-6">
-						<div class="lh-card lh-card-2">
-							<div class="lh-card-content label-card">
-								<div class="title">
-									<div class="growth-numbers">
-										<h4>Bookings</h4>
-										<h5>10.63k</h5>
-									</div>
-									<span class="icon"><i class="ri-shopping-bag-3-line"></i>
-									</span>
-								</div>
-								<p class="card-groth down">
-									<i class="ri-arrow-down-line"></i>
-									.5%
-									<span>Last Month</span>
-								</p>
-								<div class="mini-chart">
-									<div id="bookingNumbers"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-3 col-md-6">
-						<div class="lh-card lh-card-3">
-							<div class="lh-card-content label-card">
-								<div class="title">
-									<div class="growth-numbers">
-										<h4>Revenue</h4>
-										<h5>$85420</h5>
-									</div>
-									<span class="icon"><i class="ri-money-dollar-circle-line"></i></span>
-								</div>
-								<p class="card-groth down">
-									<i class="ri-arrow-down-line"></i>
-									2.1%
-									<span>Last Month</span>
-								</p>
-								<div class="mini-chart">
-									<div id="revenueNumbers"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-3 col-md-6">
-						<div class="lh-card lh-card-4">
-							<div class="lh-card-content label-card">
-								<div class="title">
-									<div class="growth-numbers">
-										<h4>Rooms</h4>
-										<h5><span data-bs-toggle="tooltip" aria-label="Available" data-bs-original-title="Available">45</span>/365</h5>
-									</div>
-									<span class="icon"><i class="ri-exchange-dollar-line"></i></span>
-								</div>
-								<p class="card-groth up">
-									<i class="ri-arrow-up-line"></i>
-									9%
-									<span>Last Month</span>
-								</p>
-								<div class="mini-chart">
-									<div id="expensesNumbers"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-xl-8 col-md-12">
-						<div class="lh-card revenue-overview">
-							<div class="lh-card-header header-575">
-								<h4 class="lh-card-title">Revenue Overview</h4>
-								<div class="header-tools">
-									<a href="javascript:void(0)" class="m-r-10 lh-full-card">
-										<i class="ri-fullscreen-line" title="Full Screen"></i></a>
-									<div class="lh-date-range date" title="Date">
-										<span></span>
-									</div>
-								</div>
-							</div>
-							<div class="lh-card-content">
-								<div class="lh-chart-header">
-									<div class="block">
-										<h6>Bookings</h6>
-										<h5>825
-											<span class="up"><i class="ri-arrow-up-line"></i>24%</span>
-										</h5>
-									</div>
-									<div class="block">
-										<h6>Revenue</h6>
-										<h5>$89k
-											<span class="up"><i class="ri-arrow-up-line"></i>24%</span>
-										</h5>
-									</div>
-									<div class="block">
-										<h6>Expence</h6>
-										<h5>$68k
-											<span class="down"><i class="ri-arrow-down-line"></i>24%</span>
-										</h5>
-									</div>
-									<div class="block">
-										<h6>Profit</h6>
-										<h5>$21k
-											<span class="up"><i class="ri-arrow-up-line"></i>24%</span>
-										</h5>
-									</div>
-								</div>
-								<div class="lh-chart-content">
-									<div id="overviewChart"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-4 col-md-12">
-						<div class="lh-card" id="lhmap">
-							<div class="lh-card-header">
-								<h4 class="lh-card-title">Top Country</h4>
-								<div class="header-tools">
-									<div class="lh-date-range dots">
-										<span></span>
-									</div>
-								</div>
-							</div>
-							<div class="lh-card-content">
-								<div class="lh-map-view">
-									<div id="world-map"></div>
-								</div>
-								<div class="lh-map-detail">
-									<div class="lh-map-detail">
-										<div class="title">
-											<h5>Revenue</h5>
-											<a href="#" class="visit" title="View all data">view <i
-													class="ri-arrow-right-line"></i></a>
-										</div>
-										<div class="lh-detail-list">
-											<div class="lh-label">
-												<div>
-													<label>India</label>
-													<span class="down"><i class="ri-arrow-down-line"></i>2.6%</span>
-												</div>
-												<p>$958.5k</p>
-											</div>
-											<div class="progress">
-												<div class="progress-bar bg-primary" role="progressbar"
-													style="width: 95%" aria-valuenow="95" aria-valuemin="0"
-													aria-valuemax="100"></div>
-											</div>
-										</div>
-										<div class="lh-detail-list">
-											<div class="lh-label">
-												<div>
-													<label>Morocco</label>
-													<span class="up"><i class="ri-arrow-up-line"></i>5.6%</span>
-												</div>
-												<p>$788.7k</p>
-											</div>
-											<div class="progress">
-												<div class="progress-bar bg-secondary" role="progressbar"
-													style="width: 84%" aria-valuenow="84" aria-valuemin="0"
-													aria-valuemax="100"></div>
-											</div>
-										</div>
-										<div class="lh-detail-list">
-											<div class="lh-label">
-												<div>
-													<label>Brazil</label>
-													<span class="up"><i class="ri-arrow-up-line"></i>3.7%</span>
-												</div>
-												<p>$592.2k</p>
-											</div>
-											<div class="progress">
-												<div class="progress-bar bg-secondary" role="progressbar"
-													style="width: 76%" aria-valuenow="76" aria-valuemin="0"
-													aria-valuemax="100"></div>
-											</div>
-										</div>
-									</div>
+									<div id="chart-visitor"></div>
 								</div>
 							</div>
 						</div>
 					</div>
 
+					<!-- Đặt bàn -->
+					<div class="col-xl-3 col-md-6">
+						<div class="lh-card lh-card-2">
+							<div class="lh-card-content label-card">
+								<div class="title">
+									<div class="growth-numbers">
+										<h4>Lượt đặt bàn</h4>
+										<h5 id="bookings-total">0</h5>
+										<p class="text-muted" style="font-size: 13px;">
+											<i class="ri-arrow-down-line"></i>
+											<span id="bookings-growth">-0%</span> so với tháng trước
+										</p>
+									</div>
+									<span class="icon"><i class="ri-calendar-check-line"></i></span>
+								</div>
+								<div class="mini-chart">
+									<div id="chart-bookings"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Doanh thu -->
+					<div class="col-xl-3 col-md-6">
+						<div class="lh-card lh-card-3">
+							<div class="lh-card-content label-card">
+								<div class="title">
+									<div class="growth-numbers">
+										<h4>Doanh thu</h4>
+										<h5 id="revenue-total">0 đ</h5>
+										<p class="text-muted" style="font-size: 13px;">
+											<i class="ri-arrow-up-line"></i>
+											<span id="revenue-growth">+0%</span> so với tháng trước
+										</p>
+									</div>
+									<span class="icon"><i class="ri-money-dollar-circle-line"></i></span>
+								</div>
+								<div class="mini-chart">
+									<div id="chart-revenue"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Top món -->
+					<div class="col-xl-3 col-md-6">
+						<div class="lh-card lh-card-4">
+							<div class="lh-card-content label-card">
+								<div class="title">
+									<div class="growth-numbers">
+										<h4>Top món được chọn</h4>
+										<h5>
+											<span id="rooms-available">0</span> món / <span
+												id="rooms-total">tháng</span>
+										</h5>
+										<p class="text-muted" style="font-size: 13px;">
+											Món bán chạy nhất: <strong><span id="rooms-topname">---</span></strong>
+										</p>
+										<p class="text-muted" style="font-size: 13px;">
+											<i class="ri-arrow-up-line"></i>
+											<span id="rooms-growth">+0%</span> so với tháng trước
+										</p>
+									</div>
+									<span class="icon"><i class="ri-star-line"></i></span>
+								</div>
+								<div class="mini-chart">
+									<div id="chart-rooms"></div>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
+
+				<!-- ROW 2: 2 BIỂU ĐỒ CHÍNH -->
+				<div class="row">
+					<!-- Biểu đồ Tổng quan -->
+					<div class="col-xl-8 col-md-12">
+						<div class="lh-card">
+							<div class="lh-card-header">
+								<h4 class="lh-card-title">Biểu đồ tổng quan theo tháng</h4>
+							</div>
+							<div class="lh-card-content">
+								<div id="chart-overview" style="height: 350px;"></div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Top 5 thực đơn bán chạy -->
+					<div class="col-xl-4 col-md-12">
+						<div class="lh-card">
+							<div class="lh-card-header">
+								<h4 class="lh-card-title">Top 5 thực đơn bán chạy nhất</h4>
+							</div>
+							<div class="lh-card-content">
+								<div id="chart-top-menus" style="height: 350px;"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
 				<div class="row">
 					<div class="col-xl-12 col-md-12">
 						<div class="lh-card" id="bookingtbl">
@@ -720,13 +649,15 @@ if (isset($_SESSION['success'])) {
 												<tr>
 													<td class="token">2205</td>
 													<td><img class="cat-thumb" src="../../assets_admin/img/user/4.jpg"
-															alt="clients Image"><span class="name">Allie Grater</span></td>
+															alt="clients Image"><span class="name">Allie Grater</span>
+													</td>
 													<td>01/07/2024</td>
 													<td>02/07/2024</td>
 													<td>Adhar Card</td>
 													<td class="success">Gpay</td>
 													<td>$1200</td>
-													<td class="type"><span>Premium :</span> 103, 104, <span>Delux : </span>106</td>
+													<td class="type"><span>Premium :</span> 103, 104, <span>Delux :
+														</span>106</td>
 													<td class="rooms">
 														<span class="mem">12 Member</span> /
 														<span class="room">3 Room</span>
@@ -825,7 +756,8 @@ if (isset($_SESSION['success'])) {
 													<td>Pan Card</td>
 													<td class="success">Gpay</td>
 													<td>$1560</td>
-													<td class="type"><span>VIP : </span>204, <span>Junior : </span>401, 402</td>
+													<td class="type"><span>VIP : </span>204, <span>Junior : </span>401,
+														402</td>
 													<td class="rooms">
 														<span class="mem">6 Member</span> /
 														<span class="room">3 Room</span>
@@ -858,7 +790,8 @@ if (isset($_SESSION['success'])) {
 													<td>Pan Card</td>
 													<td class="success">Gpay</td>
 													<td>$1560</td>
-													<td class="type"><span>Deluxe : </span>104, <span>Junior : </span>401, 402</td>
+													<td class="type"><span>Deluxe : </span>104, <span>Junior :
+														</span>401, 402</td>
 													<td class="rooms">
 														<span class="mem">10 Member</span> /
 														<span class="room">4 Room</span>
@@ -1095,18 +1028,19 @@ if (isset($_SESSION['success'])) {
 	?>
 
 	<!-- Vendor Custom -->
-	
+
 </body>
 <style>
-	#user-img{
-  width: 40px;           /* Kích thước nhỏ lại */
-  height: 40px;
-  border-radius: 50%;    /* Bo tròn thành hình tròn */
-  object-fit: cover;     /* Cắt ảnh để vừa khung */
-  border: 2px solid #fff;
-}
-
-
+	#user-img {
+		width: 40px;
+		/* Kích thước nhỏ lại */
+		height: 40px;
+		border-radius: 50%;
+		/* Bo tròn thành hình tròn */
+		object-fit: cover;
+		/* Cắt ảnh để vừa khung */
+		border: 2px solid #fff;
+	}
 </style>
 
 <!-- Mirrored from maraviyainfotech.com/projects/luxurious-html-v22/admin/./index.php by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 21 Jan 2025 15:13:42 GMT -->

@@ -18,6 +18,7 @@ if ($role_id == 1) {
                 <li><a href="./team-list.php" class="lh-page-link drop"><i class="fa-solid fa-code-commit"></i>Danh sách nhân viên</a></li>
             </ul>
         </li>
+        
         <li class="lh-sb-item-separator"></li>';
 }
 
@@ -58,6 +59,9 @@ if ($role_id == 1 || $role_id == 2) {
         <li class="lh-sb-item">
              <a href="./Comment.php" class="lh-page-link drop"><i class="fa-solid fa-code-commit"></i>Đánh giá</a>
         </li>
-        
+        <li class="lh-sb-item-separator"></li>  
+        <li class="lh-sb-item">
+             <a href="./chat.php" class="lh-page-link drop"><i class="fa-solid fa-code-commit"></i>Nhắn tin</a>
+        </li>
         ';
 }

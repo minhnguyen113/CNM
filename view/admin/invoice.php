@@ -551,7 +551,7 @@ if ($donHangDetail && !empty($donHangDetail['ID_DonHang'])) {
 
 				<div class="row">
 					<div class="col-md-12">
-						<table border="1" style="width:100%; text-align:center;">
+						<table class="invoice-table">
 							<tr>
 								<th>ID</th>
 								<th>Tổng tiền</th>
@@ -570,34 +570,34 @@ if ($donHangDetail && !empty($donHangDetail['ID_DonHang'])) {
 										$color = 'gray';
 										switch ($row['TrangThai']) {
 											case 'Chờ xử lý':
-												$color = 'orange';
+												$color = '#ffa500';
 												break;
 											case 'Đã xác nhận':
-												$color = 'dodgerblue';
+												$color = '#1e90ff';
 												break;
 											case 'Đang chế biến':
-												$color = 'purple';
+												$color = '#9370db';
 												break;
 											case 'Đang giao hàng':
-												$color = 'yellow';
+												$color = '#ffd700';
 												break;
 											case 'Đã thanh toán':
-												$color = 'green';
+												$color = '#16a34a';
 												break;
 											case 'Đã hoàn thành':
-												$color = 'gray';
+												$color = '#6b7280';
 												break;
 											case 'Đã hủy':
-												$color = 'red';
+												$color = '#dc2626';
 												break;
 										}
 										?>
-										<span style="color: white; background: <?= $color ?>; padding: 3px 10px; border-radius: 8px;">
+										<span class="status-badge" style="background: <?= $color ?>">
 											<?= $row['TrangThai'] ?>
 										</span>
 									</td>
 									<td><?= $row['ThoiGianDat'] ?></td>
-									<td>
+									<td class="action-links">
 										<a href="?id=<?= $row['ID_DonHang'] ?>">Xem</a>
 										<?php if ($row['TrangThai'] == 'Chờ xử lý'): ?>
 											| <a href="?xacnhan=<?= $row['ID_DonHang'] ?>">Xác nhận</a>
@@ -849,188 +849,190 @@ if ($donHangDetail && !empty($donHangDetail['ID_DonHang'])) {
 	?>
 </body>
 <style>
+    .lh-main-content {
+        padding: 20px;
+        background: #f8f9fa;
+    }
 
-#user-img {
-			width: 40px;
-			/* Kích thước nhỏ lại */
-			height: 40px;
-			border-radius: 50%;
-			/* Bo tròn thành hình tròn */
-			object-fit: cover;
-			/* Cắt ảnh để vừa khung */
-			border: 2px solid #fff;
-		}
-	.table-invoice {
-		width: 100%;
-		border-collapse: collapse;
-		margin: 18px 0 30px 0;
-		background: #fff;
-		border-radius: 12px;
-		overflow: hidden;
-		box-shadow: 0 2px 12px #b6d0ff33;
-	}
+    .lh-page-title {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
-	.table-invoice th,
-	.table-invoice td {
-		text-align: center;
-		border: 1px solid #e2e8f0;
-		padding: 10px 6px;
-		font-size: 1rem;
-	}
+    .lh-breadcrumb h5 {
+        margin: 0;
+        color: #2c3e50;
+        font-size: 1.5rem;
+    }
 
-	.table-invoice th {
-		background: #f1f5f9;
-		color: #2563eb;
-		font-weight: 600;
-	}
+    .lh-breadcrumb ul {
+        list-style: none;
+        padding: 0;
+        margin: 5px 0 0 0;
+        display: flex;
+        gap: 10px;
+    }
 
-	.table-invoice tr:last-child td {
-		border-bottom: none;
-	}
+    .lh-breadcrumb a {
+        color: #6c757d;
+        text-decoration: none;
+    }
 
-	.tr-highlight {
-		background: #e0f7fa;
-		font-weight: bold;
-		color: #e11d48;
-		font-size: 1.1em;
-	}
+    .lh-tools {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+    }
 
-	.tr-discount {
-		background: #fef9c3;
-		color: #b45309;
-	}
+    .lh-tools a, .lh-tools button {
+        background: #f8f9fa;
+        border: none;
+        padding: 8px;
+        border-radius: 5px;
+        color: #6c757d;
+        transition: all 0.3s;
+    }
 
-	.tr-promo {
-		background: #f0f9ff;
-		color: #2563eb;
-	}
+    .lh-tools a:hover, .lh-tools button:hover {
+        background: #e9ecef;
+        color: #2c3e50;
+    }
 
-	.invoice-center {
-		display: flex;
-		justify-content: center;
-		align-items: flex-start;
-		min-height: 100vh;
-		background: #f8fafc;
-	}
+    .invoice-table {
+        width: 100%;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
 
-	.detail-box {
-		background: #fff;
-		border-radius: 16px;
-		box-shadow: 0 4px 24px #b6d0ff33;
-		max-width: 650px;
-		margin: 40px auto;
-		padding: 32px 36px 24px 36px;
-		position: relative;
-		font-family: 'Segoe UI', Arial, sans-serif;
-		width: 100%;
-	}
+    .invoice-table th {
+        background: #f8f9fa;
+        padding: 15px;
+        text-align: left;
+        font-weight: 600;
+        color: #2c3e50;
+        border-bottom: 2px solid #dee2e6;
+    }
 
-	.detail-title {
-		color: #e11d48;
-		text-align: center;
-		font-size: 1.5em;
-		font-weight: bold;
-		margin-bottom: 20px;
-	}
+    .invoice-table td {
+        padding: 12px 15px;
+        border-bottom: 1px solid #dee2e6;
+        color: #495057;
+    }
 
-	.detail-close {
-		position: absolute;
-		top: 22px;
-		right: 36px;
-		color: #e11d48;
-		font-weight: bold;
-		cursor: pointer;
-		font-size: 1.1em;
-		text-decoration: underline;
-	}
+    .invoice-table tr:hover {
+        background: #f8f9fa;
+    }
 
-	.detail-label {
-		font-weight: bold;
-		color: #222;
-	}
+    .status-badge {
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: white;
+    }
 
-	.detail-value {
-		color: #222;
-	}
+    .action-links a {
+        color: #0d6efd;
+        text-decoration: none;
+        margin: 0 5px;
+        font-size: 0.9rem;
+    }
 
-	.detail-status {
-		display: inline-block;
-		padding: 4px 16px;
-		border-radius: 8px;
-		color: #fff;
-		font-weight: bold;
-		background: #16a34a;
-		margin-left: 8px;
-		font-size: 1em;
-		box-shadow: 0 1px 4px #b6d0ff33;
-	}
+    .action-links a:hover {
+        text-decoration: underline;
+    }
 
-	.detail-table {
-		width: 100%;
-		border-collapse: collapse;
-		margin-top: 22px;
-		background: #f8fafc;
-		border-radius: 12px;
-		overflow: hidden;
-		box-shadow: 0 2px 8px #b6d0ff22;
-	}
+    .invoice-center {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        padding: 25px;
+        margin-top: 20px;
+    }
 
-	.detail-table th,
-	.detail-table td {
-		text-align: center;
-		border: 1px solid #e2e8f0;
-		padding: 12px 8px;
-		font-size: 1rem;
-	}
+    .detail-box {
+        position: relative;
+    }
 
-	.detail-table th {
-		background: #f1f5f9;
-		color: #2563eb;
-		font-weight: 700;
-		font-size: 1.05em;
-	}
+    .detail-title {
+        font-size: 1.5rem;
+        color: #2c3e50;
+        font-weight: 600;
+        margin-bottom: 20px;
+        display: block;
+    }
 
-	.detail-table tr:last-child td {
-		border-bottom: none;
-	}
+    .detail-close {
+        position: absolute;
+        top: 0;
+        right: 0;
+        color: #6c757d;
+        cursor: pointer;
+        font-size: 0.9rem;
+    }
 
-	.tr-promo {
-		background: #f0f9ff;
-		color: #2563eb;
-		font-weight: 600;
-	}
+    .detail-label {
+        color: #6c757d;
+        font-weight: 500;
+        min-width: 150px;
+        display: inline-block;
+    }
 
-	.tr-highlight {
-		background: #e0f7fa;
-		font-weight: bold;
-		color: #e11d48;
-		font-size: 1.1em;
-	}
+    .detail-value {
+        color: #2c3e50;
+    }
 
-	.tr-total {
-		background: #f1f5f9;
-		color: #2563eb;
-		font-weight: bold;
-	}
+    .detail-status {
+        display: inline-block;
+        padding: 5px 12px;
+        border-radius: 20px;
+        color: white;
+        font-size: 0.85rem;
+        font-weight: 500;
+    }
 
-	@media (max-width: 800px) {
-		.detail-box {
-			max-width: 99vw;
-			padding: 10px;
-		}
+    .detail-table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+    }
 
-		.detail-table th,
-		.detail-table td {
-			font-size: 0.97rem;
-			padding: 7px 2px;
-		}
+    .detail-table th {
+        background: #f8f9fa;
+        padding: 12px;
+        text-align: left;
+        font-weight: 600;
+        color: #2c3e50;
+        border-bottom: 2px solid #dee2e6;
+    }
 
-		.detail-title {
-			font-size: 1.1em;
-		}
+    .detail-table td {
+        padding: 12px;
+        border-bottom: 1px solid #dee2e6;
+        color: #495057;
+    }
 
-		
-	}	
+    .tr-promo {
+        background: #f8f9fa;
+    }
+
+    .tr-highlight {
+        background: #e9ecef;
+    }
+
+    .tr-total {
+        background: #f8f9fa;
+        font-weight: 600;
+    }
 </style>
 
 
