@@ -189,18 +189,19 @@ if (isset($_POST['remove_index'])) {
     </section>
 
     <!-- Restaurant-menu -->
-    <section class="section-restaurant padding-tb-100">
+    <section class="section-restaurant padding-tb-100" style="background: linear-gradient(120deg, #f8fafc 0%, #e0e7ef 100%); min-height: 100vh;">
         <div class="container">
             <div class="banner" data-aos="fade-up" data-aos-duration="1000">
-                <h2><span>Thực đơn</span></h2>
+                <h2><span style="color:#e11d48; font-weight:bold; letter-spacing:2px;">Thực đơn</span></h2>
             </div>
 
             <!-- Tabs danh mục thực đơn để post thay GET -->
-            <div class="menu-categories d-flex flex-wrap justify-content-center gap-2 mt-4">
+            <div class="menu-categories d-flex flex-wrap justify-content-center gap-2 mt-4 mb-4">
                 <?php foreach ($dsThucDon as $td): ?>
                     <form method="POST" style="display:inline;">
                         <input type="hidden" name="chon_thuc_don" value="<?= $td['ID_ThucDon'] ?>">
-                        <button type="submit" class="btn btn-outline-danger rounded-pill px-4 py-2 <?= (isset($_SESSION['thuc_don_id']) && $_SESSION['thuc_don_id'] == $td['ID_ThucDon']) ? 'active' : '' ?>">
+                        <button type="submit" class="btn btn-outline-danger rounded-pill px-4 py-2 shadow-sm fw-bold fs-5 category-btn <?= (isset($_SESSION['thuc_don_id']) && $_SESSION['thuc_don_id'] == $td['ID_ThucDon']) ? 'active' : '' ?>"
+                            style="transition:all 0.2s;<?= (isset($_SESSION['thuc_don_id']) && $_SESSION['thuc_don_id'] == $td['ID_ThucDon']) ? 'background:linear-gradient(90deg,#e11d48 0%,#f472b6 100%);color:#fff;' : '' ?>">
                             <?= $td['TenThucDon'] ?>
                         </button>
                     </form>
@@ -225,26 +226,28 @@ if (isset($_POST['remove_index'])) {
                 <div class="row mt-5">
                     <?php foreach ($monAnList as $mon): ?>
                         <div class="col-md-6 col-lg-4 mb-4">
-                            <div class="card shadow-sm h-100">
-                                <img src="../../assets_admin/img/restaurant/<?= $mon['HinhAnh'] ?>"
-                                    alt="<?= htmlspecialchars($mon['TenMon']) ?>"
-                                    class="card-img-top" style="height: 220px; object-fit: cover;">
-                                <div class="card-body d-flex flex-column">
-                                    <h5 class="card-title text-center"><?= htmlspecialchars($mon['TenMon']) ?></h5>
-                                    <p class="text-center text-danger fw-bold fs-5">
-                                        <?= number_format($mon['Gia'], 0, ',', '.') ?> VNĐ
+                            <div class="card shadow-lg h-100 menu-card" style="border-radius:18px; overflow:hidden; transition:transform 0.2s, box-shadow 0.2s;">
+                                <div style="overflow:hidden;">
+                                    <img src="../../assets_admin/img/restaurant/<?= $mon['HinhAnh'] ?>"
+                                        alt="<?= htmlspecialchars($mon['TenMon']) ?>"
+                                        class="card-img-top menu-img" style="height: 220px; object-fit: cover; transition:transform 0.3s;">
+                                </div>
+                                <div class="card-body d-flex flex-column justify-content-between">
+                                    <h5 class="card-title text-center fw-bold" style="color:#1e293b; letter-spacing:1px; min-height:48px;"> <?= htmlspecialchars($mon['TenMon']) ?> </h5>
+                                    <p class="text-center fw-bold fs-4 mb-2" style="color:#e11d48; text-shadow:0 2px 8px #fbb6ce55;">
+                                        <?= number_format($mon['Gia'], 0, ',', '.') ?> <span style="font-size:0.8em; color:#64748b;">VNĐ</span>
                                     </p>
-                                    <form method="POST" class="d-flex justify-content-between align-items-center gap-2">
+                                    <form method="POST" class="d-flex justify-content-between align-items-center gap-2 mt-2">
                                         <input type="hidden" name="id" value="<?= $mon['ID_MonAn'] ?>">
                                         <input type="hidden" name="ten" value="<?= htmlspecialchars($mon['TenMon']) ?>">
                                         <input type="hidden" name="gia" value="<?= $mon['Gia'] ?>">
-                                        <input type="number" name="soluong" value="1" min="1" class="form-control" style="width: 60px">
-                                        <button type="submit" name="add_to_cart" class="btn btn-success">
+                                        <input type="number" name="soluong" value="1" min="1" class="form-control border-0 shadow-sm" style="width: 60px; background:#f1f5f9;">
+                                        <button type="submit" name="add_to_cart" class="btn btn-gradient-pink px-3 py-2 fw-bold shadow-sm">
                                             <i class="fa-solid fa-cart-shopping"></i> Thêm vào giỏ hàng
                                         </button>
                                     </form>
-                                    <a href="menu-details.php?id=<?= $mon['ID_MonAn'] ?>" class="btn btn-outline-primary btn-sm mt-2">
-                                       Đánh giá <i class="fa-solid fa-star"></i>
+                                    <a href="menu-details.php?id=<?= $mon['ID_MonAn'] ?>" class="btn btn-outline-primary btn-sm mt-3 rounded-pill shadow-sm">
+                                       <i class="fa-solid fa-star"></i> Xem chi tiết
                                     </a>
                                 </div>
                             </div>
@@ -258,11 +261,11 @@ if (isset($_POST['remove_index'])) {
             <?php endif; ?>
 
             <div class="text-center mt-4">
-                <a href="order.php" class="btn btn-primary">
+                <a href="order.php" class="btn btn-primary btn-lg rounded-pill shadow-sm px-4">
                     <i class="fas fa-shopping-cart"></i>
                     Giỏ hàng (<?= count($_SESSION['cart'] ?? []) ?>)
                 </a>
-                <a href="don-hang-cua-toi.php" class="btn btn-outline-secondary ms-2">
+                <a href="my-order.php" class="btn btn-outline-secondary ms-2 btn-lg rounded-pill shadow-sm px-4">
                     <i class="fas fa-receipt"></i> Đơn hàng của tôi
                 </a>
             </div>
@@ -626,6 +629,32 @@ if (isset($_POST['remove_index'])) {
         }
     </script>
 
+    <style>
+    .menu-card:hover {
+        transform: translateY(-8px) scale(1.03);
+        box-shadow: 0 8px 32px #e11d4844;
+    }
+    .menu-img:hover {
+        transform: scale(1.08) rotate(-2deg);
+    }
+    .btn-gradient-pink {
+        background: linear-gradient(90deg,#e11d48 0%,#f472b6 100%);
+        color: #fff;
+        border: none;
+        transition: background 0.2s, box-shadow 0.2s;
+    }
+    .btn-gradient-pink:hover {
+        background: linear-gradient(90deg,#f472b6 0%,#e11d48 100%);
+        color: #fff;
+        box-shadow: 0 2px 12px #e11d4844;
+    }
+    .category-btn.active, .category-btn:focus {
+        background: linear-gradient(90deg,#e11d48 0%,#f472b6 100%) !important;
+        color: #fff !important;
+        border: none;
+        box-shadow: 0 2px 12px #e11d4844;
+    }
+    </style>
 
 </body>
 

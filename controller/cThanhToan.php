@@ -92,5 +92,15 @@ class cThanhToan
             return $returnData;
         }
     }
+
+    public function getThanhToanById($idDonHang) {
+        $mThanhToan = new mThanhToan();
+        return $mThanhToan->getThanhToanById($idDonHang);
+    }
+
+    public function xoaThanhToan($idDonHang) {
+        $mThanhToan = new mThanhToan();
+        return $mThanhToan->xoaThanhToan($idDonHang);
+    }
 }
 ?>

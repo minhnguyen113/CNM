@@ -3,6 +3,7 @@ session_start();
 include_once("../../controller/cDonHang.php");
 include_once("../../controller/cThanhToan.php");
 include_once("../../controller/cUser.php");
+include_once("../../model/mKhuyenMai.php");
 
 // Lấy id đơn hàng từ session hoặc GET
 $idDonHang = $_SESSION['idDonHang'] ?? ($_GET['idDonHang'] ?? null);
@@ -21,6 +22,12 @@ if (!$donHang || empty($donHang['TongTien'])) {
     exit;
 }
 
+// Tính tổng tiền gốc
+$tong = 0;
+foreach ($chiTietDonHang as $item) {
+    $tong += $item['SoLuongMon'] * $item['Gia'];
+}
+
 // Xử lý khi khách nhấn thanh toán
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['thanhToan'])) {
     $phuongThuc = $_POST['phuongthuc'] ?? '';
@@ -29,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['thanhToan'])) {
     $maGiaoDich = null;
 
     // Kiểm tra phương thức hợp lệ
-    if (!in_array($phuongThuc, ['QR', 'Tiền mặt', 'VNPAY'])) {
+    if (!in_array($phuongThuc, ['Tiền mặt', 'VNPAY'])) {
         echo "<script>alert('Phương thức thanh toán không hợp lệ!');</script>";
     } else {
         $cThanhToan = new cThanhToan();
@@ -46,9 +53,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['thanhToan'])) {
     }
 }
 
+// Xử lý khi khách nhấn nút hủy
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['huy_don'])) {
+    unset($_SESSION['idDonHang']);
+    unset($_SESSION['cart']);
+    echo "<script>alert('Bạn đã hủy đơn hàng!');window.location='menu.php';</script>";
+    exit;
+}
+
 $userController = new UserController();
 $userResult = $userController->StaffGetCustomerById($donHang['ID_User']);
 $user = mysqli_fetch_assoc($userResult);
+
+// Tính phần trăm giảm giá và số tiền giảm giá
+$giamGia = 0;
+if (!empty($donHang['ID_KhuyenMai'])) {
+    $kmModel = new KhuyenMaiModel();
+    $km = $kmModel->getKhuyenMaiById($donHang['ID_KhuyenMai']);
+    if ($km && isset($km['GiamGia'])) {
+        $giamGia = $km['GiamGia'];
+    }
+}
+$soTienGiam = $tong * $giamGia / 100;
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -63,6 +89,31 @@ $user = mysqli_fetch_assoc($userResult);
             font-family: 'Segoe UI', Arial, sans-serif;
             margin: 0;
             padding: 0;
+        }
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 18px;
+            color: #fff;
+            background: linear-gradient(90deg, #64748b 0%, #94a3b8 100%);
+            padding: 10px 28px 10px 18px;
+            border-radius: 999px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.08em;
+            box-shadow: 0 2px 12px #64748b22;
+            transition: background 0.18s, box-shadow 0.18s, transform 0.18s;
+            position: relative;
+        }
+        .back-btn:hover {
+            background: linear-gradient(90deg, #475569 0%, #64748b 100%);
+            color: #fff;
+            box-shadow: 0 4px 24px #64748b33;
+            transform: translateY(-2px) scale(1.03);
+        }
+        .back-btn i {
+            margin-right: 8px;
+            font-size: 1.1em;
+            vertical-align: middle;
         }
         .pay-form {
             max-width: 700px;
@@ -101,16 +152,6 @@ $user = mysqli_fetch_assoc($userResult);
         }
         .pay-form button:hover {
             background: linear-gradient(90deg, #38b6ff 0%, #4f8cff 100%);
-        }
-        #qr-section {
-            text-align: center;
-            margin-top: 18px;
-            margin-bottom: 10px;
-        }
-        #qr-section img {
-            border-radius: 12px;
-            border: 2px solid #e0e7ef;
-            box-shadow: 0 2px 12px #b6d0ff33;
         }
         table {
             width: 100%;
@@ -154,6 +195,11 @@ $user = mysqli_fetch_assoc($userResult);
     </style>
 </head>
 <body>
+    <div style="max-width: 700px; margin: 30px auto 0 auto; display: flex; gap: 12px; align-items: center;">
+        <a href="menu.php" class="back-btn">
+            <i class="fa-solid fa-arrow-left"></i> Quay lại
+        </a>
+    </div>
     <div class="pay-form">
         <h2><i class="fa-solid fa-money-check-dollar"></i> Thanh toán đơn hàng #<?php echo $idDonHang; ?></h2>
         <div class="order-summary">
@@ -169,10 +215,8 @@ $user = mysqli_fetch_assoc($userResult);
                 <th>Thành tiền</th>
             </tr>
             <?php
-            $tong = 0;
             foreach ($chiTietDonHang as $item):
                 $thanhTien = $item['SoLuongMon'] * $item['Gia'];
-                $tong += $thanhTien;
             ?>
             <tr>
                 <td><?= htmlspecialchars($item['TenMon']) ?></td>
@@ -189,8 +233,8 @@ $user = mysqli_fetch_assoc($userResult);
                 <td colspan="3" align="right"><b>Khuyến mãi:</b></td>
                 <td>
                     <?php
-                    if (!empty($donHang['ID_KhuyenMai'])) {
-                        echo 'Đã áp dụng';
+                    if ($giamGia > 0) {
+                        echo '<span style="color: #059669;">- ' . number_format($soTienGiam) . ' VNĐ</span>';
                     } else {
                         echo 'Không áp dụng';
                     }
@@ -199,7 +243,12 @@ $user = mysqli_fetch_assoc($userResult);
             </tr>
             <tr>
                 <td colspan="3" align="right"><b>Thành tiền cần thanh toán:</b></td>
-                <td><b style="color:#e11d48; font-size:1.1em;"><?= number_format($donHang['TongTien']) ?> VNĐ</b></td>
+                <td><b style="color:#e11d48; font-size:1.1em;">
+                    <?php
+                    $thanhTienSauKM = $tong * (1 - $giamGia/100);
+                    echo number_format($thanhTienSauKM) . ' VNĐ';
+                    ?>
+                </b></td>
             </tr>
         </table>
         <h3><i class="fa-solid fa-user"></i> Thông tin khách hàng</h3>
@@ -212,20 +261,11 @@ $user = mysqli_fetch_assoc($userResult);
         <form method="POST" id="main-payment-form" action="">
             <label><i class="fa-solid fa-credit-card"></i> Chọn phương thức thanh toán:</label><br>
             <select name="phuongthuc" id="phuongthuc" required>
-                <option value="QR" selected>QR Code</option>
-                <option value="Tiền mặt">Tiền mặt</option>
+                <option value="Tiền mặt" selected>Tiền mặt</option>
                 <option value="VNPAY">VNPAY</option>
             </select><br><br>
-            <div id="qr-section">
-                <?php
-                $noidung = "Thanh toan don hang #$idDonHang - So tien: " . number_format($donHang['TongTien'], 0, ',', '.') . " VND";
-                $qr_url = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" . urlencode($noidung);
-                ?>
-                <img src="<?php echo $qr_url; ?>" alt="QR code" width="200"><br>
-                <small style="color:#2563eb;"><i class="fa-solid fa-qrcode"></i> Quét mã QR để thanh toán</small>
-            </div>
             <div id="vnpay-section" style="display: none;">
-                <input type="hidden" name="amount" value="<?php echo $donHang['TongTien']; ?>" />
+                <input type="hidden" name="amount" value="<?php echo $thanhTienSauKM; ?>" />
                 <input type="hidden" name="idDonHang" value="<?php echo $idDonHang; ?>" />
                 <button type="submit" name="redirect" class="btn btn-primary" style="width: 100%; padding: 10px; background: linear-gradient(90deg, #4f8cff 0%, #38b6ff 100%); color: white; border: none; border-radius: 6px; cursor: pointer;">
                     <i class="fa-solid fa-credit-card"></i> Thanh toán qua VNPAY
@@ -236,31 +276,20 @@ $user = mysqli_fetch_assoc($userResult);
     </div>
     <script>
     document.getElementById('phuongthuc').addEventListener('change', function() {
-        const qrSection = document.getElementById('qr-section');
         const vnpaySection = document.getElementById('vnpay-section');
         const normalPaymentBtn = document.getElementById('normal-payment-btn');
         const form = document.getElementById('main-payment-form');
 
-        if (this.value === 'QR') {
-            qrSection.style.display = 'block';
-            vnpaySection.style.display = 'none';
-            normalPaymentBtn.style.display = 'block';
-            form.action = "";
-        } else if (this.value === 'VNPAY') {
-            qrSection.style.display = 'none';
+        if (this.value === 'VNPAY') {
             vnpaySection.style.display = 'block';
             normalPaymentBtn.style.display = 'none';
             form.action = "confirm_vnpay.php";
         } else {
-            qrSection.style.display = 'none';
             vnpaySection.style.display = 'none';
             normalPaymentBtn.style.display = 'block';
             form.action = "";
         }
     });
-    // Luôn hiển thị QR mặc định khi vào trang
-    document.getElementById('qr-section').style.display = 'block';
-    document.getElementById('vnpay-section').style.display = 'none';
     </script>
 </body>
 </html>

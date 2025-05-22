@@ -61,8 +61,26 @@ if (isset($_GET['id'])) {
 			$user = mysqli_fetch_assoc($userResult);
 		}
 	}
-}
 
+	// Tính tổng tiền, khuyến mãi, thành tiền sau khuyến mãi
+	$tong = 0;
+	foreach ($ct as $c) {
+		$tong += $c['SoLuongMon'] * $c['Gia'];
+	}
+	$giamGia = 0;
+	$tenKhuyenMai = '';
+	if ($donHangDetail && !empty($donHangDetail['ID_KhuyenMai'])) {
+		include_once("../../controller/cKhuyenMai.php");
+		$kmController = new KhuyenMaiController();
+		$km = $kmController->getKhuyenMaiById($donHangDetail['ID_KhuyenMai']);
+		if ($km) {
+			$tenKhuyenMai = $km['TenKhuyenMai'];
+			$giamGia = $km['GiamGia'];
+		}
+	}
+	$soTienGiam = $tong * $giamGia / 100;
+	$tongTienSauKM = $tong - $soTienGiam;
+}
 
 $phuongThuc = '';
 if ($donHangDetail && !empty($donHangDetail['ID_DonHang'])) {
@@ -620,33 +638,6 @@ if ($donHangDetail && !empty($donHangDetail['ID_DonHang'])) {
 						</table>
 
 						<?php if ($ct): ?>
-							<?php
-							// Lấy thông tin khuyến mãi nếu có
-							$tenKhuyenMai = '';
-							$giamGia = 0;
-							$tong = 0;
-							$soTienGiam = 0;
-							$tongTienSauKM = 0;
-							if (!empty($ct)) {
-								// Lấy ID_KhuyenMai từ đơn hàng
-								$idDonHang = $_GET['id'];
-								foreach ($ds as $d) {
-									if ($d['ID_DonHang'] == $idDonHang) {
-										$donHangDetail = $d;
-										break;
-									}
-								}
-								if ($donHangDetail && !empty($donHangDetail['ID_KhuyenMai'])) {
-									include_once("../../controller/cKhuyenMai.php");
-									$kmController = new KhuyenMaiController();
-									$km = $kmController->getKhuyenMaiById($donHangDetail['ID_KhuyenMai']);
-									if ($km) {
-										$tenKhuyenMai = $km['TenKhuyenMai'];
-										$giamGia = $km['GiamGia'];
-									}
-								}
-							}
-							?>
 							<div class="invoice-center">
 								<div class="detail-box">
 									<span class="detail-title">Chi tiết đơn hàng #<?= htmlspecialchars($_GET['id']) ?></span>
@@ -671,8 +662,7 @@ if ($donHangDetail && !empty($donHangDetail['ID_DonHang'])) {
 											<th>Đơn giá</th>
 											<th>Thành tiền</th>
 										</tr>
-										<?php foreach ($ct as $c): $thanhTien = $c['SoLuongMon'] * $c['Gia'];
-											$tong += $thanhTien; ?>
+										<?php foreach ($ct as $c): $thanhTien = $c['SoLuongMon'] * $c['Gia']; ?>
 											<tr>
 												<td><?= htmlspecialchars($c['TenMon']) ?></td>
 												<td><?= $c['SoLuongMon'] ?></td>
@@ -681,17 +671,17 @@ if ($donHangDetail && !empty($donHangDetail['ID_DonHang'])) {
 											</tr>
 										<?php endforeach; ?>
 										<tr class="tr-promo">
-											<td colspan="2" align="right"><b>Chương trình khuyến mãi:</b></td>
+											<td colspan="2" align="right"><b>Khuyến mãi:</b></td>
 											<td colspan="2">
-												<?php if ($tenKhuyenMai): ?>
-													<?= htmlspecialchars($tenKhuyenMai) ?> (-<?= $giamGia ?>%)
-												<?php else: ?>
-													Không áp dụng
-												<?php endif; ?>
+												<?php
+												if (!empty($tenKhuyenMai) && $giamGia > 0) {
+													echo htmlspecialchars($tenKhuyenMai) . ' (-' . $giamGia . '%) <span style="color: #059669;">- ' . number_format($soTienGiam) . ' VND</span>';
+												} else {
+													echo 'Không áp dụng';
+												}
+												?>
 											</td>
 										</tr>
-										<?php $soTienGiam = $giamGia > 0 ? $tong * $giamGia / 100 : 0;
-										$tongTienSauKM = $tong - $soTienGiam; ?>
 										<tr class="tr-highlight">
 											<td colspan="2" align="right"><b>Thành tiền sau khuyến mãi:</b></td>
 											<td colspan="2"><b><?= number_format($tongTienSauKM) ?> VND</b></td>

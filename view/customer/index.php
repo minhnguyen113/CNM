@@ -274,7 +274,7 @@ error_reporting(E_ALL);
                                 <div class="room-img">
                                     <img src="../../assets_customer/img/menu/pho-hanoi.jpg" alt="room-img"
                                         class="room-image">
-                                    <a href="room-details.php" class="link"><i class="ri-arrow-right-line"></i></a>
+                                    <a href="menu.php" class="link"><i class="ri-arrow-right-line"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -331,7 +331,7 @@ error_reporting(E_ALL);
                                 <div class="room-img">
                                     <img src="../../assets_customer/img/menu/bun-bo-hue.jpg" alt="room-img"
                                         class="room-image">
-                                    <a href="room-details.php" class="link"><i class="ri-arrow-right-line"></i></a>
+                                    <a href="menu.php" class="link"><i class="ri-arrow-right-line"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -386,7 +386,7 @@ error_reporting(E_ALL);
                                 <div class="room-img">
                                     <img src="../../assets_customer/img/menu/lau-mam.jpg" alt="room-img"
                                         class="room-image">
-                                    <a href="room-details.php" class="link"><i class="ri-arrow-right-line"></i></a>
+                                    <a href="menu.php" class="link"><i class="ri-arrow-right-line"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -438,7 +438,7 @@ error_reporting(E_ALL);
                                 <div class="room-img">
                                     <img src="../../assets_customer/img/menu/mon-chay.jpg" alt="room-img"
                                         class="room-image">
-                                    <a href="room-details.php" class="link"><i class="ri-arrow-right-line"></i></a>
+                                    <a href="menu.php" class="link"><i class="ri-arrow-right-line"></i></a>
                                 </div>
                             </div>
                         </div>

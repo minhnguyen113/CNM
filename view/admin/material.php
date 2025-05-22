@@ -390,7 +390,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['sua_nguyenlieu'])) {
 
 							<div class="d-grid gap-2">
 								<button type="submit" name="sua_nguyenlieu" class="btn btn-primary">Cập nhật</button>
-								<a href="NguyenLieu.php" class="btn btn-secondary">Quay lại</a>
+								<a href="material.php" class="btn btn-secondary">Quay lại</a>
 							</div>
 						</form>
 					</div>
@@ -434,14 +434,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['sua_nguyenlieu'])) {
 							</thead>
 							<tbody>
 								<?php foreach ($dsNguyenLieu as $nl): ?>
-									<tr>
+									<?php
+										$isLow = false;
+										if (strtolower($nl['DonViTinh']) === 'quả') {
+											$isLow = $nl['SoLuongTon'] < 100;
+										} elseif (strtolower($nl['DonViTinh']) === 'gram') {
+											$isLow = $nl['SoLuongTon'] < 2000;
+										} elseif (strtolower($nl['DonViTinh']) === 'ml') {
+											$isLow = $nl['SoLuongTon'] < 5000;
+										}
+										$rowClass = $isLow ? 'nguyenlieu-low' : '';
+									?>
+									<tr class="<?= $rowClass ?>">
 										<td><?= $nl['ID_NguyenLieu'] ?></td>
 										<td><?= $nl['TenNguyenLieu'] ?></td>
 										<td><?= $nl['DonViTinh'] ?></td>
-										<td><?= $nl['SoLuongTon'] ?></td>
+										<td>
+											<?php if ($isLow): ?>
+												<span style="color:#e11d48;font-weight:bold;">
+													<?= $nl['SoLuongTon'] ?> <?= htmlspecialchars($nl['DonViTinh']) ?> ⚠️
+												</span>
+											<?php else: ?>
+												<?= $nl['SoLuongTon'] ?> <?= htmlspecialchars($nl['DonViTinh']) ?>
+											<?php endif; ?>
+										</td>
 										<td><?= $nl['GhiChu'] ?></td>
 										<td>
-											<a href="?mode=edit&id=<?= $nl['ID_NguyenLieu'] ?>" class="btn btn-warning btn-sm">Sửa</a>
+											<a href="?mode=edit&id=<?= $nl['ID_NguyenLieu'] ?>" class="btn btn-warning btn-sm">Cập nhật</a>
 											<a href="?xoa_nguyenlieu=<?= $nl['ID_NguyenLieu'] ?>"
 												onclick="return confirm('Bạn có chắc muốn xóa nguyên liệu này?')"
 												class="btn btn-danger btn-sm">Xóa</a>
@@ -624,6 +643,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['sua_nguyenlieu'])) {
 			border-radius: 5px;
 		}
 
+		.nguyenlieu-low {
+			background: #fff0f0 !important;
+			animation: blink 1s linear infinite alternate;
+		}
+		@keyframes blink {
+			0% { background: #fff0f0; }
+			100% { background: #ffeaea; }
+		}
 	</style>
 
 </body>

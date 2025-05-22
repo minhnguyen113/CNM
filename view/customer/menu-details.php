@@ -6,6 +6,7 @@ error_reporting(E_ALL);
 
 include_once('../../controller/cMonAn.php');
 include_once('../../controller/cDanhGia.php');
+include_once('../../controller/cChiTietNguyenLieu.php');
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
@@ -17,8 +18,10 @@ $idMonAn = $_SESSION['id_monan'] ?? 0;
 
 $monAnController = new MonAnController();
 $danhGiaController = new DanhGiaController();
+$chiTietNguyenLieuController = new ChiTietNguyenLieuController();
 $mon = $monAnController->getMonAnById($idMonAn);
 $danhgias = $danhGiaController->layDanhGiaTheoMonAn($idMonAn);
+$chiTietNguyenLieu = $chiTietNguyenLieuController->getChiTietNguyenLieuByMonAn($idMonAn);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_danhgia'])) {
     $idMonAn = $_POST['id_monan'] ?? $idMonAn;
@@ -64,45 +67,51 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['xoa_danhgia'])) {
     <style>
         /* Style đẹp cho chi tiết món ăn và đánh giá */
         .monan-detail-container {
-            max-width: 600px;
-            margin: 30px auto;
+            max-width: 700px;
+            margin: 0 auto 30px auto;
             background: #fff;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
-            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.09);
+            padding: 36px 32px 28px 32px;
+            position: relative;
         }
 
         .monan-img {
             width: 100%;
-            height: 220px;
+            height: 260px;
             object-fit: cover;
-            border-radius: 10px;
-            margin-bottom: 18px;
+            border-radius: 12px;
+            margin-bottom: 22px;
+            border: 2px solid #e0e7ef;
+            transition: box-shadow 0.2s;
+        }
+
+        .monan-img:hover {
+            box-shadow: 0 8px 32px rgba(225,29,72,0.18);
         }
 
         .monan-title {
-            font-size: 1.4em;
-            font-weight: bold;
+            font-size: 2em;
+            color: #e11d48;
+            letter-spacing: 1px;
             margin-bottom: 8px;
         }
 
         .monan-price {
-            color: #e44d26;
-            font-weight: bold;
-            font-size: 1.1em;
-            margin-bottom: 12px;
+            font-size: 1.3em;
         }
 
         .monan-desc {
-            color: #444;
+            font-size: 1.1em;
+            line-height: 1.6;
             margin-bottom: 18px;
         }
 
         .review-list {
             background: #f4f7fb;
             border-radius: 10px;
-            padding: 15px 18px 10px 18px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            padding: 18px 20px 12px 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
             margin-bottom: 10px;
             border: 1px solid #e3e6ed;
         }
@@ -117,24 +126,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['xoa_danhgia'])) {
         .review-item {
             display: flex;
             align-items: flex-start;
-            gap: 12px;
+            gap: 14px;
             border-bottom: 1px solid #e0e0e0;
-            padding: 10px 0 8px 0;
+            padding: 12px 0 10px 0;
+        }
+
+        .review-item:last-child {
+            border-bottom: none;
         }
 
         .review-avatar {
-            width: 38px;
-            height: 38px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
-            background: #e3e3e3;
+            background: #e11d48;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.3em;
+            font-size: 1.4em;
             color: #fff;
             font-weight: bold;
             flex-shrink: 0;
             overflow: hidden;
+            border: 2px solid #fff;
+            box-shadow: 0 2px 8px rgba(225,29,72,0.08);
+            transition: box-shadow 0.2s;
+        }
+
+        .review-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
         }
 
         .review-info {
@@ -143,7 +166,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['xoa_danhgia'])) {
 
         .review-user {
             font-weight: bold;
-            color: #333;
+            color: #e11d48;
             margin-right: 8px;
         }
 
@@ -155,7 +178,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['xoa_danhgia'])) {
 
         .review-date {
             color: #888;
-            font-size: 0.95em;
+            font-size: 0.97em;
         }
 
         .review-content {
@@ -165,11 +188,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['xoa_danhgia'])) {
         }
 
         .review-form {
-            margin-top: 12px;
+            margin-top: 16px;
             background: #fff;
             border-radius: 10px;
-            padding: 18px 18px 12px 18px;
-            box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+            padding: 20px 20px 14px 20px;
+            box-shadow: 0 1px 6px rgba(0,0,0,0.06);
             border: 1px solid #e3e6ed;
             display: flex;
             flex-direction: column;
@@ -201,7 +224,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['xoa_danhgia'])) {
         }
 
         .review-form button {
-            background: #007bff;
+            background: #e11d48;
             color: #fff;
             border: none;
             padding: 10px 0;
@@ -214,7 +237,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['xoa_danhgia'])) {
         }
 
         .review-form button:hover {
-            background: #0056b3;
+            background: #be123c;
         }
 
         .review-login-note {
@@ -252,17 +275,58 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['xoa_danhgia'])) {
             align-items: center;
             gap: 10px;
         }
+
+        .table thead tr {
+            background: #e0e7ef;
+        }
+
+        .table tbody tr:hover {
+            background: #f1f5f9;
+        }
+
+        @media (max-width: 800px) {
+            .monan-detail-container {
+                padding: 18px 6px 12px 6px;
+            }
+            .monan-img {
+                height: 180px;
+            }
+        }
     </style>
 </head>
 
 <body>
-
-
+    <div style="max-width: 700px; margin: 30px auto 0 auto;">
+        <a href="menu.php" style="display:inline-block;margin-bottom:18px;color:#fff;background:#e11d48;padding:8px 18px;border-radius:6px;text-decoration:none;font-weight:500;box-shadow:0 2px 8px rgba(225,29,72,0.08);transition:background 0.2s;">← Quay lại thực đơn</a>
+    </div>
     <div class="monan-detail-container">
-        <img src="../../assets_admin/img/restaurant/<?= $mon['HinhAnh'] ?>" alt="<?= htmlspecialchars($mon['TenMon']) ?>" class="monan-img">
-        <div class="monan-title"><?= htmlspecialchars($mon['TenMon']) ?></div>
-        <div class="monan-price"><?= number_format($mon['Gia']) ?> VNĐ</div>
-        <div class="monan-desc"><?= htmlspecialchars($mon['MoTa'] ?? '') ?></div>
+        <img src="../../assets_admin/img/restaurant/<?= $mon['HinhAnh'] ?>" alt="<?= htmlspecialchars($mon['TenMon']) ?>" class="monan-img" style="box-shadow:0 4px 16px rgba(225,29,72,0.10);">
+        <div class="monan-title" style="font-size:2em;color:#e11d48;letter-spacing:1px;">🍽️ <?= htmlspecialchars($mon['TenMon']) ?></div>
+        <div class="monan-price" style="font-size:1.3em;">Giá: <span style="color:#059669;"><?= number_format($mon['Gia']) ?> VNĐ</span></div>
+        <div class="monan-desc" style="font-size:1.1em;line-height:1.6;">Mô tả: <?= htmlspecialchars($mon['MoTa'] ?? '') ?></div>
+        <div id="chiTietNguyenLieu" style="margin-top: 28px;">
+            <h3 style="color:#2563eb;font-size:1.2em;margin-bottom:10px;">🥗 Thành phần nguyên liệu</h3>
+            <div style="overflow-x:auto;">
+            <table class="table" style="background:#f8fafc;border-radius:10px;box-shadow:0 1px 6px rgba(0,0,0,0.04);min-width:340px;">
+                <thead style="background:#e0e7ef;">
+                    <tr>
+                        <th style="padding:10px 8px;">Nguyên liệu</th>
+                        <th style="padding:10px 8px;">Số lượng</th>
+                        <th style="padding:10px 8px;">Đơn vị</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($chiTietNguyenLieu as $nl): ?>
+                    <tr style="transition:background 0.2s;">
+                        <td style="padding:8px 8px;"><span style="color:#e11d48;font-weight:500;">🍀 <?= htmlspecialchars($nl['TenNguyenLieu']) ?></span></td>
+                        <td style="padding:8px 8px;"><?= $nl['SoLuong'] ?></td>
+                        <td style="padding:8px 8px;"><?= htmlspecialchars($nl['DonViTinh']) ?></td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+            </div>
+        </div>
 
         <div class="review-list">
             <strong>Đánh giá:</strong>
@@ -295,15 +359,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['xoa_danhgia'])) {
                             <span class="review-date">
                                 (<?= date('d/m/Y H:i', strtotime($dg['NgayDanhGia'])) ?>)
                             </span>
+                            <div style="display:flex;justify-content:space-between;">
                             <div class="review-content"><?= nl2br(htmlspecialchars($dg['NoiDung'])) ?></div>
                             <?php if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $dg['ID_User']): ?>
-                                <form method="POST" style="display:inline;">
+                                <form method="POST">
                                     <input type="hidden" name="xoa_danhgia" value="<?= $dg['ID_DanhGia'] ?>">
                                     <button type="submit" style="background:#dc3545;color:#fff;border:none;padding:2px 10px;border-radius:3px;cursor:pointer;margin-left:8px;" onclick="return confirm('Bạn có chắc muốn xóa đánh giá này?')">
                                         Xóa
                                     </button>
                                 </form>
                             <?php endif; ?>
+                            </div>
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -340,6 +406,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['xoa_danhgia'])) {
             <div class="review-login-note">Vui lòng <a href="login.php">đăng nhập</a> để đánh giá.</div>
         <?php endif; ?>
     </div>
+
+    <script>
+    document.getElementById('btnChiTiet').addEventListener('click', function() {
+        var chiTiet = document.getElementById('chiTietNguyenLieu');
+        if (chiTiet.style.display === 'none') {
+            chiTiet.style.display = 'block';
+        } else {
+            chiTiet.style.display = 'none';
+        }
+    });
+    </script>
 </body>
 
 </html>
